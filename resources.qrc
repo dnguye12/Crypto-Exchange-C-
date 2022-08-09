@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/help.png</file>
+        <file>icons/invite.png</file>
+        <file>icons/logout.png</file>
+        <file>icons/setting.png</file>
+        <file>icons/withdraw.png</file>
+        <file>icons/male.png</file>
+    </qresource>
+    <qresource prefix="/clubs">
+        <file>clubs/bronze.png</file>
+        <file>clubs/gold.png</file>
+        <file>clubs/max.png</file>
+        <file>clubs/silver.png</file>
+    </qresource>
+</RCC>
