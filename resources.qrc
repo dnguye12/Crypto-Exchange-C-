@@ -13,4 +13,10 @@
         <file>clubs/max.png</file>
         <file>clubs/silver.png</file>
     </qresource>
+    <qresource prefix="/charts">
+        <file>icons/candle-chart.png</file>
+        <file>icons/candle-fill-chart.png</file>
+        <file>icons/line-chart.png</file>
+        <file>icons/mountain-chart.png</file>
+    </qresource>
 </RCC>

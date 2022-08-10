@@ -6,6 +6,10 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 
+#include <QDateTime>
+
+#include <QLineSeries>
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -23,12 +27,39 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_changeTimeToday_clicked();
+
+    void on_changeTime1W_clicked();
+
+    void on_changeTime1M_clicked();
+
+    void on_changeTime3M_clicked();
+
+    void on_changeTime6M_clicked();
+
+    void on_changeTime12M_clicked();
+
+    void on_changeTimeYTD_clicked();
+
 private:
+    //attributes
     Ui::MainWindow *ui;
 
     QNetworkAccessManager *manager;
     QNetworkRequest request;
 
+    QString timeSpan;
+
+    //functions
     void centerScreen();
+
+    QLineSeries* returnSerie(QNetworkReply *reply);
+
+    void drawChartLine(QLineSeries* series);
+
+    QString getLink(QString id, QString vs_currency, QString days);
+
+    int timeSpanDateCount(QString timeSpan);
+
 };
 #endif // MAINWINDOW_H
