@@ -8,7 +8,7 @@
 
 #include <QDateTime>
 
-#include <QLineSeries>
+#include <QSplineSeries>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -53,9 +53,9 @@ private:
     //functions
     void centerScreen();
 
-    QLineSeries* returnSerie(QNetworkReply *reply);
+    QSplineSeries * returnSerie(QNetworkReply *reply);
 
-    void drawChartLine(QLineSeries* series);
+    void drawChartLine(QSplineSeries* series);
 
     QString getLink(QString id, QString vs_currency, QString days);
 

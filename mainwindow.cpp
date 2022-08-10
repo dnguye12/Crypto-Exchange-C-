@@ -46,18 +46,18 @@ void MainWindow::managerFinished(QNetworkReply *reply) {
         return;
     }
 
-    QLineSeries* series = returnSerie(reply);
+    QSplineSeries* series = returnSerie(reply);
     drawChartLine(series);
 
 
 }
 
-QLineSeries* MainWindow::returnSerie(QNetworkReply *reply) {
+QSplineSeries * MainWindow::returnSerie(QNetworkReply *reply) {
     QJsonParseError jsonError;
 
     QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
 
-    QLineSeries *series = new QLineSeries();
+    QSplineSeries *series = new QSplineSeries();
 
     if(jsonError.error != QJsonParseError::NoError) {
         qDebug() << "fromJson failed: " << jsonError.errorString();
@@ -84,12 +84,25 @@ QLineSeries* MainWindow::returnSerie(QNetworkReply *reply) {
     return series;
 }
 
-void MainWindow::drawChartLine(QLineSeries* series) {
+void MainWindow::drawChartLine(QSplineSeries* series) {
+
     QChart *chart = new QChart();
     chart->legend()->hide();
     chart->addSeries(series);
     chart->createDefaultAxes();
     chart->setTitle("Simple line chart example");
+
+    ui->chartView->setChart(chart);
+    ui->chartView->setRenderHint(QPainter::Antialiasing);
+
+    QPen pen;
+    if(series->at(0).y() >= series->at(series->count()).y()) {
+        pen.setColor(QColor(61, 174, 35));
+    }else {
+        pen.setColor(QColor(208, 2, 27));
+    }
+    pen.setWidth(2);
+    series->setPen(pen);
 
     ui->chartView->setChart(chart);
     ui->chartView->setRenderHint(QPainter::Antialiasing);
