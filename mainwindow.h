@@ -28,5 +28,7 @@ private:
 
     QNetworkAccessManager *manager;
     QNetworkRequest request;
+
+    void centerScreen();
 };
 #endif // MAINWINDOW_H

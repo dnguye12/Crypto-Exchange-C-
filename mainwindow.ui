@@ -75,12 +75,14 @@
            </property>
            <property name="font">
             <font>
-             <family>Montserrat ExtraBold</family>
              <pointsize>39</pointsize>
+             <kerning>false</kerning>
             </font>
            </property>
            <property name="styleSheet">
-            <string notr="true">color: white;</string>
+            <string notr="true">color: white;
+font-size: 39;
+font-family: &quot;Montserrat ExtraBold&quot;;</string>
            </property>
            <property name="text">
             <string>Coin Chain</string>
@@ -109,7 +111,6 @@
              </property>
              <property name="font">
               <font>
-               <family>Segoe UI Semibold</family>
                <pointsize>16</pointsize>
               </font>
              </property>
@@ -209,20 +210,22 @@ QPushButton:hover:!pressed {
         </layout>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="minimumSize">
-          <size>
-           <width>300</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>16</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <widget class="QPushButton" name="pushButton">
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>16</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
 color: white;
 border: none;
 background-color: rgb(57, 63, 86);
@@ -232,27 +235,27 @@ padding-left: 25px;
 QPushButton:hover:!pressed {
 	background-color: rgb(40, 43, 58);
 }</string>
-         </property>
-         <property name="text">
-          <string>Home</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="minimumSize">
-          <size>
-           <width>300</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>16</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
+           </property>
+           <property name="text">
+            <string>Home</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>16</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
 color: white;
 border: none;
 background-color: rgb(57, 63, 86);
@@ -262,27 +265,27 @@ padding-left: 25px;
 QPushButton:hover:!pressed {
 	background-color: rgb(40, 43, 58);
 }</string>
-         </property>
-         <property name="text">
-          <string>Watchlist</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_4">
-         <property name="minimumSize">
-          <size>
-           <width>300</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>16</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
+           </property>
+           <property name="text">
+            <string>Watchlist</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_4">
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>16</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
 color: white;
 border: none;
 background-color: rgb(57, 63, 86);
@@ -292,27 +295,27 @@ padding-left: 25px;
 QPushButton:hover:!pressed {
 	background-color: rgb(40, 43, 58);
 }</string>
-         </property>
-         <property name="text">
-          <string>Portfolio</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="minimumSize">
-          <size>
-           <width>300</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>16</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
+           </property>
+           <property name="text">
+            <string>Portfolio</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_2">
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>16</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
 color: white;
 border: none;
 background-color: rgb(57, 63, 86);
@@ -322,58 +325,56 @@ padding-left: 25px;
 QPushButton:hover:!pressed {
 	background-color: rgb(40, 43, 58);
 }</string>
-         </property>
-         <property name="text">
-          <string>Discover</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI Semibold</family>
-           <pointsize>12</pointsize>
-           <bold>false</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">padding-left: 20px;
+           </property>
+           <property name="text">
+            <string>Discover</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>100</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">padding-left: 20px;
 color: white;</string>
-         </property>
-         <property name="text">
-          <string>More</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="minimumSize">
-          <size>
-           <width>300</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
+           </property>
+           <property name="text">
+            <string>More</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton">
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
 color: white;
 border: none;
 background-color: rgb(57, 63, 86);
@@ -383,41 +384,40 @@ padding-left: 25px;
 QPushButton:hover:!pressed {
 	background-color: rgb(40, 43, 58);
 }</string>
-         </property>
-         <property name="text">
-          <string> Invite Friends</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/icons/icons/invite.png</normaloff>:/icons/icons/invite.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>25</width>
-           <height>25</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="minimumSize">
-          <size>
-           <width>300</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
+           </property>
+           <property name="text">
+            <string> Invite Friends</string>
+           </property>
+           <property name="icon">
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/icons/invite.png</normaloff>:/icons/icons/invite.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>25</width>
+             <height>25</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_2">
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
 color: white;
 border: none;
 background-color: rgb(57, 63, 86);
@@ -427,38 +427,37 @@ padding-left: 25px;
 QPushButton:hover:!pressed {
 	background-color: rgb(40, 43, 58);
 }</string>
-         </property>
-         <property name="text">
-          <string> Withdraw Funds</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/icons/icons/withdraw.png</normaloff>:/icons/icons/withdraw.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>25</width>
-           <height>25</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="minimumSize">
-          <size>
-           <width>300</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
+           </property>
+           <property name="text">
+            <string> Withdraw Funds</string>
+           </property>
+           <property name="icon">
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/icons/withdraw.png</normaloff>:/icons/icons/withdraw.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>25</width>
+             <height>25</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
 color: white;
 border: none;
 background-color: rgb(57, 63, 86);
@@ -468,41 +467,40 @@ padding-left: 25px;
 QPushButton:hover:!pressed {
 	background-color: rgb(40, 43, 58);
 }</string>
-         </property>
-         <property name="text">
-          <string> Settings</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/icons/icons/setting.png</normaloff>:/icons/icons/setting.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>25</width>
-           <height>25</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_4">
-         <property name="minimumSize">
-          <size>
-           <width>300</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
+           </property>
+           <property name="text">
+            <string> Settings</string>
+           </property>
+           <property name="icon">
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/icons/setting.png</normaloff>:/icons/icons/setting.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>25</width>
+             <height>25</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_4">
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
 color: white;
 border: none;
 background-color: rgb(57, 63, 86);
@@ -512,38 +510,37 @@ padding-left: 25px;
 QPushButton:hover:!pressed {
 	background-color: rgb(40, 43, 58);
 }</string>
-         </property>
-         <property name="text">
-          <string> Help</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/icons/icons/help.png</normaloff>:/icons/icons/help.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>25</width>
-           <height>25</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_5">
-         <property name="minimumSize">
-          <size>
-           <width>300</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
+           </property>
+           <property name="text">
+            <string> Help</string>
+           </property>
+           <property name="icon">
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/icons/help.png</normaloff>:/icons/icons/help.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>25</width>
+             <height>25</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_5">
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
 color: white;
 border: none;
 background-color: rgb(57, 63, 86);
@@ -553,21 +550,23 @@ padding-left: 25px;
 QPushButton:hover:!pressed {
 	background-color: rgb(40, 43, 58);
 }</string>
-         </property>
-         <property name="text">
-          <string> Logout</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/icons/icons/logout.png</normaloff>:/icons/icons/logout.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>25</width>
-           <height>25</height>
-          </size>
-         </property>
-        </widget>
+           </property>
+           <property name="text">
+            <string> Logout</string>
+           </property>
+           <property name="icon">
+            <iconset resource="resources.qrc">
+             <normaloff>:/icons/icons/logout.png</normaloff>:/icons/icons/logout.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>25</width>
+             <height>25</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -611,7 +610,284 @@ border-radius: 10px;
        </layout>
       </item>
       <item>
-       <widget class="QChartView" name="chartView"/>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="coinName">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="changeTimeToday">
+            <property name="minimumSize">
+             <size>
+              <width>55</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI Semibold</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+            </property>
+            <property name="text">
+             <string>Today</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="changeTime1W">
+            <property name="minimumSize">
+             <size>
+              <width>55</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI Semibold</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+            </property>
+            <property name="text">
+             <string>1W</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="changeTime1M">
+            <property name="minimumSize">
+             <size>
+              <width>55</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI Semibold</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+            </property>
+            <property name="text">
+             <string>1M</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="changeTime3M">
+            <property name="minimumSize">
+             <size>
+              <width>55</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI Semibold</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+            </property>
+            <property name="text">
+             <string>3M</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="changeTime6M">
+            <property name="minimumSize">
+             <size>
+              <width>55</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI Semibold</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+            </property>
+            <property name="text">
+             <string>6M</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="changeTime12M">
+            <property name="minimumSize">
+             <size>
+              <width>55</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI Semibold</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+            </property>
+            <property name="text">
+             <string>12M</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="changeTimeYTD">
+            <property name="minimumSize">
+             <size>
+              <width>55</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI Semibold</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+            </property>
+            <property name="text">
+             <string>YTD</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="changeChartType">
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QChartView" name="chartView">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_2">

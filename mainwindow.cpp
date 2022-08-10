@@ -9,11 +9,16 @@
 #include <QChart>
 #include <QLineSeries>
 
+#include <QSizePolicy>
+#include <QScreen>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    centerScreen();
 
     manager = new QNetworkAccessManager();
     QObject::connect(manager, SIGNAL(finished(QNetworkReply*)),
@@ -23,6 +28,16 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::centerScreen() {
+    QScreen *screen = ui->centralwidget->screen();
+        QRect  screenGeometry = screen->geometry();
+        int sheight = screenGeometry.height();
+        int swidth = screenGeometry.width();
+        int height = ui->centralwidget->height();
+        int width = ui->centralwidget->width();
+            move(  (swidth - width) / 2 ,(sheight - height) / 2 );
 }
 
 void MainWindow::managerFinished(QNetworkReply *reply) {
