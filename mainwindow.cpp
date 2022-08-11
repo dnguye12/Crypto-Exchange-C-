@@ -114,6 +114,8 @@ void MainWindow::drawChartLine(QSplineSeries* series) {
 
     QFont labelsFont;
     labelsFont.setPixelSize(12);
+    labelsFont.setWeight(QFont::Bold);
+    qDebug() << labelsFont.family();
     axisX->setLabelsFont(labelsFont);
     axisY->setLabelsFont(labelsFont);
     QBrush labelBrush(QColor(119,121,123));
@@ -158,16 +160,19 @@ void MainWindow::drawChartLine(QSplineSeries* series) {
     axisX->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
 
     //Axis Y range
-
-    double aveY = minY / 2 + maxY / 2;
+    double gapY = (maxY - minY) / 4;
+    axisY->append("", minY - gapY / 2);
     axisY->append(QString::number(minY), minY);
-    axisY->append(QString::number(minY/2 + aveY/2), (minY/2 + aveY/2));
-    axisY->append(QString::number(aveY), (aveY));
-    axisY->append(QString::number(maxY/2 + aveY/2), (maxY/2 + aveY/2));
+    axisY->append(QString::number(minY + gapY), (minY + gapY));
+    axisY->append(QString::number(minY + gapY * 2), (minY + gapY * 2));
+    axisY->append(QString::number(minY + gapY * 3), (minY + gapY * 3));
     axisY->append(QString::number(maxY), maxY);
+    axisY->append("", maxY + gapY / 2);
+
+    axisY->setRange(minY - gapY / 2, maxY + gapY / 2);
+    axisY->setGridLineVisible(false);
     axisY->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
 
-    //chart->createDefaultAxes();
     //Set chart
     chart->addAxis(axisX, Qt::AlignBottom);
     chart->addAxis(axisY, Qt::AlignRight);

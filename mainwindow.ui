@@ -75,7 +75,7 @@
            </property>
            <property name="font">
             <font>
-             <pointsize>36</pointsize>
+             <pointsize>37</pointsize>
              <kerning>false</kerning>
             </font>
            </property>
@@ -85,7 +85,7 @@ font-size: 36;
 font-family: &quot;Montserrat ExtraBold&quot;;</string>
            </property>
            <property name="text">
-            <string>Coin Chain</string>
+            <string>Coin News</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -125,11 +125,7 @@ background-color: rgb(57, 63, 86);
 border: none;</string>
              </property>
              <property name="text">
-              <string>Generic Name</string>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/icons/icons/male.png</normaloff>:/icons/icons/male.png</iconset>
+              <string>Welcome Back</string>
              </property>
              <property name="iconSize">
               <size>
@@ -144,78 +140,27 @@ border: none;</string>
            </item>
           </layout>
          </item>
-         <item>
-          <spacer name="verticalSpacer">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_5">
-           <item>
-            <widget class="QPushButton" name="pushButton_7">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>260</width>
-               <height>60</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton {
-text-align: left;
-color: white;
-padding-left: 20px;
-border: none;
-background-color: rgb(46, 51, 69);
-}
-QPushButton:hover:!pressed {
-	background-color: rgb(40, 43, 58);
-}</string>
-             </property>
-             <property name="text">
-              <string> Bronze Club</string>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/clubs/clubs/bronze.png</normaloff>:/clubs/clubs/bronze.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>30</width>
-               <height>30</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
         </layout>
        </item>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_6">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>10</number>
+         </property>
+         <property name="bottomMargin">
+          <number>10</number>
+         </property>
          <item>
           <widget class="QPushButton" name="pushButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>300</width>
@@ -234,6 +179,7 @@ border: none;
 background-color: rgb(57, 63, 86);
 text-align: left;
 padding-left: 25px;
+border-left: 3px solid rgb(61, 174, 35);
 }
 QPushButton:hover:!pressed {
 	background-color: rgb(40, 43, 58);
@@ -246,6 +192,12 @@ QPushButton:hover:!pressed {
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>300</width>
@@ -276,6 +228,12 @@ QPushButton:hover:!pressed {
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_4">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>300</width>
@@ -300,12 +258,18 @@ QPushButton:hover:!pressed {
 }</string>
            </property>
            <property name="text">
-            <string>Portfolio</string>
+            <string>News</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>300</width>
@@ -330,7 +294,43 @@ QPushButton:hover:!pressed {
 }</string>
            </property>
            <property name="text">
-            <string>Discover</string>
+            <string>Cryptocurrencies</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_7">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>16</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+color: white;
+border: none;
+background-color: rgb(57, 63, 86);
+text-align: left;
+padding-left: 25px;
+}
+QPushButton:hover:!pressed {
+	background-color: rgb(40, 43, 58);
+}</string>
+           </property>
+           <property name="text">
+            <string>Exchanges</string>
            </property>
           </widget>
          </item>
@@ -364,90 +364,13 @@ color: white;</string>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
-           <property name="minimumSize">
-            <size>
-             <width>300</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QPushButton {
-color: white;
-border: none;
-background-color: rgb(57, 63, 86);
-text-align: left;
-padding-left: 25px;
-}
-QPushButton:hover:!pressed {
-	background-color: rgb(40, 43, 58);
-}</string>
-           </property>
-           <property name="text">
-            <string> Invite Friends</string>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/invite.png</normaloff>:/icons/icons/invite.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>25</width>
-             <height>25</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_2">
-           <property name="minimumSize">
-            <size>
-             <width>300</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QPushButton {
-color: white;
-border: none;
-background-color: rgb(57, 63, 86);
-text-align: left;
-padding-left: 25px;
-}
-QPushButton:hover:!pressed {
-	background-color: rgb(40, 43, 58);
-}</string>
-           </property>
-           <property name="text">
-            <string> Withdraw Funds</string>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/withdraw.png</normaloff>:/icons/icons/withdraw.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>25</width>
-             <height>25</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QPushButton" name="pushButton_3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>300</width>
@@ -488,6 +411,12 @@ QPushButton:hover:!pressed {
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_4">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>300</width>
@@ -530,73 +459,17 @@ QPushButton:hover:!pressed {
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_5">
-           <property name="minimumSize">
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
             <size>
-             <width>300</width>
+             <width>20</width>
              <height>40</height>
             </size>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QPushButton {
-color: white;
-border: none;
-background-color: rgb(57, 63, 86);
-text-align: left;
-padding-left: 25px;
-}
-QPushButton:hover:!pressed {
-	background-color: rgb(40, 43, 58);
-}</string>
-           </property>
-           <property name="text">
-            <string> Logout</string>
-           </property>
-           <property name="icon">
-            <iconset resource="resources.qrc">
-             <normaloff>:/icons/icons/logout.png</normaloff>:/icons/icons/logout.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>25</width>
-             <height>25</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QToolButton" name="toolButton_5">
-           <property name="minimumSize">
-            <size>
-             <width>260</width>
-             <height>60</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>16</pointsize>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: white;
-border: none;
-background-color: rgb(49, 174, 241);
-border-radius: 10px;
-</string>
-           </property>
-           <property name="text">
-            <string>Deposit Funds</string>
-           </property>
-          </widget>
+          </spacer>
          </item>
         </layout>
        </item>
@@ -648,7 +521,6 @@ border-radius: 10px;
             </property>
             <property name="font">
              <font>
-              <family>Segoe UI Semibold</family>
               <pointsize>12</pointsize>
              </font>
             </property>
@@ -683,7 +555,6 @@ QToolButton:pressed {
             </property>
             <property name="font">
              <font>
-              <family>Segoe UI Semibold</family>
               <pointsize>12</pointsize>
              </font>
             </property>
@@ -718,7 +589,6 @@ QToolButton:pressed {
             </property>
             <property name="font">
              <font>
-              <family>Segoe UI Semibold</family>
               <pointsize>12</pointsize>
              </font>
             </property>
@@ -753,7 +623,6 @@ QToolButton:pressed {
             </property>
             <property name="font">
              <font>
-              <family>Segoe UI Semibold</family>
               <pointsize>12</pointsize>
              </font>
             </property>
@@ -788,7 +657,6 @@ QToolButton:pressed {
             </property>
             <property name="font">
              <font>
-              <family>Segoe UI Semibold</family>
               <pointsize>12</pointsize>
              </font>
             </property>
@@ -823,7 +691,6 @@ QToolButton:pressed {
             </property>
             <property name="font">
              <font>
-              <family>Segoe UI Semibold</family>
               <pointsize>12</pointsize>
              </font>
             </property>
@@ -858,7 +725,6 @@ QToolButton:pressed {
             </property>
             <property name="font">
              <font>
-              <family>Segoe UI Semibold</family>
               <pointsize>12</pointsize>
              </font>
             </property>
@@ -899,7 +765,6 @@ QToolButton:pressed {
             </property>
             <property name="font">
              <font>
-              <family>Segoe UI</family>
               <pointsize>12</pointsize>
              </font>
             </property>
@@ -912,24 +777,6 @@ QToolButton:pressed {
               <height>25</height>
              </size>
             </property>
-            <item>
-             <property name="text">
-              <string>  Candle</string>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/charts/icons/candle-fill-chart.png</normaloff>:/charts/icons/candle-fill-chart.png</iconset>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>  Hollow Candle</string>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/charts/icons/candle-chart.png</normaloff>:/charts/icons/candle-chart.png</iconset>
-             </property>
-            </item>
             <item>
              <property name="text">
               <string>  Line</string>
@@ -946,6 +793,24 @@ QToolButton:pressed {
              <property name="icon">
               <iconset resource="resources.qrc">
                <normaloff>:/charts/icons/mountain-chart.png</normaloff>:/charts/icons/mountain-chart.png</iconset>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>  Candle</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resources.qrc">
+               <normaloff>:/charts/icons/candle-fill-chart.png</normaloff>:/charts/icons/candle-fill-chart.png</iconset>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>  Hollow Candle</string>
+             </property>
+             <property name="icon">
+              <iconset resource="resources.qrc">
+               <normaloff>:/charts/icons/candle-chart.png</normaloff>:/charts/icons/candle-chart.png</iconset>
              </property>
             </item>
            </widget>
