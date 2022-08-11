@@ -12,6 +12,9 @@
 #include <QSizePolicy>
 #include <QScreen>
 
+#include <QCategoryAxis>
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -74,11 +77,7 @@ QSplineSeries * MainWindow::returnSerie(QNetworkReply *reply) {
 
 
         for(int i = 0; i < jsonPrice.size(); i++) {
-            values.append(jsonPrice[i].toArray()[1].toDouble());
-        }
-
-        for(int i = 0; i < values.size(); i++) {
-            series->append(i, values[i]);
+            series->append(jsonPrice[i].toArray()[0].toDouble(),jsonPrice[i].toArray()[1].toDouble());
         }
     }
     return series;
@@ -89,20 +88,91 @@ void MainWindow::drawChartLine(QSplineSeries* series) {
     QChart *chart = new QChart();
     chart->legend()->hide();
     chart->addSeries(series);
-    chart->createDefaultAxes();
     chart->setTitle("Simple line chart example");
 
     ui->chartView->setChart(chart);
     ui->chartView->setRenderHint(QPainter::Antialiasing);
 
+    //chart line
     QPen pen;
-    if(series->at(0).y() >= series->at(series->count()).y()) {
+    if(series->at(0).y() <= series->at(series->count()-1).y()) {
         pen.setColor(QColor(61, 174, 35));
     }else {
         pen.setColor(QColor(208, 2, 27));
     }
     pen.setWidth(2);
     series->setPen(pen);
+
+    //2 Axis
+    QCategoryAxis *axisX = new QCategoryAxis();
+    QCategoryAxis *axisY = new QCategoryAxis();
+
+    QPen axisPen(QColor(237,237,237));
+    axisPen.setWidth(2);
+    axisX->setLinePen(axisPen);
+    axisY->setLinePen(axisPen);
+
+    QFont labelsFont;
+    labelsFont.setPixelSize(12);
+    axisX->setLabelsFont(labelsFont);
+    axisY->setLabelsFont(labelsFont);
+    QBrush labelBrush(QColor(119,121,123));
+    axisX->setLabelsBrush(labelBrush);
+    axisY->setLabelsBrush(labelBrush);
+
+
+    double minX = series->at(0).x();
+    double maxX = series->at(0).x();
+    double minY = series->at(0).y();
+    double maxY = series->at(0).y();
+    for(int i = 1; i < series->count(); i++) {
+        if(series->at(i).y() > maxY) {
+            maxY = series->at(i).y();
+        }
+        if(series->at(i).y() < minY) {
+            minY = series->at(i).y();
+        }
+        if(series->at(i).x() > maxX) {
+            maxX = series->at(i).x();
+        }
+        if(series->at(i).x() < minX) {
+            minX = series->at(i).x();
+        }
+    }
+
+    //Axis X range
+    double gap = (maxX - minX) / 6;
+    for(double i = minX + gap; i < maxX; i+=gap) {
+        QDateTime timeStamp;
+        timeStamp.setMSecsSinceEpoch(i);
+        QString helper="";
+        if(timeSpan != "1d") {
+            QDate dateStamp = timeStamp.date();
+            helper= ( QString::number(dateStamp.day()) + "/" + QString::number(dateStamp.month()) );
+        }else {
+            QTime timeHelper = timeStamp.time();
+            helper = ( QString::number(timeHelper.hour()) + ":" + QString::number(timeHelper.minute()) );
+        }
+        axisX->append(helper, i);
+    }
+    axisX->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
+
+    //Axis Y range
+
+    double aveY = minY / 2 + maxY / 2;
+    axisY->append(QString::number(minY), minY);
+    axisY->append(QString::number(minY/2 + aveY/2), (minY/2 + aveY/2));
+    axisY->append(QString::number(aveY), (aveY));
+    axisY->append(QString::number(maxY/2 + aveY/2), (maxY/2 + aveY/2));
+    axisY->append(QString::number(maxY), maxY);
+    axisY->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
+
+    //chart->createDefaultAxes();
+    //Set chart
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignRight);
+    series->attachAxis(axisX);
+    series->attachAxis(axisY);
 
     ui->chartView->setChart(chart);
     ui->chartView->setRenderHint(QPainter::Antialiasing);
