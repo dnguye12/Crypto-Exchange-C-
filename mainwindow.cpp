@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
+
 #include <QApplication>
 #include <QtCore>
 #include <QtGui>
@@ -14,6 +16,8 @@
 
 #include <QCategoryAxis>
 
+#include <QTime>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -26,6 +30,21 @@ MainWindow::MainWindow(QWidget *parent)
     manager = new QNetworkAccessManager();
     QObject::connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(managerFinished(QNetworkReply*)));
     on_changeTimeToday_clicked();
+
+
+    /*
+    QStringList paras={};
+    paras.append("time_end,"+ QString::number(QDateTime::currentMSecsSinceEpoch()));
+    paras.append("count,1");
+    paras.append("interval,daily");
+    paras.append("aux,total_volume_24h");
+qDebug() << "start";
+    manager = new QNetworkAccessManager();
+    QNetworkRequest reques = coinMarketApi->returnRequest("/v1/global-metrics/quotes/historical", paras);
+    qDebug() << "request done";
+    QObject::connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(managerFinished(QNetworkReply*)));
+    manager->get(reques);*/
+
 }
 
 MainWindow::~MainWindow()
@@ -46,19 +65,18 @@ void MainWindow::centerScreen() {
 void MainWindow::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
         qDebug() << "Error: " << reply->error() <<
-                               ", Message: " << reply->errorString() <<
-                               ", Code: " << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+                    ", Message: " << reply->errorString() <<
+                    ", Code: " << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     }
-
-    QSplineSeries* series = returnSerie(reply);
+    //QSplineSeries* series = returnSerie(reply);
     //drawChartLine(series);
-
-
+    //qDebug() << reply->readAll();
+    QSplineSeries* series = coinMarketApi->returnSplineSerie(reply);
 }
 
 QSplineSeries * MainWindow::returnSerie(QNetworkReply *reply) {
     QJsonParseError jsonError;
-    qDebug().noquote() << reply->readAll();
+
     QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
 
     QSplineSeries *series = new QSplineSeries();
@@ -68,10 +86,10 @@ QSplineSeries * MainWindow::returnSerie(QNetworkReply *reply) {
         return series;
     }
 
+
+
     if(jsonDoc.isObject()) {
         QJsonObject jsonObj = jsonDoc.object();
-        qDebug() << jsonObj.keys().join(", ");
-        /*
         QJsonArray jsonPrice = jsonObj["prices"].toArray();
 
         QList<double> values = {};
@@ -79,7 +97,7 @@ QSplineSeries * MainWindow::returnSerie(QNetworkReply *reply) {
 
         for(int i = 0; i < jsonPrice.size(); i++) {
             series->append(jsonPrice[i].toArray()[0].toDouble(),jsonPrice[i].toArray()[1].toDouble());
-        }*/
+        }
     }
     return series;
 }
@@ -116,7 +134,6 @@ void MainWindow::drawChartLine(QSplineSeries* series) {
     QFont labelsFont;
     labelsFont.setPixelSize(12);
     labelsFont.setWeight(QFont::Bold);
-    qDebug() << labelsFont.family();
     axisX->setLabelsFont(labelsFont);
     axisY->setLabelsFont(labelsFont);
     QBrush labelBrush(QColor(119,121,123));
@@ -214,7 +231,11 @@ QString MainWindow::getLink(QString id, QString vs_currency, QString days) {
 
 
 void MainWindow::on_changeTimeToday_clicked()
-{/*
+{
+    /*
+    if(timeSpan == "1d") {
+        return;
+    }
     timeSpan = "1d";
     request.setUrl(QUrl("https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1"));
     manager->get(request);*/
@@ -227,6 +248,7 @@ void MainWindow::on_changeTimeToday_clicked()
 
     //request.setRawHeader("X-CMC_PRO_API_KEY", "b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c");
     //request.setRawHeader("Accept", "application/json");
+    /*
     QUrl url("https://sandbox-api.coinmarketcap.com/v1/global-metrics/quotes/historical");
 
 
@@ -239,7 +261,31 @@ querry.addQueryItem("aux", "total_volume_24h");
 request.setUrl(url);
 
 
-manager->get(request);
+manager->get(request);*/
+    if(timeSpan == "1d") {
+        return;
+    }
+    timeSpan = "1d";
+    QUrl url("https://sandbox-api.coinmarketcap.com/v1/global-metrics/quotes/historical");
+
+    QUrlQuery querry{url};
+    //querry.addQueryItem("time_start", QString::number(QDateTime::currentMSecsSinceEpoch() -  QTime::currentTime().msecsSinceStartOfDay()   ));
+   //qDebug() << QString::number(QDateTime::currentMSecsSinceEpoch() -  QTime::currentTime().msecsSinceStartOfDay());
+    //QDate helperr = QDate::currentDate();
+    //QDateTime helper =  helperr.startOfDay();
+    //qDebug() << "helper: " << helper.toString();
+
+    //querry.addQueryItem("time_end", QDateTime::currentDateTime().toString(Qt::ISODateWithMs) + "Z");
+    //qDebug() << QDateTime::currentDateTime().toString(Qt::ISODateWithMs) + "Z";
+    //querry.addQueryItem("interval", "daily");
+    //querry.addQueryItem("count", "25");
+    //querry.addQueryItem("aux", "total_volume_24h");
+
+    request.setRawHeader("X-CMC_PRO_API_KEY", "b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c");
+    request.setRawHeader("Accept", "application/json");
+    request.setUrl(url);
+
+    manager->get(request);
 }
 
 

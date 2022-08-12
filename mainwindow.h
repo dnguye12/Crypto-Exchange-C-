@@ -6,6 +6,8 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 
+#include "coinmarketapi.h"
+
 #include <QDateTime>
 
 #include <QSplineSeries>
@@ -49,6 +51,9 @@ private:
     QNetworkRequest request;
 
     QString timeSpan;
+
+    CoinMarketApi* coinMarketApi;
+    QString apiKey = "b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c";
 
     //functions
     void centerScreen();
