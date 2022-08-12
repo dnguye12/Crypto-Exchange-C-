@@ -45,19 +45,20 @@ void MainWindow::centerScreen() {
 
 void MainWindow::managerFinished(QNetworkReply *reply) {
     if (reply->error()) {
-        qDebug() << reply->errorString();
-        return;
+        qDebug() << "Error: " << reply->error() <<
+                               ", Message: " << reply->errorString() <<
+                               ", Code: " << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     }
 
     QSplineSeries* series = returnSerie(reply);
-    drawChartLine(series);
+    //drawChartLine(series);
 
 
 }
 
 QSplineSeries * MainWindow::returnSerie(QNetworkReply *reply) {
     QJsonParseError jsonError;
-
+    qDebug().noquote() << reply->readAll();
     QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
 
     QSplineSeries *series = new QSplineSeries();
@@ -67,10 +68,10 @@ QSplineSeries * MainWindow::returnSerie(QNetworkReply *reply) {
         return series;
     }
 
-
-
     if(jsonDoc.isObject()) {
         QJsonObject jsonObj = jsonDoc.object();
+        qDebug() << jsonObj.keys().join(", ");
+        /*
         QJsonArray jsonPrice = jsonObj["prices"].toArray();
 
         QList<double> values = {};
@@ -78,7 +79,7 @@ QSplineSeries * MainWindow::returnSerie(QNetworkReply *reply) {
 
         for(int i = 0; i < jsonPrice.size(); i++) {
             series->append(jsonPrice[i].toArray()[0].toDouble(),jsonPrice[i].toArray()[1].toDouble());
-        }
+        }*/
     }
     return series;
 }
@@ -213,10 +214,32 @@ QString MainWindow::getLink(QString id, QString vs_currency, QString days) {
 
 
 void MainWindow::on_changeTimeToday_clicked()
-{
+{/*
     timeSpan = "1d";
     request.setUrl(QUrl("https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1"));
-    manager->get(request);
+    manager->get(request);*/
+
+
+    //curl -H "X-CMC_PRO_API_KEY: b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c" -H "Accept: application/json" -d "start=1&limit=5000&convert=USD" -G https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/listings/latest
+    //QUrl url("https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/listings/latest");
+    //QUrlQuery querry(url);
+    //querry.addQueryItem("")
+
+    //request.setRawHeader("X-CMC_PRO_API_KEY", "b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c");
+    //request.setRawHeader("Accept", "application/json");
+    QUrl url("https://sandbox-api.coinmarketcap.com/v1/global-metrics/quotes/historical");
+
+
+QUrlQuery querry{url};
+querry.addQueryItem("time_end", QString::number(QDateTime::currentMSecsSinceEpoch()));
+querry.addQueryItem("count", "1");
+querry.addQueryItem("interval", "daily");
+querry.addQueryItem("aux", "total_volume_24h");
+
+request.setUrl(url);
+
+
+manager->get(request);
 }
 
 

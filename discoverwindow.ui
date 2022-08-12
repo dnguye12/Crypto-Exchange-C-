@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>DiscoverWindow</class>
+ <widget class="QMainWindow" name="DiscoverWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -95,9 +95,9 @@ font-family: &quot;Montserrat ExtraBold&quot;;</string>
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
+        <layout class="QVBoxLayout" name="verticalLayout_8">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
             <widget class="QPushButton" name="pushButton_6">
              <property name="sizePolicy">
@@ -143,7 +143,7 @@ border: none;</string>
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_6">
+        <layout class="QVBoxLayout" name="verticalLayout_9">
          <property name="spacing">
           <number>0</number>
          </property>
@@ -178,8 +178,7 @@ color: white;
 border: none;
 background-color: rgb(57, 63, 86);
 text-align: left;
-padding-left: 22px;
-border-left: 3px solid rgb(61, 174, 35);
+padding-left: 25px;
 }
 QPushButton:hover:!pressed {
 	background-color: rgb(40, 43, 58);
@@ -287,7 +286,8 @@ color: white;
 border: none;
 background-color: rgb(57, 63, 86);
 text-align: left;
-padding-left: 25px;
+padding-left: 22px;
+border-left: 3px solid rgb(61, 174, 35);
 }
 QPushButton:hover:!pressed {
 	background-color: rgb(40, 43, 58);
@@ -364,7 +364,7 @@ color: white;</string>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_3">
+          <widget class="QPushButton" name="pushButton_5">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -410,7 +410,7 @@ QPushButton:hover:!pressed {
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_4">
+          <widget class="QPushButton" name="pushButton_8">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -477,16 +477,16 @@ QPushButton:hover:!pressed {
      </widget>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
         <property name="topMargin">
          <number>25</number>
         </property>
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -500,19 +500,19 @@ QPushButton:hover:!pressed {
          <number>0</number>
         </property>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_9">
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
           <property name="topMargin">
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="coinName">
+           <widget class="QLabel" name="coinName_2">
             <property name="text">
              <string>TextLabel</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="changeTimeToday">
+           <widget class="QToolButton" name="changeTimeToday_2">
             <property name="minimumSize">
              <size>
               <width>55</width>
@@ -546,7 +546,7 @@ QToolButton:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="changeTime1W">
+           <widget class="QToolButton" name="changeTime1W_2">
             <property name="minimumSize">
              <size>
               <width>55</width>
@@ -580,7 +580,7 @@ QToolButton:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="changeTime1M">
+           <widget class="QToolButton" name="changeTime1M_2">
             <property name="minimumSize">
              <size>
               <width>55</width>
@@ -614,7 +614,7 @@ QToolButton:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="changeTime3M">
+           <widget class="QToolButton" name="changeTime3M_2">
             <property name="minimumSize">
              <size>
               <width>55</width>
@@ -648,7 +648,7 @@ QToolButton:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="changeTime6M">
+           <widget class="QToolButton" name="changeTime6M_2">
             <property name="minimumSize">
              <size>
               <width>55</width>
@@ -682,7 +682,7 @@ QToolButton:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="changeTime12M">
+           <widget class="QToolButton" name="changeTime12M_2">
             <property name="minimumSize">
              <size>
               <width>55</width>
@@ -716,7 +716,7 @@ QToolButton:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="changeTimeYTD">
+           <widget class="QToolButton" name="changeTimeYTD_2">
             <property name="minimumSize">
              <size>
               <width>55</width>
@@ -750,7 +750,7 @@ QToolButton:pressed {
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="changChartType">
+           <widget class="QComboBox" name="changChartType_2">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -818,7 +818,7 @@ QToolButton:pressed {
          </layout>
         </item>
         <item>
-         <widget class="QChartView" name="chartView">
+         <widget class="QChartView" name="chartView_2">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -833,7 +833,7 @@ QToolButton:pressed {
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="verticalLayout_7">
         <property name="topMargin">
          <number>25</number>
         </property>
