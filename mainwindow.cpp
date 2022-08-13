@@ -71,7 +71,51 @@ void MainWindow::managerFinished(QNetworkReply *reply) {
     //QSplineSeries* series = returnSerie(reply);
     //drawChartLine(series);
     //qDebug() << reply->readAll();
-    QSplineSeries* series = coinMarketApi->returnSplineSerie(reply);
+    QMap<QString, double> totalMarket = coinMarketApi->getTotalCap(reply);
+    updateHeader(totalMarket);
+}
+
+QString MainWindow::doubleFormat(double n) {
+    QLocale locale(QLocale::English);
+    QString helper = locale.toString(n, 'f', 3);
+    for(int i = 0; i < helper.size(); i++) {
+        if(helper[i] == ',') {
+            helper[i] = '.';
+        }
+    }
+    return helper;
+}
+
+void MainWindow::percentChange(QString item, double n) {
+    if(item == "marketCap") {
+        if(n >= 0) {
+            ui->marketCapChange->setStyleSheet("color: rgb(61, 174, 35)");
+        }else {
+            ui->marketCapChange->setStyleSheet("color: rgb(208, 2, 27)");
+        }
+        ui->marketCapChange->setText(QString::number(n, 'f', 2));
+    }
+
+    if(item == "volumn") {
+        if(n >= 0) {
+            ui->volumnChange->setStyleSheet("color: rgb(61, 174, 35)");
+        }else {
+            ui->volumnChange->setStyleSheet("color: rgb(208, 2, 27)");
+        }
+        ui->volumnChange->setText(QString::number(n, 'f', 2));
+    }
+}
+
+void MainWindow::updateHeader(QMap<QString, double> info) {
+
+    ui->cryptoCountAmount->setText(QString::number(info["active_cryptocurrencies"]));
+    ui->exchangeCountAmount->setText(QString::number(info["active_exchanges"]));
+    ui->marketCap_2->setText(doubleFormat(info["total_market_cap"]));
+    //ui->marketCapChange->setText(QString::number(info["total_market_cap_yesterday_percentage_change"]));
+    percentChange("marketCap", info["total_market_cap_yesterday_percentage_change"]);
+    ui->volumnAmount->setText(doubleFormat(info["total_volume_24h"]));
+    //ui->volumnChange->setText(QString::number(info["total_volume_24h_yesterday_percentage_change"]));
+    percentChange("volumn", info["total_volume_24h_yesterday_percentage_change"]);
 }
 
 QSplineSeries * MainWindow::returnSerie(QNetworkReply *reply) {
@@ -266,9 +310,10 @@ manager->get(request);*/
         return;
     }
     timeSpan = "1d";
-    QUrl url("https://sandbox-api.coinmarketcap.com/v1/global-metrics/quotes/historical");
+    //QUrl url("https://sandbox-api.coinmarketcap.com/v1/global-metrics/quotes/latest");
+    QUrl url("https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest");
 
-    QUrlQuery querry{url};
+    //QUrlQuery querry{url};
     //querry.addQueryItem("time_start", QString::number(QDateTime::currentMSecsSinceEpoch() -  QTime::currentTime().msecsSinceStartOfDay()   ));
    //qDebug() << QString::number(QDateTime::currentMSecsSinceEpoch() -  QTime::currentTime().msecsSinceStartOfDay());
     //QDate helperr = QDate::currentDate();
@@ -277,11 +322,13 @@ manager->get(request);*/
 
     //querry.addQueryItem("time_end", QDateTime::currentDateTime().toString(Qt::ISODateWithMs) + "Z");
     //qDebug() << QDateTime::currentDateTime().toString(Qt::ISODateWithMs) + "Z";
-    //querry.addQueryItem("interval", "daily");
+    //querry.addQueryItem("interval", "hourly");
     //querry.addQueryItem("count", "25");
     //querry.addQueryItem("aux", "total_volume_24h");
 
-    request.setRawHeader("X-CMC_PRO_API_KEY", "b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c");
+
+    //request.setRawHeader("X-CMC_PRO_API_KEY", "b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c");
+    request.setRawHeader("X-CMC_PRO_API_KEY", "a5089d27-78ec-4e30-8498-61007f62a309");
     request.setRawHeader("Accept", "application/json");
     request.setUrl(url);
 

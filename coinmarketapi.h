@@ -9,7 +9,9 @@ class CoinMarketApi
 public:
     CoinMarketApi();
 
-    QSplineSeries * returnSplineSerie(QNetworkReply *reply);
+    //QSplineSeries * returnSplineSerie(QNetworkReply *reply);
+
+    QMap<QString, double> getTotalCap(QNetworkReply *reply);
 private:
 
 

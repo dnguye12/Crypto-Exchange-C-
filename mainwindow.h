@@ -60,6 +60,10 @@ private:
 
     QSplineSeries * returnSerie(QNetworkReply *reply);
 
+    void updateHeader(QMap<QString, double> info);
+    QString doubleFormat(double n);
+    void percentChange(QString item, double n);
+
     void drawChartLine(QSplineSeries* series);
 
     QString getLink(QString id, QString vs_currency, QString days);

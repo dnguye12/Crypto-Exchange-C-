@@ -9,30 +9,28 @@ CoinMarketApi::CoinMarketApi() {
 
 }
 
-QSplineSeries * CoinMarketApi::returnSplineSerie(QNetworkReply *reply) {
+QMap<QString, double> CoinMarketApi::getTotalCap(QNetworkReply *reply) {
     QJsonParseError jsonError;
     QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
 
-    QSplineSeries *series = new QSplineSeries();
-
+    QMap<QString, double> res;
     if(jsonError.error != QJsonParseError::NoError) {
         qDebug() << "fromJson failed: " << jsonError.errorString();
-        return series;
+        return res;
     }
 
     if(jsonDoc.isObject()) {
         QJsonObject jsonObj = jsonDoc.object();
 
         QJsonObject jsonData = jsonObj["data"].toObject();
+        res["active_cryptocurrencies"] = jsonData["active_cryptocurrencies"].toDouble();
+        res["active_exchanges"] = jsonData["active_exchanges"].toDouble();
 
-        QJsonArray jsonPrice = jsonData["quotes"].toArray();
-
-        for(int i = 0; i < jsonPrice.size(); i++) {
-            QJsonObject jsonQuote = jsonPrice[i].toObject();
-            QString timeHelper = jsonQuote["timestamp"].toString();
-            QDateTime dateHeler = QDateTime::fromString(timeHelper, Qt::ISODate);
-            qDebug() << dateHeler.toString();
-        }
+        QJsonObject jsonPrice1 = jsonData["quote"].toObject()["USD"].toObject();
+        res["total_market_cap"] = jsonPrice1["total_market_cap"].toDouble();
+        res["total_market_cap_yesterday_percentage_change"] = jsonPrice1["total_market_cap_yesterday_percentage_change"].toDouble();
+        res["total_volume_24h"] = jsonPrice1["total_volume_24h"].toDouble();
+        res["total_volume_24h_yesterday_percentage_change"] = jsonPrice1["total_volume_24h_yesterday_percentage_change"].toDouble();
         /*
         QList<double> values = {};
 
@@ -41,5 +39,5 @@ QSplineSeries * CoinMarketApi::returnSplineSerie(QNetworkReply *reply) {
             series->append(jsonPrice[i].toArray()[0].toDouble(),jsonPrice[i].toArray()[1].toDouble());
         }*/
     }
-    return series;
+    return res;
 }
