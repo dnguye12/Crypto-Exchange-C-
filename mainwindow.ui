@@ -28,7 +28,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QWidget" name="verticalWidget" native="true">
+     <widget class="QWidget" name="menulWidget" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
         <horstretch>0</horstretch>
@@ -477,7 +477,7 @@ QPushButton:hover:!pressed {
      </widget>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QVBoxLayout" name="main">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -488,659 +488,936 @@ QPushButton:hover:!pressed {
        <number>0</number>
       </property>
       <item>
-       <layout class="QHBoxLayout" name="infoHeader">
-        <property name="topMargin">
-         <number>10</number>
+       <widget class="QScrollArea" name="scrollArea">
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
         </property>
-        <property name="rightMargin">
-         <number>0</number>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
         </property>
-        <property name="bottomMargin">
-         <number>5</number>
+        <property name="widgetResizable">
+         <bool>true</bool>
         </property>
-        <item>
-         <widget class="QWidget" name="cryptoCount_2" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>310</width>
-            <height>50</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: white;
-border-radius: 15px;
-color: black;</string>
-          </property>
-          <layout class="QVBoxLayout" name="cryptoCount">
-           <property name="leftMargin">
-            <number>25</number>
-           </property>
-           <property name="topMargin">
-            <number>5</number>
-           </property>
-           <property name="rightMargin">
-            <number>25</number>
-           </property>
-           <property name="bottomMargin">
-            <number>5</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="cryptoCountLabel">
-             <property name="font">
-              <font>
-               <family>Segoe UI Semibold</family>
-               <pointsize>16</pointsize>
-               <bold>false</bold>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">font-family: &quot;Segoe UI Semibold&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Active Cryptocurrencies</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="cryptoCountAmount">
-             <property name="text">
-              <string>TextLabel</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QWidget" name="exchangeCount" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>310</width>
-            <height>50</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: white;
-border-radius: 15px;
-color: black;</string>
-          </property>
-          <layout class="QVBoxLayout" name="cryptoCount_5">
-           <property name="leftMargin">
-            <number>25</number>
-           </property>
-           <property name="topMargin">
-            <number>5</number>
-           </property>
-           <property name="rightMargin">
-            <number>25</number>
-           </property>
-           <property name="bottomMargin">
-            <number>5</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="exchangeCountLabel">
-             <property name="font">
-              <font>
-               <pointsize>16</pointsize>
-               <bold>false</bold>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">font-family: &quot;Segoe UI Semibold&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Active Exchanges</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="exchangeCountAmount">
-             <property name="text">
-              <string>TextLabel</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QWidget" name="marketCap" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>310</width>
-            <height>50</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: white;
-border-radius: 15px;
-color: black;</string>
-          </property>
-          <layout class="QVBoxLayout" name="cryptoCount_9">
-           <property name="spacing">
-            <number>6</number>
-           </property>
-           <property name="leftMargin">
-            <number>25</number>
-           </property>
-           <property name="topMargin">
-            <number>5</number>
-           </property>
-           <property name="rightMargin">
-            <number>25</number>
-           </property>
-           <property name="bottomMargin">
-            <number>5</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="marketCaptLabel">
-             <property name="font">
-              <font>
-               <family>Segoe UI Semibold</family>
-               <pointsize>16</pointsize>
-               <bold>false</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Total Market Cap</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QLabel" name="marketCap_2">
-               <property name="text">
-                <string>TextLabel</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>0</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="marketCapChange">
-               <property name="text">
-                <string>TextLabel</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QWidget" name="volumn" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>310</width>
-            <height>50</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: white;
-border-radius: 15px;
-color: black;</string>
-          </property>
-          <layout class="QVBoxLayout" name="cryptoCount_7">
-           <property name="leftMargin">
-            <number>25</number>
-           </property>
-           <property name="topMargin">
-            <number>5</number>
-           </property>
-           <property name="rightMargin">
-            <number>25</number>
-           </property>
-           <property name="bottomMargin">
-            <number>5</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="volumnLabel">
-             <property name="font">
-              <font>
-               <pointsize>16</pointsize>
-               <bold>false</bold>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">font-family: &quot;Segoe UI Semibold&quot;;</string>
-             </property>
-             <property name="text">
-              <string>24h Volumn</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_8">
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QLabel" name="volumnAmount">
-               <property name="text">
-                <string>TextLabel</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="volumnChange">
-               <property name="text">
-                <string>TextLabel</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
-        <property name="leftMargin">
-         <number>0</number>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <widget class="QWidget" name="scrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>1276</width>
+           <height>896</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
           <property name="topMargin">
            <number>0</number>
           </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
-           <widget class="QLabel" name="coinName">
-            <property name="text">
-             <string>TextLabel</string>
+           <layout class="QHBoxLayout" name="infoHeader">
+            <property name="topMargin">
+             <number>10</number>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="changeTimeToday">
-            <property name="minimumSize">
-             <size>
-              <width>55</width>
-              <height>30</height>
-             </size>
+            <property name="rightMargin">
+             <number>0</number>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QToolButton {
-border-radius:10px;
-background-color: rgb(242, 243, 244);
-color: rgb(222, 227, 234);
-}
-
-QToolButton:hover:!pressed {
-color: rgb(135, 135, 135)
-}
-
-QToolButton:pressed {
-	background-color: rgb(247, 247, 247);
-	color: rgb(44, 44, 44);
-}</string>
-            </property>
-            <property name="text">
-             <string>Today</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="changeTime1W">
-            <property name="minimumSize">
-             <size>
-              <width>55</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QToolButton {
-border-radius:10px;
-background-color: rgb(242, 243, 244);
-color: rgb(222, 227, 234);
-}
-
-QToolButton:hover:!pressed {
-color: rgb(135, 135, 135)
-}
-
-QToolButton:pressed {
-	background-color: rgb(247, 247, 247);
-	color: rgb(44, 44, 44);
-}</string>
-            </property>
-            <property name="text">
-             <string>1W</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="changeTime1M">
-            <property name="minimumSize">
-             <size>
-              <width>55</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QToolButton {
-border-radius:10px;
-background-color: rgb(242, 243, 244);
-color: rgb(222, 227, 234);
-}
-
-QToolButton:hover:!pressed {
-color: rgb(135, 135, 135)
-}
-
-QToolButton:pressed {
-	background-color: rgb(247, 247, 247);
-	color: rgb(44, 44, 44);
-}</string>
-            </property>
-            <property name="text">
-             <string>1M</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="changeTime3M">
-            <property name="minimumSize">
-             <size>
-              <width>55</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QToolButton {
-border-radius:10px;
-background-color: rgb(242, 243, 244);
-color: rgb(222, 227, 234);
-}
-
-QToolButton:hover:!pressed {
-color: rgb(135, 135, 135)
-}
-
-QToolButton:pressed {
-	background-color: rgb(247, 247, 247);
-	color: rgb(44, 44, 44);
-}</string>
-            </property>
-            <property name="text">
-             <string>3M</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="changeTime6M">
-            <property name="minimumSize">
-             <size>
-              <width>55</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QToolButton {
-border-radius:10px;
-background-color: rgb(242, 243, 244);
-color: rgb(222, 227, 234);
-}
-
-QToolButton:hover:!pressed {
-color: rgb(135, 135, 135)
-}
-
-QToolButton:pressed {
-	background-color: rgb(247, 247, 247);
-	color: rgb(44, 44, 44);
-}</string>
-            </property>
-            <property name="text">
-             <string>6M</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="changeTime12M">
-            <property name="minimumSize">
-             <size>
-              <width>55</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QToolButton {
-border-radius:10px;
-background-color: rgb(242, 243, 244);
-color: rgb(222, 227, 234);
-}
-
-QToolButton:hover:!pressed {
-color: rgb(135, 135, 135)
-}
-
-QToolButton:pressed {
-	background-color: rgb(247, 247, 247);
-	color: rgb(44, 44, 44);
-}</string>
-            </property>
-            <property name="text">
-             <string>12M</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="changeTimeYTD">
-            <property name="minimumSize">
-             <size>
-              <width>55</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QToolButton {
-border-radius:10px;
-background-color: rgb(242, 243, 244);
-color: rgb(222, 227, 234);
-}
-
-QToolButton:hover:!pressed {
-color: rgb(135, 135, 135)
-}
-
-QToolButton:pressed {
-	background-color: rgb(247, 247, 247);
-	color: rgb(44, 44, 44);
-}</string>
-            </property>
-            <property name="text">
-             <string>YTD</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="changChartType">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>200</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="sizeAdjustPolicy">
-             <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
+            <property name="bottomMargin">
+             <number>5</number>
             </property>
             <item>
-             <property name="text">
-              <string>  Line</string>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/charts/icons/line-chart.png</normaloff>:/charts/icons/line-chart.png</iconset>
-             </property>
+             <widget class="QWidget" name="cryptoCount_2" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>310</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+border-radius: 15px;
+color: black;</string>
+              </property>
+              <layout class="QVBoxLayout" name="cryptoCount">
+               <property name="leftMargin">
+                <number>25</number>
+               </property>
+               <property name="topMargin">
+                <number>5</number>
+               </property>
+               <property name="rightMargin">
+                <number>25</number>
+               </property>
+               <property name="bottomMargin">
+                <number>5</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="cryptoCountLabel">
+                 <property name="font">
+                  <font>
+                   <family>Segoe UI Semibold</family>
+                   <pointsize>16</pointsize>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-family: &quot;Segoe UI Semibold&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Active Cryptocurrencies</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="cryptoCountAmount">
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>TextLabel</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </item>
             <item>
-             <property name="text">
-              <string>  Mountain</string>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/charts/icons/mountain-chart.png</normaloff>:/charts/icons/mountain-chart.png</iconset>
-             </property>
+             <widget class="QWidget" name="exchangeCount" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>310</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+border-radius: 15px;
+color: black;</string>
+              </property>
+              <layout class="QVBoxLayout" name="cryptoCount_5">
+               <property name="leftMargin">
+                <number>25</number>
+               </property>
+               <property name="topMargin">
+                <number>5</number>
+               </property>
+               <property name="rightMargin">
+                <number>25</number>
+               </property>
+               <property name="bottomMargin">
+                <number>5</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="exchangeCountLabel">
+                 <property name="font">
+                  <font>
+                   <pointsize>16</pointsize>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-family: &quot;Segoe UI Semibold&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Active Exchanges</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="exchangeCountAmount">
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>tst</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </item>
             <item>
-             <property name="text">
-              <string>  Candle</string>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/charts/icons/candle-fill-chart.png</normaloff>:/charts/icons/candle-fill-chart.png</iconset>
-             </property>
+             <widget class="QWidget" name="marketCap" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>310</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+border-radius: 15px;
+color: black;</string>
+              </property>
+              <layout class="QVBoxLayout" name="cryptoCount_9">
+               <property name="spacing">
+                <number>6</number>
+               </property>
+               <property name="leftMargin">
+                <number>25</number>
+               </property>
+               <property name="topMargin">
+                <number>5</number>
+               </property>
+               <property name="rightMargin">
+                <number>25</number>
+               </property>
+               <property name="bottomMargin">
+                <number>5</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="marketCaptLabel">
+                 <property name="font">
+                  <font>
+                   <family>Segoe UI Semibold</family>
+                   <pointsize>16</pointsize>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Total Market Cap</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="marketCap_2">
+                   <property name="font">
+                    <font>
+                     <pointsize>12</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>TextLabel</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="marketCapChange">
+                   <property name="font">
+                    <font>
+                     <pointsize>12</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>TextLabel</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
             </item>
             <item>
-             <property name="text">
-              <string>  Hollow Candle</string>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/charts/icons/candle-chart.png</normaloff>:/charts/icons/candle-chart.png</iconset>
-             </property>
+             <widget class="QWidget" name="volumn" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>310</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: white;
+border-radius: 15px;
+color: black;</string>
+              </property>
+              <layout class="QVBoxLayout" name="cryptoCount_7">
+               <property name="leftMargin">
+                <number>25</number>
+               </property>
+               <property name="topMargin">
+                <number>5</number>
+               </property>
+               <property name="rightMargin">
+                <number>25</number>
+               </property>
+               <property name="bottomMargin">
+                <number>5</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="volumnLabel">
+                 <property name="font">
+                  <font>
+                   <pointsize>16</pointsize>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">font-family: &quot;Segoe UI Semibold&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>24h Volumn</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_8">
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="volumnAmount">
+                   <property name="font">
+                    <font>
+                     <pointsize>12</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>TextLabel</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="volumnChange">
+                   <property name="font">
+                    <font>
+                     <pointsize>12</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>TextLabel</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
             </item>
-           </widget>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="highLight">
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="font">
+               <font>
+                <family>Segoe UI Semibold</family>
+                <pointsize>24</pointsize>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Today's Cryptocurrency Highlights</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_14">
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QWidget" name="horizontalWidget_3" native="true">
+                <property name="styleSheet">
+                 <string notr="true">background-color: white;
+border-radius: 10px;</string>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_10">
+                 <property name="topMargin">
+                  <number>1</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>1</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="label_4">
+                   <property name="font">
+                    <font>
+                     <family>Segoe UI Semibold</family>
+                     <pointsize>18</pointsize>
+                     <bold>false</bold>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: black;</string>
+                   </property>
+                   <property name="text">
+                    <string>🔥 Trendings</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_5">
+                   <property name="font">
+                    <font>
+                     <family>Segoe UI Semibold</family>
+                     <pointsize>14</pointsize>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: rgb(0, 85, 255);</string>
+                   </property>
+                   <property name="text">
+                    <string>More &gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_15">
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_11">
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="label_6">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>1</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="btnTrendingGainer1">
+                    <property name="text">
+                     <string>PushButton</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="trendingGainer1">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>TextLabel</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_12">
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="label_7">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>2</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="btnTrendingGainer2">
+                    <property name="text">
+                     <string>PushButton</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="trendingGainer2">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>TextLabel</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_13">
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="label_8">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>3</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="btnTrendingGainer3">
+                    <property name="text">
+                     <string>PushButton</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="trendingGainer3">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>TextLabel</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="coinName">
+                <property name="text">
+                 <string>TextLabel</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="changeTimeToday">
+                <property name="minimumSize">
+                 <size>
+                  <width>55</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+                </property>
+                <property name="text">
+                 <string>Today</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="changeTime1W">
+                <property name="minimumSize">
+                 <size>
+                  <width>55</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+                </property>
+                <property name="text">
+                 <string>1W</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="changeTime1M">
+                <property name="minimumSize">
+                 <size>
+                  <width>55</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+                </property>
+                <property name="text">
+                 <string>1M</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="changeTime3M">
+                <property name="minimumSize">
+                 <size>
+                  <width>55</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+                </property>
+                <property name="text">
+                 <string>3M</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="changeTime6M">
+                <property name="minimumSize">
+                 <size>
+                  <width>55</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+                </property>
+                <property name="text">
+                 <string>6M</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="changeTime12M">
+                <property name="minimumSize">
+                 <size>
+                  <width>55</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+                </property>
+                <property name="text">
+                 <string>12M</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="changeTimeYTD">
+                <property name="minimumSize">
+                 <size>
+                  <width>55</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+                </property>
+                <property name="text">
+                 <string>YTD</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="changChartType">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>200</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="sizeAdjustPolicy">
+                 <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>25</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>  Line</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resources.qrc">
+                   <normaloff>:/charts/icons/line-chart.png</normaloff>:/charts/icons/line-chart.png</iconset>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>  Mountain</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resources.qrc">
+                   <normaloff>:/charts/icons/mountain-chart.png</normaloff>:/charts/icons/mountain-chart.png</iconset>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>  Candle</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resources.qrc">
+                   <normaloff>:/charts/icons/candle-fill-chart.png</normaloff>:/charts/icons/candle-fill-chart.png</iconset>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>  Hollow Candle</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="resources.qrc">
+                   <normaloff>:/charts/icons/candle-chart.png</normaloff>:/charts/icons/candle-chart.png</iconset>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QChartView" name="chartView">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <property name="topMargin">
+             <number>25</number>
+            </property>
+           </layout>
           </item>
          </layout>
-        </item>
-        <item>
-         <widget class="QChartView" name="chartView">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <property name="topMargin">
-         <number>25</number>
-        </property>
-       </layout>
+        </widget>
+       </widget>
       </item>
      </layout>
     </item>
