@@ -38,11 +38,16 @@ MainWindow::MainWindow(QWidget *parent)
     //connect(myObject, SIGNAL(theSignalToWaitFor()), &loop, SLOT(quit()));
     //connect(timeoutTimer, SIGNAL(timeout()), &loop, SLOT(quit()));
     //loop.exec(); //blocks untill either theSignalToWaitFor or timeout was fired
-    requestHeader();
     connect(manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
+
+    requestTrendings();
+    loop.exec();
+    requestHeader();
     loop.exec();
     requestGainers();
-
+    loop.exec();
+    requestLosers();
+    loop.exec();
 }
 
 MainWindow::~MainWindow()
@@ -62,6 +67,7 @@ void MainWindow::centerScreen() {
 
 void MainWindow::resetChoices() {
     reqHeader = false;
+    reqTrendings = false;
     reqGainers = false;
     reqLosers = false;
 }
@@ -75,6 +81,10 @@ void MainWindow::managerFinished(QNetworkReply *reply) {
     //QSplineSeries* series = returnSerie(reply);
     //drawChartLine(series);
     //qDebug() << reply->readAll();
+    if(reqTrendings) {
+        updateTrendings(reply);
+        resetChoices();
+    }
     if(reqHeader) {
         QMap<QString, double> totalMarket = coinMarketApi->getTotalCap(reply);
         updateHeader(totalMarket);
@@ -83,6 +93,11 @@ void MainWindow::managerFinished(QNetworkReply *reply) {
 
     if(reqGainers) {
         updateGainers(reply);
+        resetChoices();
+    }
+
+    if(reqLosers) {
+        updateLosers(reply);
         resetChoices();
     }
 }
@@ -147,6 +162,83 @@ void MainWindow::updateHeader(QMap<QString, double> info) {
     percentChangeHeader("volumn", info["total_volume_24h_yesterday_percentage_change"]);
 }
 
+void MainWindow::requestTrendings() {
+    QUrl url("https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/trending/latest");
+
+    QUrlQuery querry{url};
+    querry.addQueryItem("limit", "3");
+
+    request.setRawHeader("X-CMC_PRO_API_KEY", "a5089d27-78ec-4e30-8498-61007f62a309");
+    request.setRawHeader("Accept", "application/json");
+    request.setUrl(url);
+
+    resetChoices();
+    reqTrendings = true;
+
+    manager->get(request);
+}
+void MainWindow::updateTrendings(QNetworkReply *reply) {
+    QJsonParseError jsonError;
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
+    if(jsonError.error != QJsonParseError::NoError) {
+        qDebug() << "fromJson failed: " << jsonError.errorString();
+        return;
+    }
+    QJsonObject jsonObj = jsonDoc.object();
+    QJsonObject jsonData1 = jsonObj["data"].toObject();
+    QJsonArray jsonData2 =  jsonData1["data"].toArray();
+    double n;
+
+    ui->trendingName1->setText(jsonData2[0].toObject()["name"].toString());
+    ui->trendingSymbol1->setText(jsonData2[0].toObject()["symbol"].toString());
+    n = jsonData2[0].toObject()["quote"].toObject()["USD"].toObject()["percent_change_24h"].toDouble();
+    if(n > 0) {
+        ui->trendingPercent1->setStyleSheet("color: rgb(61, 174, 35)");
+        ui->trendingPercent1->setText("▲ " + QString::number(n, 'f', 2) + "%");
+    }else if(n == 0) {
+        ui->trendingPercent1->setStyleSheet("color: rgb(255, 216, 0)");
+        ui->trendingPercent1->setText("- 0%");
+    }
+    else {
+        ui->trendingPercent1->setStyleSheet("color: rgb(208, 2, 27)");
+        ui->trendingPercent1->setText("▼ " + QString::number(n, 'f', 2) + "%");
+    }
+
+    ui->trendingName2->setText(jsonData2[1].toObject()["name"].toString());
+    ui->trendingSymbol2->setText(jsonData2[1].toObject()["symbol"].toString());
+    ui->trendingName1->setText(jsonData2[0].toObject()["name"].toString());
+    ui->trendingSymbol1->setText(jsonData2[0].toObject()["symbol"].toString());
+    n = jsonData2[1].toObject()["quote"].toObject()["USD"].toObject()["percent_change_24h"].toDouble();
+    if(n > 0) {
+        ui->trendingPercent2->setStyleSheet("color: rgb(61, 174, 35)");
+        ui->trendingPercent2->setText("▲ " + QString::number(n, 'f', 2) + "%");
+    }else if(n == 0) {
+        ui->trendingPercent2->setStyleSheet("color: rgb(255, 216, 0)");
+        ui->trendingPercent2->setText("- 0%");
+    }
+    else {
+        ui->trendingPercent2->setStyleSheet("color: rgb(208, 2, 27)");
+        ui->trendingPercent2->setText("▼ " + QString::number(n, 'f', 2) + "%");
+    }
+
+    ui->trendingName3->setText(jsonData2[2].toObject()["name"].toString());
+    ui->trendingSymbol3->setText(jsonData2[2].toObject()["symbol"].toString());
+    ui->trendingName1->setText(jsonData2[0].toObject()["name"].toString());
+    ui->trendingSymbol1->setText(jsonData2[0].toObject()["symbol"].toString());
+    n = jsonData2[2].toObject()["quote"].toObject()["USD"].toObject()["percent_change_24h"].toDouble();
+    if(n > 0) {
+        ui->trendingPercent3->setStyleSheet("color: rgb(61, 174, 35)");
+        ui->trendingPercent3->setText("▲ " + QString::number(n, 'f', 2) + "%");
+    }else if(n == 0) {
+        ui->trendingPercent3->setStyleSheet("color: rgb(255, 216, 0)");
+        ui->trendingPercent3->setText("- 0%");
+    }
+    else {
+        ui->trendingPercent3->setStyleSheet("color: rgb(208, 2, 27)");
+        ui->trendingPercent3->setText("▼ " + QString::number(n, 'f', 2) + "%");
+    }
+}
+
 void MainWindow::requestGainers() {
     QUrl url("https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/trending/gainers-losers");
 
@@ -174,22 +266,86 @@ void MainWindow::updateGainers(QNetworkReply *reply) {
     QJsonObject jsonData1 = jsonObj["data"].toObject();
     QJsonArray jsonData2 =  jsonData1["data"].toArray();
 
-    QMap<double, int> coins;
+    QMap<double, QPair<QString, QString>> coins;
     QList<double> values;
     for(int i = 0; i < jsonData2.size(); i++) {
         QJsonObject usd =  jsonData2[i].toObject()["quote"].toObject()["USD"].toObject();
         values.append(usd["percent_change_24h"].toDouble());
-        coins[usd["percent_change_24h"].toDouble()] = jsonData2[i].toObject()["id"].toInt();
+        QString name = jsonData2[i].toObject()["name"].toString();
+        QString sym = jsonData2[i].toObject()["symbol"].toString();
+        coins[usd["percent_change_24h"].toDouble()] = QPair<QString, QString>(name, sym);
     }
     sort(values.begin(), values.end(), greater<>());
 
+    ui->gainerName1->setText(coins[values[0]].first);
+    ui->gainerSymbol1->setText(coins[values[0]].second);
     ui->trendingGainer1->setText("▲ " + QString::number(values[0], 'f', 2) + "%");
     ui->trendingGainer1->setStyleSheet("color: rgb(61, 174, 35)");
+
+    ui->gainerName2->setText(coins[values[1]].first);
+    ui->gainerSymbol2->setText(coins[values[1]].second);
     ui->trendingGainer2->setText("▲ " + QString::number(values[1], 'f', 2) + "%");
     ui->trendingGainer2->setStyleSheet("color: rgb(61, 174, 35)");
+
+    ui->gainerName3->setText(coins[values[2]].first);
+    ui->gainerSymbol3->setText(coins[values[2]].second);
     ui->trendingGainer3->setText("▲ " + QString::number(values[2], 'f', 2) + "%");
     ui->trendingGainer3->setStyleSheet("color: rgb(61, 174, 35)");
 }
+
+void MainWindow::requestLosers() {
+    QUrl url("https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/trending/gainers-losers");
+
+    QUrlQuery querry{url};
+    querry.addQueryItem("sort_dir", "asc");
+
+    request.setRawHeader("X-CMC_PRO_API_KEY", "a5089d27-78ec-4e30-8498-61007f62a309");
+    request.setRawHeader("Accept", "application/json");
+    request.setUrl(url);
+
+    resetChoices();
+    reqLosers = true;
+
+    manager->get(request);
+}
+void MainWindow::updateLosers(QNetworkReply *reply) {
+    QJsonParseError jsonError;
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
+    if(jsonError.error != QJsonParseError::NoError) {
+        qDebug() << "fromJson failed: " << jsonError.errorString();
+        return;
+    }
+    QJsonObject jsonObj = jsonDoc.object();
+    QJsonObject jsonData1 = jsonObj["data"].toObject();
+    QJsonArray jsonData2 =  jsonData1["data"].toArray();
+
+    QMap<double, QPair<QString, QString>> coins;
+    QList<double> values;
+    for(int i = 0; i < jsonData2.size(); i++) {
+        QJsonObject usd =  jsonData2[i].toObject()["quote"].toObject()["USD"].toObject();
+        values.append(usd["percent_change_24h"].toDouble());
+        QString name = jsonData2[i].toObject()["name"].toString();
+        QString sym = jsonData2[i].toObject()["symbol"].toString();
+        coins[usd["percent_change_24h"].toDouble()] = QPair<QString, QString>(name, sym);
+    }
+    sort(values.begin(), values.end());
+
+    ui->loserName1->setText(coins[values[0]].first);
+    ui->loserSymbol1->setText(coins[values[0]].second);
+    ui->loserPercent1->setText("▼ " + QString::number(values[0], 'f', 2) + "%");
+    ui->loserPercent1->setStyleSheet("color: rgb(208, 2, 27)");
+
+    ui->loserName2->setText(coins[values[1]].first);
+    ui->loserSymbol2->setText(coins[values[1]].second);
+    ui->loserPercent2->setText("▼ " + QString::number(values[1], 'f', 2) + "%");
+    ui->loserPercent2->setStyleSheet("color: rgb(208, 2, 27)");
+
+    ui->loserName3->setText(coins[values[2]].first);
+    ui->loserSymbol3->setText(coins[values[2]].second);
+    ui->loserPercent3->setText("▼ " + QString::number(values[2], 'f', 2) + "%");
+    ui->loserPercent3->setStyleSheet("color: rgb(208, 2, 27)");
+}
+
 
 QSplineSeries * MainWindow::returnSerie(QNetworkReply *reply) {
     QJsonParseError jsonError;

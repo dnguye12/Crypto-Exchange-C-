@@ -66,6 +66,7 @@ private:
 
     //request choices
     bool reqHeader = false;
+    bool reqTrendings = false;
     bool reqGainers = false;
     bool reqLosers = false;
 
@@ -75,8 +76,12 @@ private:
     void percentChangeHeader(QString item, double n);
 
     //treding
+    void requestTrendings();
+    void updateTrendings(QNetworkReply *reply);
     void requestGainers();
     void updateGainers(QNetworkReply *reply);
+    void requestLosers();
+    void updateLosers(QNetworkReply *reply);
 
 
     void drawChartLine(QSplineSeries* series);
