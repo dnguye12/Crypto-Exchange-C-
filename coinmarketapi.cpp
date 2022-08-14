@@ -31,13 +31,10 @@ QMap<QString, double> CoinMarketApi::getTotalCap(QNetworkReply *reply) {
         res["total_market_cap_yesterday_percentage_change"] = jsonPrice1["total_market_cap_yesterday_percentage_change"].toDouble();
         res["total_volume_24h"] = jsonPrice1["total_volume_24h"].toDouble();
         res["total_volume_24h_yesterday_percentage_change"] = jsonPrice1["total_volume_24h_yesterday_percentage_change"].toDouble();
-        /*
-        QList<double> values = {};
-
-
-        for(int i = 0; i < jsonPrice.size(); i++) {
-            series->append(jsonPrice[i].toArray()[0].toDouble(),jsonPrice[i].toArray()[1].toDouble());
-        }*/
     }
     return res;
+}
+
+QList<Coin> getGainers(QNetworkReply *reply) {
+
 }

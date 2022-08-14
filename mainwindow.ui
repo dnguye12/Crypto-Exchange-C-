@@ -904,7 +904,7 @@ border-radius: 10px;</string>
                     <string notr="true">color: black;</string>
                    </property>
                    <property name="text">
-                    <string>🔥 Trendings</string>
+                    <string>🔥 Trendings Gainers</string>
                    </property>
                   </widget>
                  </item>

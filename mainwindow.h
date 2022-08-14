@@ -60,15 +60,32 @@ private:
 
     QSplineSeries * returnSerie(QNetworkReply *reply);
 
-    void updateHeader(QMap<QString, double> info);
+    void resetChoices();
+
     QString doubleFormat(double n);
-    void percentChange(QString item, double n);
+
+    //request choices
+    bool reqHeader = false;
+    bool reqGainers = false;
+    bool reqLosers = false;
+
+    //headers
+    void requestHeader();
+    void updateHeader(QMap<QString, double> info);
+    void percentChangeHeader(QString item, double n);
+
+    //treding
+    void requestGainers();
+    void updateGainers(QNetworkReply *reply);
+
 
     void drawChartLine(QSplineSeries* series);
 
     QString getLink(QString id, QString vs_currency, QString days);
 
     int timeSpanDateCount(QString timeSpan);
+
+
 
 };
 #endif // MAINWINDOW_H
