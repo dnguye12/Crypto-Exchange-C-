@@ -12,6 +12,7 @@
 
 #include <QChart>
 #include <QLineSeries>
+#include <QPieSeries>
 
 #include <QSizePolicy>
 #include <QScreen>
@@ -159,84 +160,6 @@ void MainWindow::updateHeader(QMap<QString, double> info) {
     ui->volumnAmount->setText("$" + doubleFormat(info["total_volume_24h"]));
     percentChangeHeader("volumn", info["total_volume_24h_yesterday_percentage_change"]);
 }
-
-/*
-void MainWindow::requestTrendings() {
-    QUrl url("https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/trending/latest");
-
-    QUrlQuery querry{url};
-    querry.addQueryItem("limit", "3");
-
-    request.setRawHeader("X-CMC_PRO_API_KEY", "a5089d27-78ec-4e30-8498-61007f62a309");
-    request.setRawHeader("Accept", "application/json");
-    request.setUrl(url);
-
-    resetChoices();
-    reqTrendings = true;
-
-    manager->get(request);
-}
-void MainWindow::updateTrendings(QNetworkReply *reply) {
-    QJsonParseError jsonError;
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
-    if(jsonError.error != QJsonParseError::NoError) {
-        qDebug() << "fromJson failed: " << jsonError.errorString();
-        return;
-    }
-    QJsonObject jsonObj = jsonDoc.object();
-    QJsonObject jsonData1 = jsonObj["data"].toObject();
-    QJsonArray jsonData2 =  jsonData1["data"].toArray();
-    double n;
-
-    ui->trendingName1->setText(jsonData2[0].toObject()["name"].toString());
-    ui->trendingSymbol1->setText(jsonData2[0].toObject()["symbol"].toString());
-    n = jsonData2[0].toObject()["quote"].toObject()["USD"].toObject()["percent_change_24h"].toDouble();
-    if(n > 0) {
-        ui->trendingPercent1->setStyleSheet("color: rgb(61, 174, 35)");
-        ui->trendingPercent1->setText("▲ " + QString::number(n, 'f', 2) + "%");
-    }else if(n == 0) {
-        ui->trendingPercent1->setStyleSheet("color: rgb(255, 216, 0)");
-        ui->trendingPercent1->setText("- 0%");
-    }
-    else {
-        ui->trendingPercent1->setStyleSheet("color: rgb(208, 2, 27)");
-        ui->trendingPercent1->setText("▼ " + QString::number(n, 'f', 2) + "%");
-    }
-
-    ui->trendingName2->setText(jsonData2[1].toObject()["name"].toString());
-    ui->trendingSymbol2->setText(jsonData2[1].toObject()["symbol"].toString());
-    ui->trendingName1->setText(jsonData2[0].toObject()["name"].toString());
-    ui->trendingSymbol1->setText(jsonData2[0].toObject()["symbol"].toString());
-    n = jsonData2[1].toObject()["quote"].toObject()["USD"].toObject()["percent_change_24h"].toDouble();
-    if(n > 0) {
-        ui->trendingPercent2->setStyleSheet("color: rgb(61, 174, 35)");
-        ui->trendingPercent2->setText("▲ " + QString::number(n, 'f', 2) + "%");
-    }else if(n == 0) {
-        ui->trendingPercent2->setStyleSheet("color: rgb(255, 216, 0)");
-        ui->trendingPercent2->setText("- 0%");
-    }
-    else {
-        ui->trendingPercent2->setStyleSheet("color: rgb(208, 2, 27)");
-        ui->trendingPercent2->setText("▼ " + QString::number(n, 'f', 2) + "%");
-    }
-
-    ui->trendingName3->setText(jsonData2[2].toObject()["name"].toString());
-    ui->trendingSymbol3->setText(jsonData2[2].toObject()["symbol"].toString());
-    ui->trendingName1->setText(jsonData2[0].toObject()["name"].toString());
-    ui->trendingSymbol1->setText(jsonData2[0].toObject()["symbol"].toString());
-    n = jsonData2[2].toObject()["quote"].toObject()["USD"].toObject()["percent_change_24h"].toDouble();
-    if(n > 0) {
-        ui->trendingPercent3->setStyleSheet("color: rgb(61, 174, 35)");
-        ui->trendingPercent3->setText("▲ " + QString::number(n, 'f', 2) + "%");
-    }else if(n == 0) {
-        ui->trendingPercent3->setStyleSheet("color: rgb(255, 216, 0)");
-        ui->trendingPercent3->setText("- 0%");
-    }
-    else {
-        ui->trendingPercent3->setStyleSheet("color: rgb(208, 2, 27)");
-        ui->trendingPercent3->setText("▼ " + QString::number(n, 'f', 2) + "%");
-    }
-}*/
 
 void MainWindow::requestTrendings() {
     QUrl url("https://api.coingecko.com/api/v3/search/trending");

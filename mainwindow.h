@@ -81,7 +81,7 @@ private:
     void updateHeader(QMap<QString, double> info);
     void percentChangeHeader(QString item, double n);
 
-    //treding
+    //trending
     bool trendingImg1 = false;
     bool trendingImg2 = false;
     bool trendingImg3 = false;
