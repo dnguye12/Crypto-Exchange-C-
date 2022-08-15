@@ -5,6 +5,7 @@
 
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
+#include <QEventLoop>
 
 #include "coinmarketapi.h"
 
@@ -27,6 +28,8 @@ public:
 private slots:
     void managerFinished(QNetworkReply *reply);
 
+    void managerImgFinished(QNetworkReply *reply);
+
     void on_pushButton_clicked();
 
     void on_changeTimeToday_clicked();
@@ -48,7 +51,10 @@ private:
     Ui::MainWindow *ui;
 
     QNetworkAccessManager *manager;
+    QNetworkAccessManager *ImgManager;
     QNetworkRequest request;
+    QEventLoop loop;
+    QEventLoop imgloop;
 
     QString timeSpan;
 
@@ -76,6 +82,14 @@ private:
     void percentChangeHeader(QString item, double n);
 
     //treding
+    bool trendingImg1 = false;
+    bool trendingImg2 = false;
+    bool trendingImg3 = false;
+    bool trendingPercent1 = false;
+    bool trendingPercent2 = false;
+    bool trendingPercent3 = false;
+    void resetTrendingImg();
+
     void requestTrendings();
     void updateTrendings(QNetworkReply *reply);
     void requestGainers();

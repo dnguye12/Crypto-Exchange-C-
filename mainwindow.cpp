@@ -6,7 +6,7 @@
 #include <QApplication>
 #include <QtCore>
 #include <QtGui>
-#include <QEventLoop>
+
 
 #include <QNetworkReply>
 
@@ -32,13 +32,13 @@ MainWindow::MainWindow(QWidget *parent)
     centerScreen();
 
     manager = new QNetworkAccessManager();
+    ImgManager = new QNetworkAccessManager();
     QObject::connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(managerFinished(QNetworkReply*)));
+    QObject::connect(ImgManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(managerImgFinished(QNetworkReply*)));
 
-    QEventLoop loop;
-    //connect(myObject, SIGNAL(theSignalToWaitFor()), &loop, SLOT(quit()));
-    //connect(timeoutTimer, SIGNAL(timeout()), &loop, SLOT(quit()));
-    //loop.exec(); //blocks untill either theSignalToWaitFor or timeout was fired
+
     connect(manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
+    connect(ImgManager, SIGNAL(finished(QNetworkReply*)), &imgloop, SLOT(quit()));
 
     requestTrendings();
     loop.exec();
@@ -88,18 +88,16 @@ void MainWindow::managerFinished(QNetworkReply *reply) {
     if(reqHeader) {
         QMap<QString, double> totalMarket = coinMarketApi->getTotalCap(reply);
         updateHeader(totalMarket);
-        resetChoices();
     }
 
     if(reqGainers) {
         updateGainers(reply);
-        resetChoices();
     }
 
     if(reqLosers) {
         updateLosers(reply);
-        resetChoices();
     }
+    resetChoices();
 }
 
 QString MainWindow::doubleFormat(double n) {
@@ -162,6 +160,7 @@ void MainWindow::updateHeader(QMap<QString, double> info) {
     percentChangeHeader("volumn", info["total_volume_24h_yesterday_percentage_change"]);
 }
 
+/*
 void MainWindow::requestTrendings() {
     QUrl url("https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/trending/latest");
 
@@ -237,6 +236,155 @@ void MainWindow::updateTrendings(QNetworkReply *reply) {
         ui->trendingPercent3->setStyleSheet("color: rgb(208, 2, 27)");
         ui->trendingPercent3->setText("▼ " + QString::number(n, 'f', 2) + "%");
     }
+}*/
+
+void MainWindow::requestTrendings() {
+    QUrl url("https://api.coingecko.com/api/v3/search/trending");
+    request.setUrl(url);
+    resetChoices();
+    reqTrendings = true;
+    manager->get(request);
+}
+
+void MainWindow::resetTrendingImg() {
+    trendingImg1 = false;
+    trendingImg2 = false;
+    trendingImg3 = false;
+    trendingPercent1 = false;
+    trendingPercent2 = false;
+    trendingPercent3 = false;
+}
+
+void MainWindow::managerImgFinished(QNetworkReply *reply) {
+
+
+    QPixmap pixmap;
+    double n;
+    if(trendingImg1 or trendingImg2 or trendingImg3) {
+        if (reply->error() != QNetworkReply::NoError) {
+            qDebug() << "Error in" << reply->url() << ":" << reply->errorString();
+            return;
+        }
+        QByteArray img = reply->readAll();
+        pixmap.loadFromData(img);
+    }else {
+        QJsonParseError jsonError;
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
+        if(jsonError.error != QJsonParseError::NoError) {
+            qDebug() << "fromJson failed: " << jsonError.errorString();
+            return;
+        }
+        QJsonObject jsonObj = jsonDoc.object();
+        n =  jsonObj["market_data"].toObject()["price_change_percentage_24h"].toDouble();
+    }
+
+    if(trendingImg1) {
+        ui->trendingImage1->setPixmap(pixmap);
+    }
+    if(trendingImg2) {
+        ui->trendingImage2->setPixmap(pixmap);
+    }
+    if(trendingImg3) {
+        ui->trendingImage3->setPixmap(pixmap);
+    }
+    if(trendingPercent1) {
+        if(n > 0) {
+            ui->trendingPercent1->setStyleSheet("color: rgb(61, 174, 35)");
+            ui->trendingPercent1->setText("▲ " + QString::number(n, 'f', 2) + "%");
+        }else if(n == 0) {
+            ui->trendingPercent1->setStyleSheet("color: rgb(255, 216, 0)");
+            ui->trendingPercent1->setText("- 0%");
+        }
+        else {
+            ui->trendingPercent1->setStyleSheet("color: rgb(208, 2, 27)");
+            ui->trendingPercent1->setText("▼ " + QString::number(n, 'f', 2) + "%");
+        }
+    }
+    if(trendingPercent2) {
+        if(n > 0) {
+            ui->trendingPercent2->setStyleSheet("color: rgb(61, 174, 35)");
+            ui->trendingPercent2->setText("▲ " + QString::number(n, 'f', 2) + "%");
+        }else if(n == 0) {
+            ui->trendingPercent2->setStyleSheet("color: rgb(255, 216, 0)");
+            ui->trendingPercent2->setText("- 0%");
+        }
+        else {
+            ui->trendingPercent2->setStyleSheet("color: rgb(208, 2, 27)");
+            ui->trendingPercent2->setText("▼ " + QString::number(n, 'f', 2) + "%");
+        }
+    }
+    if(trendingPercent3) {
+        if(n > 0) {
+            ui->trendingPercent3->setStyleSheet("color: rgb(61, 174, 35)");
+            ui->trendingPercent3->setText("▲ " + QString::number(n, 'f', 2) + "%");
+        }else if(n == 0) {
+            ui->trendingPercent3->setStyleSheet("color: rgb(255, 216, 0)");
+            ui->trendingPercent3->setText("- 0%");
+        }
+        else {
+            ui->trendingPercent3->setStyleSheet("color: rgb(208, 2, 27)");
+            ui->trendingPercent3->setText("▼ " + QString::number(n, 'f', 2) + "%");
+        }
+    }
+    resetTrendingImg();
+}
+
+void MainWindow::updateTrendings(QNetworkReply *reply) {
+    QJsonParseError jsonError;
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
+    if(jsonError.error != QJsonParseError::NoError) {
+        qDebug() << "fromJson failed: " << jsonError.errorString();
+        return;
+    }
+    QJsonArray jsonArray =  jsonDoc.object()["coins"].toArray();
+
+
+
+    ui->trendingName1->setText(jsonArray[0].toObject()["item"].toObject()["name"].toString());
+    ui->trendingSymbol1->setText(jsonArray[0].toObject()["item"].toObject()["symbol"].toString());
+    trendingImg1 = true;
+    QUrl url1(jsonArray[0].toObject()["item"].toObject()["thumb"].toString());
+    request.setUrl(url1);
+    ImgManager->get(request);
+    imgloop.exec();
+
+    trendingPercent1 = true;
+    QUrl urlP1("https://api.coingecko.com/api/v3/coins/" + jsonArray[0].toObject()["item"].toObject()["id"].toString() + "?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false");
+    request.setUrl(urlP1);
+    ImgManager->get(request);
+    imgloop.exec();
+
+
+
+
+    ui->trendingName2->setText(jsonArray[1].toObject()["item"].toObject()["name"].toString());
+    ui->trendingSymbol2->setText(jsonArray[1].toObject()["item"].toObject()["symbol"].toString());
+    trendingImg2 = true;
+    QUrl url2(jsonArray[1].toObject()["item"].toObject()["thumb"].toString());
+    request.setUrl(url2);
+    ImgManager->get(request);
+    imgloop.exec();
+
+    trendingPercent2 = true;
+    QUrl urlP2("https://api.coingecko.com/api/v3/coins/" + jsonArray[1].toObject()["item"].toObject()["id"].toString() + "?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false");
+    request.setUrl(urlP2);
+    ImgManager->get(request);
+    imgloop.exec();
+
+
+    ui->trendingName3->setText(jsonArray[2].toObject()["item"].toObject()["name"].toString());
+    ui->trendingSymbol3->setText(jsonArray[2].toObject()["item"].toObject()["symbol"].toString());
+    trendingImg3 = true;
+    QUrl url3(jsonArray[2].toObject()["item"].toObject()["thumb"].toString());
+    request.setUrl(url3);
+    ImgManager->get(request);
+    imgloop.exec();
+
+    trendingPercent3 = true;
+    QUrl urlP3("https://api.coingecko.com/api/v3/coins/" + jsonArray[2].toObject()["item"].toObject()["id"].toString() + "?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false");
+    request.setUrl(urlP3);
+    ImgManager->get(request);
+    imgloop.exec();
 }
 
 void MainWindow::requestGainers() {
@@ -328,7 +476,7 @@ void MainWindow::updateLosers(QNetworkReply *reply) {
         QString sym = jsonData2[i].toObject()["symbol"].toString();
         coins[usd["percent_change_24h"].toDouble()] = QPair<QString, QString>(name, sym);
     }
-    sort(values.begin(), values.end());
+    sort(values.begin(), values.end(), greater<>());
 
     ui->loserName1->setText(coins[values[0]].first);
     ui->loserSymbol1->setText(coins[values[0]].second);
