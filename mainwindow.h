@@ -104,6 +104,7 @@ private:
     void requestMain();
     void updateMain(QNetworkReply *reply);
     void drawMainRow(QJsonObject coin);
+    void drawMainRowChart(QJsonObject coin);
 
 
     void drawChartLine(QSplineSeries* series);

@@ -456,16 +456,27 @@ void MainWindow::updateMain(QNetworkReply *reply) {
     }
 
     QJsonArray jsonArr = jsonDoc.array();
+    QDir dir("image");
+    dir.setNameFilters(QStringList() << "*.png");
+    dir.setFilter(QDir::Files);
+    foreach(QString dirFile, dir.entryList())
+    {
+        dir.remove(dirFile);
+    }
     for(int i = 0; i < jsonArr.size(); i++) {
         ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
+         ui->tableWidget->setRowHeight(ui->tableWidget->rowCount() - 1, 75);
         QJsonObject coin = jsonArr[i].toObject();
+        drawMainRowChart(coin);
         drawMainRow(coin);
     }
+    ui->helperChart->setVisible(false);
 }
 
 void MainWindow::drawMainRow(QJsonObject coin) {
     QTableWidgetItem *name = new QTableWidgetItem(tr(coin["name"].toString().toLocal8Bit()));
     ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 0, name);
+
 
     QLocale locale(QLocale::English);
 
@@ -528,9 +539,74 @@ void MainWindow::drawMainRow(QJsonObject coin) {
     QTableWidgetItem *vol = new QTableWidgetItem("$"+locale.toString(helper, 'f', 3));
     vol->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
     ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 6, vol);
+
+    QPixmap pixmap("image/" + coin["id"].toString() + ".png");
+    QIcon icon = *new QIcon(pixmap);
+
+    QTableWidgetItem *chart = new QTableWidgetItem();
+    chart->setBackground(QBrush(pixmap));
+    ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 7, chart);
 }
 
+void MainWindow::drawMainRowChart(QJsonObject coin) {
+    QJsonArray arr = coin["sparkline_in_7d"].toObject()["price"].toArray();
+    QSplineSeries *series = new QSplineSeries();
 
+    for(int i = 0; i < arr.size(); i++) {
+        series->append(i, arr[i].toDouble());
+    }
+
+    QChart *chart = new QChart();
+    chart->legend()->hide();
+
+
+    //chart line
+    QPen pen;
+    if(series->at(0).y() <= series->at(series->count()-1).y()) {
+        pen.setColor(QColor(61, 174, 35));
+    }else {
+        pen.setColor(QColor(208, 2, 27));
+    }
+    pen.setWidth(2);
+    series->setPen(pen);
+
+    //2 Axis
+    QCategoryAxis *axisX = new QCategoryAxis();
+    QCategoryAxis *axisY = new QCategoryAxis();
+
+    /*
+    QPen axisPen(QColor(237,237,237));
+    axisPen.setWidth(2);
+    axisX->setLinePen(axisPen);
+    axisY->setLinePen(axisPen);*/
+
+    //Set chart
+    chart->addSeries(series);
+    //series->attachAxis(axisX);
+    //series->attachAxis(axisY);
+    //chart->addAxis(axisX, Qt::AlignBottom);
+    //chart->addAxis(axisY, Qt::AlignRight);
+
+    chart->setMargins(QMargins(0,0,0,0));
+    chart->setBackgroundVisible(false);
+    ui->helperChart->setChart(chart);
+    //ui->helperChart->setBaseSize(175,50);
+    ui->helperChart->setRenderHint(QPainter::Antialiasing);
+
+    /*
+    QString fileName = "image/" + coin["id"].toString() + ".png";
+    QPixmap pixMap = ui->helperChart->grab(ui->helperChart->sceneRect().toRect());
+    pixMap.
+    pixMap.save(fileName);*/
+
+    QImage image(ui->helperChart->sceneRect().size().toSize(), QImage::Format_ARGB32);  // Create the image with the exact size of the shrunk scene
+    image.fill(Qt::transparent);                                              // Start all pixels transparent
+
+    QPainter painter(&image);
+    ui->helperChart->render(&painter);
+    image.save("image/" + coin["id"].toString() +  ".png");
+
+}
 
 
 
@@ -574,9 +650,6 @@ void MainWindow::drawChartLine(QSplineSeries* series) {
     chart->legend()->hide();
     chart->addSeries(series);
     chart->setTitle("Simple line chart example");
-
-    ui->chartView->setChart(chart);
-    ui->chartView->setRenderHint(QPainter::Antialiasing);
 
     //chart line
     QPen pen;
