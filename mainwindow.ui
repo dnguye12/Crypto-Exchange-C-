@@ -1914,34 +1914,95 @@ border-radius: 10px;</string>
              <widget class="QLabel" name="label_19">
               <property name="font">
                <font>
-                <family>Segoe UI Semibold</family>
                 <pointsize>24</pointsize>
                </font>
               </property>
               <property name="text">
-               <string>Market Dominance</string>
+               <string>Top Cryptocurrencies by Market Cap</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QChartView" name="domiChart">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+             <widget class="QTableWidget" name="tableWidget">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
               </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>250</height>
-               </size>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
               </property>
-              <property name="font">
-               <font>
-                <family>Segoe Print</family>
-               </font>
+              <property name="lineWidth">
+               <number>1</number>
               </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <property name="horizontalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOff</enum>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QAbstractScrollArea::AdjustToContents</enum>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="showDropIndicator" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="dragDropOverwriteMode">
+               <bool>false</bool>
+              </property>
+              <property name="cornerButtonEnabled">
+               <bool>false</bool>
+              </property>
+              <attribute name="horizontalHeaderCascadingSectionResizes">
+               <bool>false</bool>
+              </attribute>
+              <attribute name="horizontalHeaderStretchLastSection">
+               <bool>true</bool>
+              </attribute>
+              <attribute name="verticalHeaderStretchLastSection">
+               <bool>false</bool>
+              </attribute>
+              <column>
+               <property name="text">
+                <string>Coin</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Price</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>1h %</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>24h %</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>7d %</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Market Cap</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Total Volume</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Last 7 Days</string>
+               </property>
+              </column>
              </widget>
             </item>
            </layout>

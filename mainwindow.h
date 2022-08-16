@@ -55,6 +55,7 @@ private:
     QNetworkRequest request;
     QEventLoop loop;
     QEventLoop imgloop;
+    QEventLoop coinLoop;
 
     QString timeSpan;
 
@@ -75,6 +76,8 @@ private:
     bool reqTrendings = false;
     bool reqGainers = false;
     bool reqLosers = false;
+    bool reqMain = false;
+    bool reqCoin = false;
 
     //headers
     void requestHeader();
@@ -96,6 +99,11 @@ private:
     void updateGainers(QNetworkReply *reply);
     void requestLosers();
     void updateLosers(QNetworkReply *reply);
+
+    //main table
+    void requestMain();
+    void updateMain(QNetworkReply *reply);
+    void drawMainRow(QJsonObject coin);
 
 
     void drawChartLine(QSplineSeries* series);

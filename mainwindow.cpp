@@ -22,6 +22,7 @@
 #include <QTime>
 
 #include <algorithm>
+#include <sstream>
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -40,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
     connect(ImgManager, SIGNAL(finished(QNetworkReply*)), &imgloop, SLOT(quit()));
+    connect(manager, SIGNAL(finished(QNetworkReply*)), &coinLoop, SLOT(quit()));
 
     requestTrendings();
     loop.exec();
@@ -49,6 +51,14 @@ MainWindow::MainWindow(QWidget *parent)
     loop.exec();
     requestLosers();
     loop.exec();
+    requestMain();
+    loop.exec();
+
+    /*
+    QString fileName = "file_name.png";
+    QPixmap pixMap = ui->chartView->grab(ui->chartView->sceneRect().toRect());
+    pixMap.save(fileName);
+    on_changeTimeToday_clicked();*/
 }
 
 MainWindow::~MainWindow()
@@ -71,6 +81,8 @@ void MainWindow::resetChoices() {
     reqTrendings = false;
     reqGainers = false;
     reqLosers = false;
+    reqMain = false;
+    reqCoin = false;
 }
 
 void MainWindow::managerFinished(QNetworkReply *reply) {
@@ -79,9 +91,7 @@ void MainWindow::managerFinished(QNetworkReply *reply) {
                     ", Message: " << reply->errorString() <<
                     ", Code: " << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     }
-    //QSplineSeries* series = returnSerie(reply);
-    //drawChartLine(series);
-    //qDebug() << reply->readAll();
+
     if(reqTrendings) {
         updateTrendings(reply);
         resetChoices();
@@ -97,6 +107,10 @@ void MainWindow::managerFinished(QNetworkReply *reply) {
 
     if(reqLosers) {
         updateLosers(reply);
+    }
+
+    if(reqMain) {
+        updateMain(reply);
     }
     resetChoices();
 }
@@ -418,6 +432,114 @@ void MainWindow::updateLosers(QNetworkReply *reply) {
 }
 
 
+void MainWindow::requestMain() {
+    QUrl url("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=30&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d");
+
+    request.setUrl(url);
+
+    resetChoices();
+    reqMain = true;
+    manager->get(request);
+}
+
+void MainWindow::updateMain(QNetworkReply *reply) {
+    ui->tableWidget->clearContents();
+    QJsonParseError jsonError;
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
+    QMap<double, QString> coins;
+    QList<double> values;
+
+    if(jsonError.error != QJsonParseError::NoError) {
+        qDebug() << "fromJson failed: " << jsonError.errorString();
+        return;
+    }
+
+    QJsonArray jsonArr = jsonDoc.array();
+    for(int i = 0; i < jsonArr.size(); i++) {
+        ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
+        QJsonObject coin = jsonArr[i].toObject();
+        drawMainRow(coin);
+    }
+}
+
+void MainWindow::drawMainRow(QJsonObject coin) {
+    QTableWidgetItem *name = new QTableWidgetItem(tr(coin["name"].toString().toLocal8Bit()));
+    ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 0, name);
+
+    QLocale locale(QLocale::English);
+
+    QTableWidgetItem *price = new QTableWidgetItem("$" + locale.toString(coin["current_price"].toDouble(), 'f', 3));
+    price->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 1, price);
+
+    double helper;
+    helper = coin["price_change_percentage_1h_in_currency"].toDouble();
+    QTableWidgetItem *oneH = new QTableWidgetItem(QString::number(helper, 'f', 2));
+    if(helper < 0) {
+        oneH->setForeground(QBrush(QColor(208, 2, 27)));
+        oneH->setText("▼" + QString::number(helper, 'f', 2) + "%");
+    }else if(helper == 0) {
+        oneH->setForeground(QBrush(QColor(255, 216, 0)));
+        oneH->setText("-0%");
+    }else {
+        oneH->setForeground(QBrush(QColor(61, 174, 35)));
+        oneH->setText("▲" + QString::number(helper, 'f', 2) + "%");
+    }
+    oneH->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 2, oneH);
+
+    helper = coin["price_change_percentage_24h_in_currency"].toDouble();
+    QTableWidgetItem *dayH = new QTableWidgetItem(QString::number(helper, 'f', 2));
+    if(helper < 0) {
+        dayH->setForeground(QBrush(QColor(208, 2, 27)));
+        dayH->setText("▼" + QString::number(helper, 'f', 2) + "%");
+    }else if(helper == 0) {
+        dayH->setForeground(QBrush(QColor(255, 216, 0)));
+        dayH->setText("-0%");
+    }else {
+        dayH->setForeground(QBrush(QColor(61, 174, 35)));
+        dayH->setText("▲" + QString::number(helper, 'f', 2) + "%");
+    }
+    dayH->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 3, dayH);
+
+    helper = coin["price_change_percentage_7d_in_currency"].toDouble();
+    QTableWidgetItem *weekH = new QTableWidgetItem(QString::number(helper, 'f', 2));
+    if(helper < 0) {
+        weekH->setForeground(QBrush(QColor(208, 2, 27)));
+        weekH->setText("▼" + QString::number(helper, 'f', 2) + "%");
+    }else if(helper == 0) {
+        weekH->setForeground(QBrush(QColor(255, 216, 0)));
+        weekH->setText("-0%");
+    }else {
+        weekH->setForeground(QBrush(QColor(61, 174, 35)));
+        weekH->setText("▲" + QString::number(helper, 'f', 2) + "%");
+    }
+    weekH->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 4, weekH);
+
+    helper = coin["market_cap"].toDouble();
+    QTableWidgetItem *cap = new QTableWidgetItem("$"+locale.toString(helper, 'f', 3));
+    cap->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 5, cap);
+
+    helper = coin["total_volume"].toDouble();
+    QTableWidgetItem *vol = new QTableWidgetItem("$"+locale.toString(helper, 'f', 3));
+    vol->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 6, vol);
+}
+
+
+
+
+
+
+
+
+
+
+
 QSplineSeries * MainWindow::returnSerie(QNetworkReply *reply) {
     QJsonParseError jsonError;
 
@@ -582,6 +704,7 @@ void MainWindow::on_changeTimeToday_clicked()
     }
     timeSpan = "1d";
     request.setUrl(QUrl("https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1"));
+
     manager->get(request);
 }
 
