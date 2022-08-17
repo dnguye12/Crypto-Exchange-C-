@@ -53,12 +53,6 @@ MainWindow::MainWindow(QWidget *parent)
     loop.exec();
     requestMain();
     loop.exec();
-
-    /*
-    QString fileName = "file_name.png";
-    QPixmap pixMap = ui->chartView->grab(ui->chartView->sceneRect().toRect());
-    pixMap.save(fileName);
-    on_changeTimeToday_clicked();*/
 }
 
 MainWindow::~MainWindow()
@@ -443,7 +437,8 @@ void MainWindow::requestMain() {
 }
 
 void MainWindow::updateMain(QNetworkReply *reply) {
-    ui->tableWidget->clearContents();
+    //ui->tableWidget->clearContents();
+    ui->tableWidget->horizontalHeader()->setFixedHeight(50);
     QJsonParseError jsonError;
 
     QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
@@ -456,20 +451,28 @@ void MainWindow::updateMain(QNetworkReply *reply) {
     }
 
     QJsonArray jsonArr = jsonDoc.array();
-    QDir dir("F:/School/C++/QT/build-CryptoExchange-Desktop_Qt_6_2_3_MinGW_64_bit-Debug/image", {"*.png"});
+    //QDir dir("F:/School/C++/QT/build-CryptoExchange-Desktop_Qt_6_2_3_MinGW_64_bit-Debug/image", {"*.png"});
+    QDir dir(":/image", {"*.png"});
     for(const QString & filename: dir.entryList()){
         qDebug() << ": " << filename;
         dir.remove(filename);
     }
-    ui->tableWidget->setColumnWidth(7, 168);
+    ui->tableWidget->setColumnWidth(0, 148);
+    ui->tableWidget->setColumnWidth(1, 168);
+    ui->tableWidget->setColumnWidth(2, 122);
+    ui->tableWidget->setColumnWidth(3, 122);
+    ui->tableWidget->setColumnWidth(4, 122);
+    ui->tableWidget->setColumnWidth(5, 168);
+    ui->tableWidget->setColumnWidth(6, 168);
+    ui->tableWidget->setColumnWidth(7, 210);
     for(int i = 0; i < jsonArr.size(); i++) {
         ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
-         ui->tableWidget->setRowHeight(ui->tableWidget->rowCount() - 1, 79);
+         ui->tableWidget->setRowHeight(ui->tableWidget->rowCount() - 1, 64);
         QJsonObject coin = jsonArr[i].toObject();
         drawMainRowChart(coin);
         drawMainRow(coin);
     }
-    //ui->helperChart->setVisible(false);
+    ui->helperChart->setVisible(false);
 }
 
 void MainWindow::drawMainRow(QJsonObject coin) {
@@ -569,7 +572,7 @@ void MainWindow::drawMainRowChart(QJsonObject coin) {
     }else {
         pen.setColor(QColor(208, 2, 27));
     }
-    //pen.setWidth(2);
+    pen.setWidth(2);
     series->setPen(pen);
 
     //2 Axis
@@ -582,8 +585,6 @@ void MainWindow::drawMainRowChart(QJsonObject coin) {
     axisX->setVisible(true);
 
     //Set chart
-
-
     chart->addSeries(series);
     chart->addAxis(axisX, Qt::AlignBottom);
     chart->addAxis(axisY, Qt::AlignRight);
@@ -591,7 +592,7 @@ void MainWindow::drawMainRowChart(QJsonObject coin) {
     series->attachAxis(axisY);
 
     chart->setBackgroundVisible(false);
-    chart->setPlotArea(QRectF(0,0,168, 79));
+    chart->setPlotArea(QRectF(0,0,168, 50));
     ui->helperChart->setChart(chart);
     ui->helperChart->setRenderHint(QPainter::Antialiasing);
 
