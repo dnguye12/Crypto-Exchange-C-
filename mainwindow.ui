@@ -2057,8 +2057,8 @@ border-radius: 10px;</string>
               </property>
               <property name="maximumSize">
                <size>
-                <width>175</width>
-                <height>100</height>
+                <width>168</width>
+                <height>16777215</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -2410,10 +2410,16 @@ QToolButton:pressed {
             <item>
              <widget class="QChartView" name="chartView">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>0</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true"/>

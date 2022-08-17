@@ -456,21 +456,20 @@ void MainWindow::updateMain(QNetworkReply *reply) {
     }
 
     QJsonArray jsonArr = jsonDoc.array();
-    QDir dir("image");
-    dir.setNameFilters(QStringList() << "*.png");
-    dir.setFilter(QDir::Files);
-    foreach(QString dirFile, dir.entryList())
-    {
-        dir.remove(dirFile);
+    QDir dir("F:/School/C++/QT/build-CryptoExchange-Desktop_Qt_6_2_3_MinGW_64_bit-Debug/image", {"*.png"});
+    for(const QString & filename: dir.entryList()){
+        qDebug() << ": " << filename;
+        dir.remove(filename);
     }
+    ui->tableWidget->setColumnWidth(7, 168);
     for(int i = 0; i < jsonArr.size(); i++) {
         ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
-         ui->tableWidget->setRowHeight(ui->tableWidget->rowCount() - 1, 75);
+         ui->tableWidget->setRowHeight(ui->tableWidget->rowCount() - 1, 79);
         QJsonObject coin = jsonArr[i].toObject();
         drawMainRowChart(coin);
         drawMainRow(coin);
     }
-    ui->helperChart->setVisible(false);
+    //ui->helperChart->setVisible(false);
 }
 
 void MainWindow::drawMainRow(QJsonObject coin) {
@@ -544,7 +543,10 @@ void MainWindow::drawMainRow(QJsonObject coin) {
     QIcon icon = *new QIcon(pixmap);
 
     QTableWidgetItem *chart = new QTableWidgetItem();
-    chart->setBackground(QBrush(pixmap));
+    QBrush brush = *new QBrush(pixmap);
+    chart->setBackground(brush);
+
+    chart->setTextAlignment(Qt::AlignCenter);
     ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 7, chart);
 }
 
@@ -567,44 +569,34 @@ void MainWindow::drawMainRowChart(QJsonObject coin) {
     }else {
         pen.setColor(QColor(208, 2, 27));
     }
-    pen.setWidth(2);
+    //pen.setWidth(2);
     series->setPen(pen);
 
     //2 Axis
     QCategoryAxis *axisX = new QCategoryAxis();
     QCategoryAxis *axisY = new QCategoryAxis();
 
-    /*
-    QPen axisPen(QColor(237,237,237));
-    axisPen.setWidth(2);
-    axisX->setLinePen(axisPen);
-    axisY->setLinePen(axisPen);*/
+    axisY->setGridLineVisible(false);
+    axisY->setLineVisible(false);
+    axisY->setVisible(true);
+    axisX->setVisible(true);
 
     //Set chart
-    chart->addSeries(series);
-    //series->attachAxis(axisX);
-    //series->attachAxis(axisY);
-    //chart->addAxis(axisX, Qt::AlignBottom);
-    //chart->addAxis(axisY, Qt::AlignRight);
 
-    chart->setMargins(QMargins(0,0,0,0));
+
+    chart->addSeries(series);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignRight);
+    series->attachAxis(axisX);
+    series->attachAxis(axisY);
+
     chart->setBackgroundVisible(false);
+    chart->setPlotArea(QRectF(0,0,168, 79));
     ui->helperChart->setChart(chart);
-    //ui->helperChart->setBaseSize(175,50);
     ui->helperChart->setRenderHint(QPainter::Antialiasing);
 
-    /*
-    QString fileName = "image/" + coin["id"].toString() + ".png";
     QPixmap pixMap = ui->helperChart->grab(ui->helperChart->sceneRect().toRect());
-    pixMap.
-    pixMap.save(fileName);*/
-
-    QImage image(ui->helperChart->sceneRect().size().toSize(), QImage::Format_ARGB32);  // Create the image with the exact size of the shrunk scene
-    image.fill(Qt::transparent);                                              // Start all pixels transparent
-
-    QPainter painter(&image);
-    ui->helperChart->render(&painter);
-    image.save("image/" + coin["id"].toString() +  ".png");
+    pixMap.save("image/" + coin["id"].toString() +  ".png");
 
 }
 
