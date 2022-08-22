@@ -459,12 +459,12 @@ void MainWindow::updateMain(QNetworkReply *reply) {
     }
     ui->tableWidget->setColumnWidth(0, 148);
     ui->tableWidget->setColumnWidth(1, 168);
-    ui->tableWidget->setColumnWidth(2, 122);
-    ui->tableWidget->setColumnWidth(3, 122);
-    ui->tableWidget->setColumnWidth(4, 122);
+    ui->tableWidget->setColumnWidth(2, 136);
+    ui->tableWidget->setColumnWidth(3, 136);
+    ui->tableWidget->setColumnWidth(4, 136);
     ui->tableWidget->setColumnWidth(5, 168);
     ui->tableWidget->setColumnWidth(6, 168);
-    ui->tableWidget->setColumnWidth(7, 210);
+    ui->tableWidget->setColumnWidth(7, 168);
     for(int i = 0; i < jsonArr.size(); i++) {
         ui->tableWidget->setRowCount(ui->tableWidget->rowCount() + 1);
          ui->tableWidget->setRowHeight(ui->tableWidget->rowCount() - 1, 64);

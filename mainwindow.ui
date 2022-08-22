@@ -522,6 +522,9 @@ QPushButton:hover:!pressed {
           </property>
           <item>
            <layout class="QHBoxLayout" name="infoHeader">
+            <property name="leftMargin">
+             <number>5</number>
+            </property>
             <property name="topMargin">
              <number>10</number>
             </property>
@@ -696,6 +699,7 @@ color: black;</string>
                 <widget class="QLabel" name="marketCaptLabel">
                  <property name="font">
                   <font>
+                   <family>Segoe UI Semibold</family>
                    <pointsize>16</pointsize>
                    <bold>false</bold>
                   </font>
@@ -855,7 +859,7 @@ color: black;</string>
              <number>10</number>
             </property>
             <property name="topMargin">
-             <number>10</number>
+             <number>20</number>
             </property>
             <property name="rightMargin">
              <number>10</number>
@@ -864,6 +868,7 @@ color: black;</string>
              <widget class="QLabel" name="label_3">
               <property name="font">
                <font>
+                <family>Segoe UI Semibold</family>
                 <pointsize>24</pointsize>
                 <bold>false</bold>
                </font>
@@ -889,7 +894,7 @@ border-radius: 10px;</string>
                   <number>20</number>
                  </property>
                  <property name="topMargin">
-                  <number>1</number>
+                  <number>5</number>
                  </property>
                  <property name="rightMargin">
                   <number>20</number>
@@ -899,6 +904,11 @@ border-radius: 10px;</string>
                  </property>
                  <item>
                   <widget class="QWidget" name="horizontalWidget_4" native="true">
+                   <property name="font">
+                    <font>
+                     <family>Segoe UI Semibold</family>
+                    </font>
+                   </property>
                    <property name="styleSheet">
                     <string notr="true">background-color: white;
 border-radius: 10px;</string>
@@ -920,6 +930,7 @@ border-radius: 10px;</string>
                      <widget class="QLabel" name="label_9">
                       <property name="font">
                        <font>
+                        <family>Segoe UI Semibold</family>
                         <pointsize>18</pointsize>
                         <bold>false</bold>
                        </font>
@@ -962,7 +973,7 @@ border-radius: 10px;</string>
                     <number>10</number>
                    </property>
                    <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_15">
+                    <layout class="QHBoxLayout" name="trendingCoin1">
                      <property name="topMargin">
                       <number>0</number>
                      </property>
@@ -1054,7 +1065,7 @@ border-radius: 10px;</string>
                     </layout>
                    </item>
                    <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_16">
+                    <layout class="QHBoxLayout" name="trendingCoin2">
                      <property name="topMargin">
                       <number>0</number>
                      </property>
@@ -1146,7 +1157,7 @@ border-radius: 10px;</string>
                     </layout>
                    </item>
                    <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_17">
+                    <layout class="QHBoxLayout" name="trendingCoin3">
                      <property name="topMargin">
                       <number>0</number>
                      </property>
@@ -1284,6 +1295,7 @@ border-radius: 10px;</string>
                      <widget class="QLabel" name="label_4">
                       <property name="font">
                        <font>
+                        <family>Segoe UI Semibold</family>
                         <pointsize>18</pointsize>
                         <bold>false</bold>
                        </font>
@@ -1609,6 +1621,7 @@ border-radius: 10px;</string>
                      <widget class="QLabel" name="label_14">
                       <property name="font">
                        <font>
+                        <family>Segoe UI Semibold</family>
                         <pointsize>18</pointsize>
                         <bold>false</bold>
                        </font>
@@ -1902,7 +1915,7 @@ border-radius: 10px;</string>
              <number>10</number>
             </property>
             <property name="topMargin">
-             <number>10</number>
+             <number>20</number>
             </property>
             <property name="rightMargin">
              <number>10</number>
@@ -1914,6 +1927,7 @@ border-radius: 10px;</string>
              <widget class="QLabel" name="label_19">
               <property name="font">
                <font>
+                <family>Segoe UI Semibold</family>
                 <pointsize>24</pointsize>
                </font>
               </property>
@@ -1925,7 +1939,7 @@ border-radius: 10px;</string>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
               <property name="topMargin">
-               <number>0</number>
+               <number>5</number>
               </property>
               <item>
                <spacer name="horizontalSpacer_3">
