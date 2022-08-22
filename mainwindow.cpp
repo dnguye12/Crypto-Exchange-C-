@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "coin.h"
+#include "coinpage.h"
 
 #include <QApplication>
 #include <QtCore>
@@ -284,9 +285,8 @@ void MainWindow::updateTrendings(QNetworkReply *reply) {
     request.setUrl(urlP1);
     ImgManager->get(request);
     imgloop.exec();
-
-
-
+    QString helper1  = "https://api.coingecko.com/api/v3/coins/" + jsonArray[0].toObject()["item"].toObject()["id"].toString() + "?localization=false&tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=false";
+    connect(ui->trendingCoin_1, &ClickableWidgetTrending::clicked, this, &MainWindow::openCoinPage);
 
     ui->trendingName2->setText(jsonArray[1].toObject()["item"].toObject()["name"].toString());
     ui->trendingSymbol2->setText(jsonArray[1].toObject()["item"].toObject()["symbol"].toString());
@@ -310,12 +310,25 @@ void MainWindow::updateTrendings(QNetworkReply *reply) {
     request.setUrl(url3);
     ImgManager->get(request);
     imgloop.exec();
-
     trendingPercent3 = true;
     QUrl urlP3("https://api.coingecko.com/api/v3/coins/" + jsonArray[2].toObject()["item"].toObject()["id"].toString() + "?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false");
     request.setUrl(urlP3);
     ImgManager->get(request);
     imgloop.exec();
+}
+
+void MainWindow::openCoinPage(QMouseEvent* event) {
+    QRect widgetRect1 = ui->verticalLayout_17->geometry();
+    qDebug() << widgetRect1.x();
+    qDebug() << event->position().x();
+    qDebug() << event->position().y();
+    /*
+    if(widgetRect1.contains(QPoint(event->position().x(), event->position().y()))) {
+        qDebug() << "click 1";
+    }else {
+        qDebug() << "gay";
+    }
+    */
 }
 
 void MainWindow::requestGainers() {
@@ -600,13 +613,6 @@ void MainWindow::drawMainRowChart(QJsonObject coin) {
     pixMap.save("image/" + coin["id"].toString() +  ".png");
 
 }
-
-
-
-
-
-
-
 
 
 QSplineSeries * MainWindow::returnSerie(QNetworkReply *reply) {

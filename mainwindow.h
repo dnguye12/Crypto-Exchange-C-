@@ -106,6 +106,9 @@ private:
     void drawMainRow(QJsonObject coin);
     void drawMainRowChart(QJsonObject coin);
 
+    //coin manager
+    void openCoinPage(QMouseEvent* event);
+
 
     void drawChartLine(QSplineSeries* series);
 
