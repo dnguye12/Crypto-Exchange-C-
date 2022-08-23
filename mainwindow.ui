@@ -962,8 +962,14 @@ border-radius: 10px;</string>
                  <item>
                   <widget class="ClickableWidgetTrending" name="trendingHolders" native="true">
                    <layout class="QVBoxLayout" name="verticalLayout_17">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
                     <property name="topMargin">
                      <number>1</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
                     </property>
                     <property name="bottomMargin">
                      <number>10</number>
