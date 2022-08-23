@@ -78,6 +78,7 @@ private:
     bool reqLosers = false;
     bool reqMain = false;
     bool reqCoin = false;
+    bool reqCoinPage = false;
 
     //headers
     void requestHeader();
@@ -85,6 +86,10 @@ private:
     void percentChangeHeader(QString item, double n);
 
     //trending
+    QString trendingUrl1;
+    QString trendingUrl2;
+    QString trendingUrl3;
+
     bool trendingImg1 = false;
     bool trendingImg2 = false;
     bool trendingImg3 = false;

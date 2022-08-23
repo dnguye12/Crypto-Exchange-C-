@@ -12,3 +12,7 @@ CoinPage::~CoinPage()
 {
     delete ui;
 }
+
+void CoinPage::constructor(QNetworkReply *reply) {
+    qDebug() << "gay";
+}

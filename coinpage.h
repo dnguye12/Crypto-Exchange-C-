@@ -19,9 +19,7 @@ public:
     explicit CoinPage(QWidget *parent = nullptr);
     ~CoinPage();
 
-    QNetworkRequest request;
-
-    void constructor(QString coinUrl, QNetworkAccessManager *manager);
+    void constructor(QNetworkReply *reply);
 
 private:
     Ui::CoinPage *ui;

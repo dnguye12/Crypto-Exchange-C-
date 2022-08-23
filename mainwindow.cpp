@@ -78,6 +78,7 @@ void MainWindow::resetChoices() {
     reqLosers = false;
     reqMain = false;
     reqCoin = false;
+    reqCoinPage = false;
 }
 
 void MainWindow::managerFinished(QNetworkReply *reply) {
@@ -106,6 +107,12 @@ void MainWindow::managerFinished(QNetworkReply *reply) {
 
     if(reqMain) {
         updateMain(reply);
+    }
+    if(reqCoinPage) {
+        CoinPage cp;
+        //cp.constructor(reply);
+        //this->hide();
+        cp.show();
     }
     resetChoices();
 }
@@ -262,6 +269,7 @@ void MainWindow::managerImgFinished(QNetworkReply *reply) {
 }
 
 void MainWindow::updateTrendings(QNetworkReply *reply) {
+    connect(ui->trendingHolders, &ClickableWidgetTrending::clicked, this, &MainWindow::openCoinPage);
     QJsonParseError jsonError;
     QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
     if(jsonError.error != QJsonParseError::NoError) {
@@ -285,8 +293,7 @@ void MainWindow::updateTrendings(QNetworkReply *reply) {
     request.setUrl(urlP1);
     ImgManager->get(request);
     imgloop.exec();
-    QString helper1  = "https://api.coingecko.com/api/v3/coins/" + jsonArray[0].toObject()["item"].toObject()["id"].toString() + "?localization=false&tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=false";
-    connect(ui->trendingCoin_1, &ClickableWidgetTrending::clicked, this, &MainWindow::openCoinPage);
+    trendingUrl1  = "https://api.coingecko.com/api/v3/coins/" + jsonArray[0].toObject()["item"].toObject()["id"].toString() + "?localization=false&tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=false";
 
     ui->trendingName2->setText(jsonArray[1].toObject()["item"].toObject()["name"].toString());
     ui->trendingSymbol2->setText(jsonArray[1].toObject()["item"].toObject()["symbol"].toString());
@@ -301,6 +308,7 @@ void MainWindow::updateTrendings(QNetworkReply *reply) {
     request.setUrl(urlP2);
     ImgManager->get(request);
     imgloop.exec();
+    trendingUrl2  = "https://api.coingecko.com/api/v3/coins/" + jsonArray[1].toObject()["item"].toObject()["id"].toString() + "?localization=false&tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=false";
 
 
     ui->trendingName3->setText(jsonArray[2].toObject()["item"].toObject()["name"].toString());
@@ -315,20 +323,27 @@ void MainWindow::updateTrendings(QNetworkReply *reply) {
     request.setUrl(urlP3);
     ImgManager->get(request);
     imgloop.exec();
+    trendingUrl3  = "https://api.coingecko.com/api/v3/coins/" + jsonArray[2].toObject()["item"].toObject()["id"].toString() + "?localization=false&tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=false";
 }
 
 void MainWindow::openCoinPage(QMouseEvent* event) {
-    QRect widgetRect1 = ui->verticalLayout_17->geometry();
-    qDebug() << widgetRect1.x();
-    qDebug() << event->position().x();
-    qDebug() << event->position().y();
-    /*
-    if(widgetRect1.contains(QPoint(event->position().x(), event->position().y()))) {
-        qDebug() << "click 1";
-    }else {
-        qDebug() << "gay";
+    QRect widgetRect1 = ui->trendingHolders->geometry();
+    int h = widgetRect1.height();
+    int y = event->position().y();
+    resetChoices();
+    reqCoinPage = true;
+    if(y <= 1.0 * h / 3) {
+        request.setUrl(QUrl(trendingUrl1));
+        manager->get(request);
     }
-    */
+    if(y <= 1.0 * h / 3 * 2) {
+        request.setUrl(QUrl(trendingUrl2));
+        manager->get(request);
+    }
+    if(y <= h) {
+        request.setUrl(QUrl(trendingUrl3));
+        manager->get(request);
+    }
 }
 
 void MainWindow::requestGainers() {
