@@ -489,6 +489,9 @@ QPushButton:hover:!pressed {
       </property>
       <item>
        <widget class="QScrollArea" name="scrollArea">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
         <property name="verticalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOn</enum>
         </property>
@@ -507,7 +510,7 @@ QPushButton:hover:!pressed {
            <x>0</x>
            <y>0</y>
            <width>1293</width>
-           <height>896</height>
+           <height>898</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">

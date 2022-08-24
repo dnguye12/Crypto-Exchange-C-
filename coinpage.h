@@ -5,6 +5,7 @@
 
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
+#include <QNetworkReply>
 #include <QEventLoop>
 
 namespace Ui {
@@ -23,6 +24,13 @@ public:
 
 private:
     Ui::CoinPage *ui;
+
+    QNetworkAccessManager *manager;
+    QNetworkRequest request;
+    QEventLoop loop;
+
+private slots:
+    void managerFinished(QNetworkReply* reply);
 };
 
 #endif // COINPAGE_H
