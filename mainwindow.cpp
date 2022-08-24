@@ -513,9 +513,16 @@ void MainWindow::drawMainRow(QJsonObject coin) {
 
     QLocale locale(QLocale::English);
 
-    QTableWidgetItem *price = new QTableWidgetItem("$" + locale.toString(coin["current_price"].toDouble(), 'f', 3));
-    price->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-    ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 1, price);
+    double prix = coin["current_price"].toDouble();
+    if(prix < 1) {
+        QTableWidgetItem *price = new QTableWidgetItem("$" + locale.toString(prix, 'f', 6));
+        price->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 1, price);
+    }else {
+        QTableWidgetItem *price = new QTableWidgetItem("$" + locale.toString(prix, 'f', 3));
+        price->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+        ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 1, price);
+    }
 
     double helper;
     helper = coin["price_change_percentage_1h_in_currency"].toDouble();

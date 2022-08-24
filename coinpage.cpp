@@ -31,6 +31,7 @@ void CoinPage::constructor(QNetworkReply *reply) {
 
     QJsonObject jsonObj = jsonDoc.object();
 
+    //Section 1
     ui->CoinName->setText(jsonObj["name"].toString());
     ui->CoinSymbol->setText(jsonObj["symbol"].toString().toUpper());
     ui->CoinRank->setText("Rank #" + QString::number(jsonObj["market_cap_rank"].toInteger()));
@@ -48,7 +49,6 @@ void CoinPage::constructor(QNetworkReply *reply) {
     ui->CoinPrice->setText("$" + QString::number(price, 'f', 2));
     }
 
-    //color: white;\nbackground-color: rgb(128, 138, 157);\nborder-radius: 5px;\npadding: 10px 15px;\nmargin-left: 15px;
     if(jsonObj["market_data"].toObject()["price_change_percentage_24h"].toDouble() >= 0) {
         ui->CoinChange->setStyleSheet("color: white;\nbackground-color: rgb(61, 174, 35);\nborder-radius: 5px;\npadding: 10px 15px;\nmargin-left: 15px;");
         ui->CoinChange->setText("▲" + QString::number(jsonObj["market_data"].toObject()["price_change_percentage_24h"].toDouble(), 'f', 2) + "%");
@@ -62,6 +62,32 @@ void CoinPage::constructor(QNetworkReply *reply) {
     request.setUrl(QUrl(jsonObj["image"].toObject()["large"].toString()));
     manager->get(request);
     loop.exec();
+
+
+    //Section 2
+    QLocale locale(QLocale::English);
+    ui->CoinMarketCap->setText("$" + locale.toString(jsonObj["market_data"].toObject()["market_cap"].toObject()["usd"].toDouble(), 'f', 0));
+
+    if(jsonObj["market_data"].toObject()["market_cap_change_percentage_24h"].toDouble() >= 0) {
+        ui->CoinMarketCapChange->setStyleSheet("color: rgb(61, 174, 35);");
+        ui->CoinMarketCapChange->setText("▲ " + QString::number(jsonObj["market_data"].toObject()["market_cap_change_percentage_24h"].toDouble(), 'f', 2) + "%");
+    }else {
+        ui->CoinMarketCapChange->setStyleSheet("color: rgb(208, 2, 27);");
+        ui->CoinMarketCapChange->setText("▼ " + QString::number(jsonObj["market_data"].toObject()["market_cap_change_percentage_24h"].toDouble(), 'f', 2) + "%");
+    }
+
+    ui->CoinFullyDiluted->setText("$" + locale.toString(jsonObj["market_data"].toObject()["fully_diluted_valuation"].toObject()["usd"].toDouble(), 'f', 0));
+
+    ui->CoinVolume->setText("$" + locale.toString(jsonObj["market_data"].toObject()["total_volume"].toObject()["usd"].toDouble(), 'f', 0));
+    ui->CoinVolumeDivided->setText(locale.toString(jsonObj["market_data"].toObject()["total_volume"].toObject()["usd"].toDouble() / jsonObj["market_data"].toObject()["market_cap"].toObject()["usd"].toDouble(), 'f', 5));
+
+    ui->CoinSupply->setText(locale.toString(jsonObj["market_data"].toObject()["circulating_supply"].toDouble(), 'f', 0) + " " + jsonObj["symbol"].toString().toUpper());
+    ui->CoinSupplyTotal->setText(locale.toString(jsonObj["market_data"].toObject()["total_supply"].toDouble(), 'f', 0));
+    if(jsonObj["market_data"].toObject()["max_supply"].isNull()) {
+        ui->CoinSupplyMax->setText("--");
+    }else {
+        ui->CoinSupplyMax->setText(locale.toString(jsonObj["market_data"].toObject()["max_supply"].toDouble(), 'f', 0));
+    }
 }
 
 void CoinPage::managerFinished(QNetworkReply* reply) {
