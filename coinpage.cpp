@@ -14,11 +14,15 @@ CoinPage::CoinPage(QWidget *parent) :
     manager = new QNetworkAccessManager();
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(managerFinished(QNetworkReply*)));
     connect(manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
+
 }
 
 CoinPage::~CoinPage()
 {
     delete ui;
+}
+
+void CoinPage::TestFunc(QMouseEvent *event) {
 }
 
 void CoinPage::constructor(QNetworkReply *reply) {
@@ -31,14 +35,19 @@ void CoinPage::constructor(QNetworkReply *reply) {
 
     QJsonObject jsonObj = jsonDoc.object();
 
-    //Section 1
+    section1(jsonObj);
+    section2(jsonObj);
+    section2Links(jsonObj);
+}
+
+void CoinPage::section1(QJsonObject jsonObj) {
     ui->CoinName->setText(jsonObj["name"].toString());
     ui->CoinSymbol->setText(jsonObj["symbol"].toString().toUpper());
     ui->CoinRank->setText("Rank #" + QString::number(jsonObj["market_cap_rank"].toInteger()));
     if(jsonObj["categories"].toArray().size() == 0) {
         ui->CoinType->setVisible(false);
     }else {
-    ui->CoinType->setText(jsonObj["categories"].toArray()[0].toString());
+        ui->CoinType->setText(jsonObj["categories"].toArray()[0].toString());
     }
 
     ui->CoinPriceSmall->setText(ui->CoinName->text() + " Price (" + ui->CoinSymbol->text() + ")");
@@ -46,7 +55,7 @@ void CoinPage::constructor(QNetworkReply *reply) {
     if(price < 1) {
         ui->CoinPrice->setText("$" + QString::number(price, 'f', 6));
     }else {
-    ui->CoinPrice->setText("$" + QString::number(price, 'f', 2));
+        ui->CoinPrice->setText("$" + QString::number(price, 'f', 2));
     }
 
     if(jsonObj["market_data"].toObject()["price_change_percentage_24h"].toDouble() >= 0) {
@@ -62,9 +71,9 @@ void CoinPage::constructor(QNetworkReply *reply) {
     request.setUrl(QUrl(jsonObj["image"].toObject()["large"].toString()));
     manager->get(request);
     loop.exec();
+}
 
-
-    //Section 2
+void CoinPage::section2(QJsonObject jsonObj) {
     QLocale locale(QLocale::English);
     ui->CoinMarketCap->setText("$" + locale.toString(jsonObj["market_data"].toObject()["market_cap"].toObject()["usd"].toDouble(), 'f', 0));
 
@@ -87,6 +96,50 @@ void CoinPage::constructor(QNetworkReply *reply) {
         ui->CoinSupplyMax->setText("--");
     }else {
         ui->CoinSupplyMax->setText(locale.toString(jsonObj["market_data"].toObject()["max_supply"].toDouble(), 'f', 0));
+    }
+}
+
+void CoinPage::setUpComboBox(QJsonObject jsonObj, QString section, QComboBox* cb) {
+    QJsonArray arr = jsonObj["links"].toObject()[section].toArray();
+    if(arr.size() == 0 or arr[0].toString() == "") {
+        cb->setVisible(false);
+    }else {
+        for(int i = 0; i < arr.size(); i++) {
+            if(arr[i].toString() == "") {
+                return;
+            }
+            cb->addItem(linkShort(arr[i].toString()));
+        }
+    }
+}
+
+QString CoinPage::linkShort(QString link) {
+    QUrl url = *new QUrl(link);
+    url = url.adjusted(QUrl::RemoveScheme);
+    url = url.adjusted(QUrl::RemovePath);
+    url = url.adjusted(QUrl::RemovePort);
+    return url.toString(QUrl::None).remove("/");
+}
+
+void CoinPage::section2Links(QJsonObject jsonObj) {
+    setUpComboBox(jsonObj, "homepage", ui->CoinHomepage);
+    setUpComboBox(jsonObj, "blockchain_site", ui->CoinWebsite);
+    setUpComboBox(jsonObj, "official_forum_url", ui->CoinForum);
+    setUpComboBox(jsonObj, "chat_url", ui->CoinChat);
+    setUpComboBox(jsonObj, "announcement_url", ui->CoinAnnouncement);
+    setUpComboBox(jsonObj, "repos_url", ui->CoinRepos);
+
+    if(jsonObj["links"].toObject()["twitter_screen_name"].toString() != "") {
+        ui->CoinSocialMedia->addItem(QIcon(":/CoinPage/icons/CoinPage/twitter.png"), "Twitter");
+    }
+    if(jsonObj["links"].toObject()["facebook_username"].toString() != "") {
+        ui->CoinSocialMedia->addItem(QIcon(":/CoinPage/icons/CoinPage/facebook.png"), "Facebook");
+    }
+    if(jsonObj["links"].toObject()["telegram_channel_identifier"].toString() != "") {
+        ui->CoinSocialMedia->addItem(QIcon(":/CoinPage/icons/CoinPage/telegram.png"), "Telegram");
+    }
+    if(jsonObj["links"].toObject()["subreddit_url"].toString() != "") {
+        ui->CoinSocialMedia->addItem(QIcon(":/CoinPage/icons/CoinPage/reddit.png"), "Reddit");
     }
 }
 

@@ -19,4 +19,17 @@
         <file>icons/line-chart.png</file>
         <file>icons/mountain-chart.png</file>
     </qresource>
+    <qresource prefix="/CoinPage">
+        <file>icons/CoinPage/announcement.png</file>
+        <file>icons/CoinPage/chat.png</file>
+        <file>icons/CoinPage/forum.png</file>
+        <file>icons/CoinPage/home.png</file>
+        <file>icons/CoinPage/link.png</file>
+        <file>icons/CoinPage/person.png</file>
+        <file>icons/CoinPage/repos.png</file>
+        <file>icons/CoinPage/facebook.png</file>
+        <file>icons/CoinPage/reddit.png</file>
+        <file>icons/CoinPage/telegram.png</file>
+        <file>icons/CoinPage/twitter.png</file>
+    </qresource>
 </RCC>
