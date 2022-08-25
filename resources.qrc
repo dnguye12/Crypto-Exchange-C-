@@ -31,5 +31,7 @@
         <file>icons/CoinPage/reddit.png</file>
         <file>icons/CoinPage/telegram.png</file>
         <file>icons/CoinPage/twitter.png</file>
+        <file>icons/CoinPage/github.png</file>
+        <file>icons/CoinPage/bitbucket.png</file>
     </qresource>
 </RCC>

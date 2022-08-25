@@ -127,8 +127,9 @@ void CoinPage::section2Links(QJsonObject jsonObj) {
     setUpComboBox(jsonObj, "official_forum_url", ui->CoinForum);
     setUpComboBox(jsonObj, "chat_url", ui->CoinChat);
     setUpComboBox(jsonObj, "announcement_url", ui->CoinAnnouncement);
-    setUpComboBox(jsonObj, "repos_url", ui->CoinRepos);
 
+
+    //social medias link
     if(jsonObj["links"].toObject()["twitter_screen_name"].toString() != "") {
         ui->CoinSocialMedia->addItem(QIcon(":/CoinPage/icons/CoinPage/twitter.png"), "Twitter");
     }
@@ -140,6 +141,18 @@ void CoinPage::section2Links(QJsonObject jsonObj) {
     }
     if(jsonObj["links"].toObject()["subreddit_url"].toString() != "") {
         ui->CoinSocialMedia->addItem(QIcon(":/CoinPage/icons/CoinPage/reddit.png"), "Reddit");
+    }
+
+    //git link
+    if(jsonObj["links"].toObject()["github"].toArray().size() == 0 and jsonObj["links"].toObject()["bitbucket"].toArray().size() == 0) {
+        ui->CoinRepos->setVisible(false);
+    }else {
+        if(jsonObj["links"].toObject()["github"].toArray().size() != 0) {
+            ui->CoinRepos->addItem(QIcon(":/CoinPage/icons/CoinPage/github.png"), "Github");
+        }
+        if(jsonObj["links"].toObject()["bitbucket"].toArray().size() != 0) {
+            ui->CoinRepos->addItem(QIcon(":/CoinPage/icons/CoinPage/bitbucket.png"), "Bit Bucket");
+        }
     }
 }
 
