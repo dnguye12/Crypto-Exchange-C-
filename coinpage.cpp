@@ -5,6 +5,9 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
+#include <QListView>
+
+
 CoinPage::CoinPage(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::CoinPage)
@@ -122,12 +125,27 @@ QString CoinPage::linkShort(QString link) {
 }
 
 void CoinPage::section2Links(QJsonObject jsonObj) {
-    setUpComboBox(jsonObj, "homepage", ui->CoinHomepage);
-    setUpComboBox(jsonObj, "blockchain_site", ui->CoinWebsite);
-    setUpComboBox(jsonObj, "official_forum_url", ui->CoinForum);
-    setUpComboBox(jsonObj, "chat_url", ui->CoinChat);
-    setUpComboBox(jsonObj, "announcement_url", ui->CoinAnnouncement);
+    QListView* helper;
 
+    setUpComboBox(jsonObj, "homepage", ui->CoinHomepage);
+    helper = qobject_cast<QListView *>(ui->CoinHomepage->view());
+    helper->setRowHidden(0, true);
+
+    setUpComboBox(jsonObj, "blockchain_site", ui->CoinWebsite);
+    helper = qobject_cast<QListView *>(ui->CoinWebsite->view());
+    helper->setRowHidden(0, true);
+
+    setUpComboBox(jsonObj, "official_forum_url", ui->CoinForum);
+    helper = qobject_cast<QListView *>(ui->CoinForum->view());
+    helper->setRowHidden(0, true);
+
+    setUpComboBox(jsonObj, "chat_url", ui->CoinChat);
+    helper = qobject_cast<QListView *>(ui->CoinChat->view());
+    helper->setRowHidden(0, true);
+
+    setUpComboBox(jsonObj, "announcement_url", ui->CoinAnnouncement);
+    helper = qobject_cast<QListView *>(ui->CoinAnnouncement->view());
+    helper->setRowHidden(0, true);
 
     //social medias link
     if(jsonObj["links"].toObject()["twitter_screen_name"].toString() != "") {
@@ -143,6 +161,9 @@ void CoinPage::section2Links(QJsonObject jsonObj) {
         ui->CoinSocialMedia->addItem(QIcon(":/CoinPage/icons/CoinPage/reddit.png"), "Reddit");
     }
 
+    helper = qobject_cast<QListView *>(ui->CoinSocialMedia->view());
+    helper->setRowHidden(0, true);
+
     //git link
     if(jsonObj["links"].toObject()["github"].toArray().size() == 0 and jsonObj["links"].toObject()["bitbucket"].toArray().size() == 0) {
         ui->CoinRepos->setVisible(false);
@@ -154,6 +175,9 @@ void CoinPage::section2Links(QJsonObject jsonObj) {
             ui->CoinRepos->addItem(QIcon(":/CoinPage/icons/CoinPage/bitbucket.png"), "Bit Bucket");
         }
     }
+
+    helper = qobject_cast<QListView *>(ui->CoinRepos->view());
+    helper->setRowHidden(0, true);
 }
 
 void CoinPage::managerFinished(QNetworkReply* reply) {
