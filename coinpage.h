@@ -10,6 +10,7 @@
 
 #include <QComboBox>
 
+#include <QJsonObject>
 
 namespace Ui {
 class CoinPage;
@@ -32,6 +33,8 @@ private:
     QNetworkRequest request;
     QEventLoop loop;
 
+    QJsonObject helperObj;
+
     //functions
     void section1(QJsonObject jsonObj);
 
@@ -45,6 +48,8 @@ private slots:
     void managerFinished(QNetworkReply* reply);
 
     void TestFunc(QMouseEvent *event);
+
+    void activateComboBox(int index);
 };
 
 #endif // COINPAGE_H

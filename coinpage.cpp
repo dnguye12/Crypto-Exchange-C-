@@ -2,11 +2,10 @@
 #include "ui_coinpage.h"
 
 #include <QJsonParseError>
-#include <QJsonObject>
 #include <QJsonArray>
 
 #include <QListView>
-
+#include <QDesktopServices>
 
 CoinPage::CoinPage(QWidget *parent) :
     QMainWindow(parent),
@@ -126,26 +125,32 @@ QString CoinPage::linkShort(QString link) {
 
 void CoinPage::section2Links(QJsonObject jsonObj) {
     QListView* helper;
+    helperObj = jsonObj;
 
     setUpComboBox(jsonObj, "homepage", ui->CoinHomepage);
     helper = qobject_cast<QListView *>(ui->CoinHomepage->view());
     helper->setRowHidden(0, true);
+    connect(ui->CoinHomepage, &QComboBox::activated, this, &CoinPage::activateComboBox);
 
     setUpComboBox(jsonObj, "blockchain_site", ui->CoinWebsite);
     helper = qobject_cast<QListView *>(ui->CoinWebsite->view());
     helper->setRowHidden(0, true);
+    connect(ui->CoinWebsite, &QComboBox::activated, this, &CoinPage::activateComboBox);
 
     setUpComboBox(jsonObj, "official_forum_url", ui->CoinForum);
     helper = qobject_cast<QListView *>(ui->CoinForum->view());
     helper->setRowHidden(0, true);
+    connect(ui->CoinForum, &QComboBox::activated, this, &CoinPage::activateComboBox);
 
     setUpComboBox(jsonObj, "chat_url", ui->CoinChat);
     helper = qobject_cast<QListView *>(ui->CoinChat->view());
     helper->setRowHidden(0, true);
+    connect(ui->CoinChat, &QComboBox::activated, this, &CoinPage::activateComboBox);
 
     setUpComboBox(jsonObj, "announcement_url", ui->CoinAnnouncement);
     helper = qobject_cast<QListView *>(ui->CoinAnnouncement->view());
     helper->setRowHidden(0, true);
+    connect(ui->CoinAnnouncement, &QComboBox::activated, this, &CoinPage::activateComboBox);
 
     //social medias link
     if(jsonObj["links"].toObject()["twitter_screen_name"].toString() != "") {
@@ -163,6 +168,7 @@ void CoinPage::section2Links(QJsonObject jsonObj) {
 
     helper = qobject_cast<QListView *>(ui->CoinSocialMedia->view());
     helper->setRowHidden(0, true);
+    connect(ui->CoinSocialMedia, &QComboBox::activated, this, &CoinPage::activateComboBox);
 
     //git link
     if(jsonObj["links"].toObject()["github"].toArray().size() == 0 and jsonObj["links"].toObject()["bitbucket"].toArray().size() == 0) {
@@ -178,6 +184,61 @@ void CoinPage::section2Links(QJsonObject jsonObj) {
 
     helper = qobject_cast<QListView *>(ui->CoinRepos->view());
     helper->setRowHidden(0, true);
+    connect(ui->CoinRepos, &QComboBox::activated, this, &CoinPage::activateComboBox);
+}
+
+void CoinPage::activateComboBox(int index) {
+    QComboBox *s = qobject_cast<QComboBox*> (sender());
+    if(s == ui->CoinHomepage) {
+        QString url = helperObj["links"].toObject()["homepage"].toArray()[index - 1].toString();
+        QDesktopServices::openUrl(QUrl(url));
+    }
+    if(s == ui->CoinWebsite) {
+        QString url = helperObj["links"].toObject()["blockchain_site"].toArray()[index - 1].toString();
+        QDesktopServices::openUrl(QUrl(url));
+    }
+    if(s == ui->CoinForum) {
+        QString url = helperObj["links"].toObject()["official_forum_url"].toArray()[index - 1].toString();
+        QDesktopServices::openUrl(QUrl(url));
+    }
+    if(s == ui->CoinChat) {
+        QString url = helperObj["links"].toObject()["chat_url"].toArray()[index - 1].toString();
+        QDesktopServices::openUrl(QUrl(url));
+    }
+    if(s == ui->CoinAnnouncement) {
+        QString url = helperObj["links"].toObject()["announcement_url"].toArray()[index - 1].toString();
+        QDesktopServices::openUrl(QUrl(url));
+    }
+    if(s == ui->CoinSocialMedia) {
+        if(s->itemText(index) == "Twitter") {
+            QString url = "https://twitter.com/" + helperObj["links"].toObject()["twitter_screen_name"].toString();
+            QDesktopServices::openUrl(QUrl(url));
+        }
+        if(s->itemText(index) == "Facebook") {
+            QString url = "https://www.facebook.com/" + helperObj["links"].toObject()["facebook_username"].toString() + "/";
+            QDesktopServices::openUrl(QUrl(url));
+        }
+        if(s->itemText(index) == "Telegram") {
+            QString url = "https://t.me/" + helperObj["links"].toObject()["telegram_channel_identifier"].toString();
+            QDesktopServices::openUrl(QUrl(url));
+        }
+        if(s->itemText(index) == "Reddit") {
+            QString url = "https://www.reddit.com/r/" + helperObj["links"].toObject()["subreddit_url"].toString();
+            QDesktopServices::openUrl(QUrl(url));
+        }
+    }
+
+    if(s == ui->CoinRepos) {
+        if(s->itemText(index) == "Github") {
+            QString url = "https://github.com/" + helperObj["links"].toObject()["repos_url"].toObject()["github"].toArray()[0].toString();
+            QDesktopServices::openUrl(QUrl(url));
+        }
+        if(s->itemText(index) == "Bit Bucket") {
+            QString url = "https://bitbucket.org/" + helperObj["links"].toObject()["repos_url"].toObject()["bitbucket"].toArray()[0].toString();
+            QDesktopServices::openUrl(QUrl(url));
+        }
+    }
+    s->setCurrentIndex(0);
 }
 
 void CoinPage::managerFinished(QNetworkReply* reply) {
