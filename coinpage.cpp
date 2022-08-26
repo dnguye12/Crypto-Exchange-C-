@@ -7,6 +7,8 @@
 #include <QListView>
 #include <QDesktopServices>
 
+#include <QCategoryAxis>
+
 CoinPage::CoinPage(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::CoinPage)
@@ -24,7 +26,9 @@ CoinPage::~CoinPage()
     delete ui;
 }
 
-void CoinPage::TestFunc(QMouseEvent *event) {
+void CoinPage::resetReq() {
+    reqIcon = false;
+    reqChart = false;
 }
 
 void CoinPage::constructor(QNetworkReply *reply) {
@@ -40,9 +44,11 @@ void CoinPage::constructor(QNetworkReply *reply) {
     section1(jsonObj);
     section2(jsonObj);
     section2Links(jsonObj);
+    on_changeTimeToday_2_clicked();
 }
 
 void CoinPage::section1(QJsonObject jsonObj) {
+    coinId = jsonObj["id"].toString();
     ui->CoinName->setText(jsonObj["name"].toString());
     ui->CoinSymbol->setText(jsonObj["symbol"].toString().toUpper());
     ui->CoinRank->setText("Rank #" + QString::number(jsonObj["market_cap_rank"].toInteger()));
@@ -71,6 +77,7 @@ void CoinPage::section1(QJsonObject jsonObj) {
     ui->CoinHigh->setText("High(24h):$" + QString::number(jsonObj["market_data"].toObject()["high_24h"].toObject()["usd"].toDouble(), 'f', 2));
 
     request.setUrl(QUrl(jsonObj["image"].toObject()["large"].toString()));
+    reqIcon = true;
     manager->get(request);
     loop.exec();
 }
@@ -241,14 +248,266 @@ void CoinPage::activateComboBox(int index) {
     s->setCurrentIndex(0);
 }
 
+QSplineSeries* CoinPage::returnSerie(QNetworkReply *reply) {
+    QJsonParseError jsonError;
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
+
+    QSplineSeries *series = new QSplineSeries();
+
+    if(jsonError.error != QJsonParseError::NoError) {
+        qDebug() << "fromJson failed: " << jsonError.errorString();
+        return series;
+    }
+
+
+
+    if(jsonDoc.isObject()) {
+        QJsonObject jsonObj = jsonDoc.object();
+        QJsonArray jsonPrice = jsonObj["prices"].toArray();
+
+        QList<double> values = {};
+
+
+        for(int i = 0; i < jsonPrice.size(); i++) {
+            series->append(jsonPrice[i].toArray()[0].toDouble(),jsonPrice[i].toArray()[1].toDouble());
+        }
+    }
+    return series;
+}
+
+void CoinPage::drawChartLine(QSplineSeries* series) {
+
+    QChart *chart = new QChart();
+    chart->legend()->hide();
+    chart->addSeries(series);
+
+    //chart line
+    QPen pen;
+    if(series->at(0).y() <= series->at(series->count()-1).y()) {
+        pen.setColor(QColor(61, 174, 35));
+    }else {
+        pen.setColor(QColor(208, 2, 27));
+    }
+    pen.setWidth(2);
+    series->setPen(pen);
+
+    //2 Axis
+    QCategoryAxis *axisX = new QCategoryAxis();
+    QCategoryAxis *axisY = new QCategoryAxis();
+
+    QPen axisPen(QColor(237,237,237));
+    axisPen.setWidth(2);
+    axisX->setLinePen(axisPen);
+    axisY->setLinePen(axisPen);
+
+    QFont labelsFont;
+    labelsFont.setPixelSize(12);
+    labelsFont.setWeight(QFont::Bold);
+    axisX->setLabelsFont(labelsFont);
+    axisY->setLabelsFont(labelsFont);
+    QBrush labelBrush(QColor(119,121,123));
+    axisX->setLabelsBrush(labelBrush);
+    axisY->setLabelsBrush(labelBrush);
+
+
+    double minX = series->at(0).x();
+    double maxX = series->at(0).x();
+    double minY = series->at(0).y();
+    double maxY = series->at(0).y();
+    for(int i = 1; i < series->count(); i++) {
+        if(series->at(i).y() > maxY) {
+            maxY = series->at(i).y();
+        }
+        if(series->at(i).y() < minY) {
+            minY = series->at(i).y();
+        }
+        if(series->at(i).x() > maxX) {
+            maxX = series->at(i).x();
+        }
+        if(series->at(i).x() < minX) {
+            minX = series->at(i).x();
+        }
+    }
+
+    //Axis X range
+    double gap = (maxX - minX) / 6;
+    for(double i = minX + gap; i < maxX; i+=gap) {
+        QDateTime timeStamp;
+        timeStamp.setMSecsSinceEpoch(i);
+        QString helper="";
+        if(timeSpan != "1d") {
+            QDate dateStamp = timeStamp.date();
+            helper= ( QString::number(dateStamp.day()) + "/" + QString::number(dateStamp.month()) );
+        }else {
+            QTime timeHelper = timeStamp.time();
+            helper = ( QString::number(timeHelper.hour()) + ":" + QString::number(timeHelper.minute()) );
+        }
+        axisX->append(helper, i);
+    }
+    axisX->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
+
+    //Axis Y range
+    double gapY = (maxY - minY) / 4;
+    axisY->append("", minY - gapY / 2);
+    axisY->append(QString::number(minY), minY);
+    axisY->append(QString::number(minY + gapY), (minY + gapY));
+    axisY->append(QString::number(minY + gapY * 2), (minY + gapY * 2));
+    axisY->append(QString::number(minY + gapY * 3), (minY + gapY * 3));
+    axisY->append(QString::number(maxY), maxY);
+    axisY->append("", maxY + gapY / 2);
+
+    axisY->setRange(minY - gapY / 2, maxY + gapY / 2);
+    axisY->setGridLineVisible(false);
+    axisY->setLabelsPosition(QCategoryAxis::AxisLabelsPositionOnValue);
+
+    //Set chart
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignRight);
+    series->attachAxis(axisX);
+    series->attachAxis(axisY);
+
+    ui->chartView_2->setChart(chart);
+    ui->chartView_2->setRenderHint(QPainter::Antialiasing);
+}
+
 void CoinPage::managerFinished(QNetworkReply* reply) {
     QPixmap pixmap;
     if (reply->error() != QNetworkReply::NoError) {
         qDebug() << "Error in" << reply->url() << ":" << reply->errorString();
         return;
     }
+    if(reqIcon) {
     QByteArray img = reply->readAll();
     pixmap.loadFromData(img);
     pixmap = pixmap.scaled(QSize(32,32), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     ui->CoinImage->setPixmap(pixmap);
+
+    }
+    if(reqChart) {
+        QSplineSeries* serie = returnSerie(reply);
+        drawChartLine(serie);
+    }
+    resetReq();
+}
+
+int CoinPage::timeSpanDateCount(QString timeSpan) {
+    QDateTime now = QDateTime::currentDateTimeUtc();
+    int monthToAdd = 0;
+    if(timeSpan == "1d" or timeSpan == "1w") {
+        return -1;
+    }else if(timeSpan=="ytd") {
+        int currentYear = now.date().year();
+        QDate ytd{currentYear, 1, 1};
+        return -1 * now.daysTo(ytd.startOfDay());
+
+    }else if(timeSpan=="12m") {
+        monthToAdd = 12;
+    }
+    else {
+        monthToAdd = timeSpan.at(0).digitValue();
+    }
+    QDateTime span = now.addMonths(-1 * monthToAdd);
+    return span.daysTo(now);
+}
+
+void CoinPage::on_changeTimeToday_2_clicked()
+{
+    if(timeSpan == "1d") {
+        return;
+    }
+    timeSpan = "1d";
+    QString chartUrl = "https://api.coingecko.com/api/v3/coins/" + coinId + "/market_chart?vs_currency=usd&days=1";
+    reqChart = true;
+    request.setUrl(chartUrl);
+    manager->get(request);
+    loop.exec();
+}
+
+
+void CoinPage::on_changeTime1W_2_clicked()
+{
+    if(timeSpan == "1w") {
+        return;
+    }
+    timeSpan = "1w";
+    QString chartUrl = "https://api.coingecko.com/api/v3/coins/" + coinId + "/market_chart?vs_currency=usd&days=7";
+    reqChart = true;
+    request.setUrl(chartUrl);
+    manager->get(request);
+    loop.exec();
+}
+
+
+void CoinPage::on_changeTime1M_2_clicked()
+{
+    if(timeSpan == "1m") {
+        return;
+    }
+    timeSpan = "1m";
+    int days = timeSpanDateCount(timeSpan);
+    QString chartUrl = "https://api.coingecko.com/api/v3/coins/" + coinId + "/market_chart?vs_currency=usd&days=" + QString::number(days);
+    reqChart = true;
+    request.setUrl(chartUrl);
+    manager->get(request);
+    loop.exec();
+}
+
+
+void CoinPage::on_changeTime3M_2_clicked()
+{
+    if(timeSpan == "3m") {
+        return;
+    }
+    timeSpan = "3m";
+    int days = timeSpanDateCount(timeSpan);
+    QString chartUrl = "https://api.coingecko.com/api/v3/coins/" + coinId + "/market_chart?vs_currency=usd&days=" + QString::number(days);
+    reqChart = true;
+    request.setUrl(chartUrl);
+    manager->get(request);
+    loop.exec();
+}
+
+
+void CoinPage::on_changeTime6M_2_clicked()
+{
+    if(timeSpan == "6m") {
+        return;
+    }
+    timeSpan = "6m";
+    int days = timeSpanDateCount(timeSpan);
+    QString chartUrl = "https://api.coingecko.com/api/v3/coins/" + coinId + "/market_chart?vs_currency=usd&days=" + QString::number(days);
+    reqChart = true;
+    request.setUrl(chartUrl);
+    manager->get(request);
+    loop.exec();
+}
+
+
+void CoinPage::on_changeTime12M_2_clicked()
+{
+    if(timeSpan == "12m") {
+        return;
+    }
+    timeSpan = "12m";
+    int days = timeSpanDateCount(timeSpan);
+    QString chartUrl = "https://api.coingecko.com/api/v3/coins/" + coinId + "/market_chart?vs_currency=usd&days=" + QString::number(days);
+    reqChart = true;
+    request.setUrl(chartUrl);
+    manager->get(request);
+    loop.exec();
+}
+
+
+void CoinPage::on_changeTimeYTD_2_clicked()
+{    if(timeSpan == "ytd") {
+        return;
+    }
+    timeSpan = "ytd";
+    int days = timeSpanDateCount(timeSpan);
+    QString chartUrl = "https://api.coingecko.com/api/v3/coins/" + coinId + "/market_chart?vs_currency=usd&days=" + QString::number(days);
+    reqChart = true;
+    request.setUrl(chartUrl);
+    manager->get(request);
+    loop.exec();
 }

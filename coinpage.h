@@ -12,6 +12,9 @@
 
 #include <QJsonObject>
 
+#include <QSplineSeries>
+
+
 namespace Ui {
 class CoinPage;
 }
@@ -35,7 +38,11 @@ private:
 
     QJsonObject helperObj;
 
+    bool reqIcon = false;
+    bool reqChart = false;
+
     //functions
+    void resetReq();
     void section1(QJsonObject jsonObj);
 
     void section2(QJsonObject jsonObj);
@@ -44,12 +51,24 @@ private:
     QString linkShort(QString link);
     void setUpComboBox(QJsonObject jsonObj, QString section, QComboBox* cb);
 
+    //charts
+    QString coinId;
+    QString timeSpan;
+    int timeSpanDateCount(QString timeSpan);
+    QSplineSeries* returnSerie(QNetworkReply *reply);
+    void drawChartLine(QSplineSeries* series);
+
 private slots:
     void managerFinished(QNetworkReply* reply);
 
-    void TestFunc(QMouseEvent *event);
-
     void activateComboBox(int index);
+    void on_changeTimeToday_2_clicked();
+    void on_changeTimeYTD_2_clicked();
+    void on_changeTime1W_2_clicked();
+    void on_changeTime1M_2_clicked();
+    void on_changeTime3M_2_clicked();
+    void on_changeTime6M_2_clicked();
+    void on_changeTime12M_2_clicked();
 };
 
 #endif // COINPAGE_H

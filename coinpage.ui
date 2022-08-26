@@ -21,21 +21,6 @@
     </sizepolicy>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
-    <property name="spacing">
-     <number>0</number>
-    </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
     <item>
      <widget class="QWidget" name="menulWidget" native="true">
       <property name="sizePolicy">
@@ -497,6 +482,9 @@ QPushButton:hover:!pressed {
       <property name="lineWidth">
        <number>1</number>
       </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAsNeeded</enum>
+      </property>
       <property name="horizontalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
@@ -511,8 +499,8 @@ QPushButton:hover:!pressed {
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1300</width>
-         <height>900</height>
+         <width>1276</width>
+         <height>882</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -550,6 +538,15 @@ QPushButton:hover:!pressed {
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_6">
+               <property name="leftMargin">
+                <number>10</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>10</number>
+               </property>
                <item>
                 <widget class="QLabel" name="CoinImage">
                  <property name="sizePolicy">
@@ -645,6 +642,12 @@ padding: 5px 10px;</string>
              </item>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <property name="leftMargin">
+                <number>10</number>
+               </property>
+               <property name="rightMargin">
+                <number>10</number>
+               </property>
                <item>
                 <widget class="QLabel" name="CoinRank">
                  <property name="sizePolicy">
@@ -1478,17 +1481,413 @@ padding: 5px 10px;</string>
          </widget>
         </item>
         <item>
-         <spacer name="verticalSpacer_10">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+         <layout class="QHBoxLayout" name="horizontalLayout_12">
+          <property name="spacing">
+           <number>6</number>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
+          <property name="topMargin">
+           <number>0</number>
           </property>
-         </spacer>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>15</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_9">
+            <property name="text">
+             <string>Overview</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_12">
+            <property name="text">
+             <string>Historical Data</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_10">
+            <property name="text">
+             <string>News</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_13">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_14">
+            <property name="leftMargin">
+             <number>18</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="coinName_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="changeTimeToday_2">
+              <property name="minimumSize">
+               <size>
+                <width>55</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+              </property>
+              <property name="text">
+               <string>Today</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="changeTime1W_2">
+              <property name="minimumSize">
+               <size>
+                <width>55</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+              </property>
+              <property name="text">
+               <string>1W</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="changeTime1M_2">
+              <property name="minimumSize">
+               <size>
+                <width>55</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+              </property>
+              <property name="text">
+               <string>1M</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="changeTime3M_2">
+              <property name="minimumSize">
+               <size>
+                <width>55</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+              </property>
+              <property name="text">
+               <string>3M</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="changeTime6M_2">
+              <property name="minimumSize">
+               <size>
+                <width>55</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+              </property>
+              <property name="text">
+               <string>6M</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="changeTime12M_2">
+              <property name="minimumSize">
+               <size>
+                <width>55</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+              </property>
+              <property name="text">
+               <string>12M</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="changeTimeYTD_2">
+              <property name="minimumSize">
+               <size>
+                <width>55</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QToolButton {
+border-radius:10px;
+background-color: rgb(242, 243, 244);
+color: rgb(222, 227, 234);
+}
+
+QToolButton:hover:!pressed {
+color: rgb(135, 135, 135)
+}
+
+QToolButton:pressed {
+	background-color: rgb(247, 247, 247);
+	color: rgb(44, 44, 44);
+}</string>
+              </property>
+              <property name="text">
+               <string>YTD</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="changChartType_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+               </font>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>25</width>
+                <height>25</height>
+               </size>
+              </property>
+              <item>
+               <property name="text">
+                <string>  Line</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resources.qrc">
+                 <normaloff>:/charts/icons/line-chart.png</normaloff>:/charts/icons/line-chart.png</iconset>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>  Mountain</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resources.qrc">
+                 <normaloff>:/charts/icons/mountain-chart.png</normaloff>:/charts/icons/mountain-chart.png</iconset>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>  Candle</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resources.qrc">
+                 <normaloff>:/charts/icons/candle-fill-chart.png</normaloff>:/charts/icons/candle-fill-chart.png</iconset>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>  Hollow Candle</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resources.qrc">
+                 <normaloff>:/charts/icons/candle-chart.png</normaloff>:/charts/icons/candle-chart.png</iconset>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QChartView" name="chartView_2"/>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -1497,6 +1896,13 @@ padding: 5px 10px;</string>
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QChartView</class>
+   <extends>QGraphicsView</extends>
+   <header>QtCharts</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resources.qrc"/>
  </resources>

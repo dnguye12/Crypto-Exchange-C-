@@ -30,22 +30,6 @@ private slots:
 
     void managerImgFinished(QNetworkReply *reply);
 
-    void on_pushButton_clicked();
-
-    void on_changeTimeToday_clicked();
-
-    void on_changeTime1W_clicked();
-
-    void on_changeTime1M_clicked();
-
-    void on_changeTime3M_clicked();
-
-    void on_changeTime6M_clicked();
-
-    void on_changeTime12M_clicked();
-
-    void on_changeTimeYTD_clicked();
-
 private:
     //attributes
     Ui::MainWindow *ui;
@@ -113,13 +97,6 @@ private:
 
     //coin manager
     void openCoinPage(QMouseEvent* event);
-
-
-    void drawChartLine(QSplineSeries* series);
-
-    QString getLink(QString id, QString vs_currency, QString days);
-
-    int timeSpanDateCount(QString timeSpan);
 
 
 
