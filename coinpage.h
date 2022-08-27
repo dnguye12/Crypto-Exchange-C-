@@ -13,7 +13,7 @@
 #include <QJsonObject>
 
 #include <QSplineSeries>
-
+#include "callout.h"
 
 namespace Ui {
 class CoinPage;
@@ -57,8 +57,10 @@ private:
     int timeSpanDateCount(QString timeSpan);
     QSplineSeries* returnSerie(QNetworkReply *reply);
     void drawChartLine(QSplineSeries* series);
+    Callout *m_tooltip;
 
 private slots:
+    void test(const QPointF &point, bool state);
     void managerFinished(QNetworkReply* reply);
 
     void activateComboBox(int index);

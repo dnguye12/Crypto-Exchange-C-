@@ -11,7 +11,8 @@
 
 CoinPage::CoinPage(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::CoinPage)
+    ui(new Ui::CoinPage),
+    m_tooltip(0)
 {
     ui->setupUi(this);
 
@@ -44,6 +45,9 @@ void CoinPage::constructor(QNetworkReply *reply) {
     section1(jsonObj);
     section2(jsonObj);
     section2Links(jsonObj);
+
+    //chart
+    ui->chartCoinName->setText(jsonObj["name"].toString() + " Price Chart");
     on_changeTimeToday_2_clicked();
 }
 
@@ -366,9 +370,45 @@ void CoinPage::drawChartLine(QSplineSeries* series) {
     chart->addAxis(axisY, Qt::AlignRight);
     series->attachAxis(axisX);
     series->attachAxis(axisY);
+    connect(series, &QXYSeries::hovered, this, &CoinPage::test);
 
     ui->chartView_2->setChart(chart);
     ui->chartView_2->setRenderHint(QPainter::Antialiasing);
+}
+
+void CoinPage::test(const QPointF &point, bool state) {
+
+    if(m_tooltip == 0) {
+        m_tooltip = new Callout(ui->chartView_2->chart());
+    }
+    QString price = "";
+    if(point.y() < 1) {
+        price = QString::number(point.y());
+    }else {
+        price = QString::number(point.y(), 'f', 2);
+    }
+
+    QString time = "";
+    QDateTime timeStamp;
+    timeStamp.setMSecsSinceEpoch(point.x());
+    if(timeSpan == "1d") {
+        QTime timeHelper = timeStamp.time();
+        time = ( QString::number(timeHelper.hour()) + ":" + QString::number(timeHelper.minute()) );
+    }else {
+        //QDate dateStamp = timeStamp.date();
+        //time = ( QString::number(dateStamp.day()) + "/" + QString::number(dateStamp.month()) );
+        time = timeStamp.toString("ddd d MMMM yyyy");
+    }
+
+    if (state) {
+        m_tooltip->setText(QString("%1\nPrice: $%2 ").arg(time).arg(price));
+        m_tooltip->setAnchor(point);
+        m_tooltip->setZValue(11);
+        m_tooltip->updateGeometry();
+        m_tooltip->show();
+    } else {
+        m_tooltip->hide();
+    }
 }
 
 void CoinPage::managerFinished(QNetworkReply* reply) {
@@ -378,13 +418,14 @@ void CoinPage::managerFinished(QNetworkReply* reply) {
         return;
     }
     if(reqIcon) {
-    QByteArray img = reply->readAll();
-    pixmap.loadFromData(img);
-    pixmap = pixmap.scaled(QSize(32,32), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    ui->CoinImage->setPixmap(pixmap);
+        QByteArray img = reply->readAll();
+        pixmap.loadFromData(img);
+        pixmap = pixmap.scaled(QSize(32,32), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        ui->CoinImage->setPixmap(pixmap);
 
     }
     if(reqChart) {
+        m_tooltip = 0;
         QSplineSeries* serie = returnSerie(reply);
         drawChartLine(serie);
     }
@@ -504,10 +545,10 @@ void CoinPage::on_changeTimeYTD_2_clicked()
         return;
     }
     timeSpan = "ytd";
-    int days = timeSpanDateCount(timeSpan);
-    QString chartUrl = "https://api.coingecko.com/api/v3/coins/" + coinId + "/market_chart?vs_currency=usd&days=" + QString::number(days);
-    reqChart = true;
-    request.setUrl(chartUrl);
-    manager->get(request);
-    loop.exec();
+     int days = timeSpanDateCount(timeSpan);
+      QString chartUrl = "https://api.coingecko.com/api/v3/coins/" + coinId + "/market_chart?vs_currency=usd&days=" + QString::number(days);
+       reqChart = true;
+        request.setUrl(chartUrl);
+         manager->get(request);
+          loop.exec();
 }

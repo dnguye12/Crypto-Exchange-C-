@@ -9,19 +9,23 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    callout.cpp \
     clickablewidgettrending.cpp \
     coin.cpp \
     coinmarketapi.cpp \
     coinpage.cpp \
+    customchartview.cpp \
     discoverwindow.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    callout.h \
     clickablewidgettrending.h \
     coin.h \
     coinmarketapi.h \
     coinpage.h \
+    customchartview.h \
     discoverwindow.h \
     mainwindow.h
 

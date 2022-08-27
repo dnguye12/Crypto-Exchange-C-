@@ -702,6 +702,7 @@ color: black;</string>
                 <widget class="QLabel" name="marketCaptLabel">
                  <property name="font">
                   <font>
+                   <family>Segoe UI Semibold</family>
                    <pointsize>16</pointsize>
                    <bold>false</bold>
                   </font>
@@ -870,8 +871,8 @@ color: black;</string>
              <widget class="QLabel" name="label_3">
               <property name="font">
                <font>
-                <pointsize>24</pointsize>
-                <bold>false</bold>
+                <pointsize>22</pointsize>
+                <bold>true</bold>
                </font>
               </property>
               <property name="text">
@@ -930,7 +931,7 @@ border-radius: 10px;</string>
                       <property name="font">
                        <font>
                         <pointsize>18</pointsize>
-                        <bold>false</bold>
+                        <bold>true</bold>
                        </font>
                       </property>
                       <property name="styleSheet">
@@ -1353,7 +1354,7 @@ border-radius: 10px;</string>
                       <property name="font">
                        <font>
                         <pointsize>18</pointsize>
-                        <bold>false</bold>
+                        <bold>true</bold>
                        </font>
                       </property>
                       <property name="styleSheet">
@@ -1678,7 +1679,7 @@ border-radius: 10px;</string>
                       <property name="font">
                        <font>
                         <pointsize>18</pointsize>
-                        <bold>false</bold>
+                        <bold>true</bold>
                        </font>
                       </property>
                       <property name="styleSheet">
@@ -1982,7 +1983,8 @@ border-radius: 10px;</string>
              <widget class="QLabel" name="label_19">
               <property name="font">
                <font>
-                <pointsize>24</pointsize>
+                <pointsize>22</pointsize>
+                <bold>true</bold>
                </font>
               </property>
               <property name="text">
@@ -2211,372 +2213,6 @@ border: none;</string>
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_5">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_9">
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="coinName">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>TextLabel</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QToolButton" name="changeTimeToday">
-                <property name="minimumSize">
-                 <size>
-                  <width>55</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QToolButton {
-border-radius:10px;
-background-color: rgb(242, 243, 244);
-color: rgb(222, 227, 234);
-}
-
-QToolButton:hover:!pressed {
-color: rgb(135, 135, 135)
-}
-
-QToolButton:pressed {
-	background-color: rgb(247, 247, 247);
-	color: rgb(44, 44, 44);
-}</string>
-                </property>
-                <property name="text">
-                 <string>Today</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QToolButton" name="changeTime1W">
-                <property name="minimumSize">
-                 <size>
-                  <width>55</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QToolButton {
-border-radius:10px;
-background-color: rgb(242, 243, 244);
-color: rgb(222, 227, 234);
-}
-
-QToolButton:hover:!pressed {
-color: rgb(135, 135, 135)
-}
-
-QToolButton:pressed {
-	background-color: rgb(247, 247, 247);
-	color: rgb(44, 44, 44);
-}</string>
-                </property>
-                <property name="text">
-                 <string>1W</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QToolButton" name="changeTime1M">
-                <property name="minimumSize">
-                 <size>
-                  <width>55</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QToolButton {
-border-radius:10px;
-background-color: rgb(242, 243, 244);
-color: rgb(222, 227, 234);
-}
-
-QToolButton:hover:!pressed {
-color: rgb(135, 135, 135)
-}
-
-QToolButton:pressed {
-	background-color: rgb(247, 247, 247);
-	color: rgb(44, 44, 44);
-}</string>
-                </property>
-                <property name="text">
-                 <string>1M</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QToolButton" name="changeTime3M">
-                <property name="minimumSize">
-                 <size>
-                  <width>55</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QToolButton {
-border-radius:10px;
-background-color: rgb(242, 243, 244);
-color: rgb(222, 227, 234);
-}
-
-QToolButton:hover:!pressed {
-color: rgb(135, 135, 135)
-}
-
-QToolButton:pressed {
-	background-color: rgb(247, 247, 247);
-	color: rgb(44, 44, 44);
-}</string>
-                </property>
-                <property name="text">
-                 <string>3M</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QToolButton" name="changeTime6M">
-                <property name="minimumSize">
-                 <size>
-                  <width>55</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QToolButton {
-border-radius:10px;
-background-color: rgb(242, 243, 244);
-color: rgb(222, 227, 234);
-}
-
-QToolButton:hover:!pressed {
-color: rgb(135, 135, 135)
-}
-
-QToolButton:pressed {
-	background-color: rgb(247, 247, 247);
-	color: rgb(44, 44, 44);
-}</string>
-                </property>
-                <property name="text">
-                 <string>6M</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QToolButton" name="changeTime12M">
-                <property name="minimumSize">
-                 <size>
-                  <width>55</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QToolButton {
-border-radius:10px;
-background-color: rgb(242, 243, 244);
-color: rgb(222, 227, 234);
-}
-
-QToolButton:hover:!pressed {
-color: rgb(135, 135, 135)
-}
-
-QToolButton:pressed {
-	background-color: rgb(247, 247, 247);
-	color: rgb(44, 44, 44);
-}</string>
-                </property>
-                <property name="text">
-                 <string>12M</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QToolButton" name="changeTimeYTD">
-                <property name="minimumSize">
-                 <size>
-                  <width>55</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QToolButton {
-border-radius:10px;
-background-color: rgb(242, 243, 244);
-color: rgb(222, 227, 234);
-}
-
-QToolButton:hover:!pressed {
-color: rgb(135, 135, 135)
-}
-
-QToolButton:pressed {
-	background-color: rgb(247, 247, 247);
-	color: rgb(44, 44, 44);
-}</string>
-                </property>
-                <property name="text">
-                 <string>YTD</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="changChartType">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>200</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="sizeAdjustPolicy">
-                 <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>25</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <item>
-                 <property name="text">
-                  <string>  Line</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="resources.qrc">
-                   <normaloff>:/charts/icons/line-chart.png</normaloff>:/charts/icons/line-chart.png</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>  Mountain</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="resources.qrc">
-                   <normaloff>:/charts/icons/mountain-chart.png</normaloff>:/charts/icons/mountain-chart.png</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>  Candle</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="resources.qrc">
-                   <normaloff>:/charts/icons/candle-fill-chart.png</normaloff>:/charts/icons/candle-fill-chart.png</iconset>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>  Hollow Candle</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="resources.qrc">
-                   <normaloff>:/charts/icons/candle-chart.png</normaloff>:/charts/icons/candle-chart.png</iconset>
-                 </property>
-                </item>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QChartView" name="chartView">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <property name="topMargin">
-             <number>25</number>
-            </property>
            </layout>
           </item>
          </layout>

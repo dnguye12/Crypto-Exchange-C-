@@ -803,6 +803,12 @@ padding: 5px 10px;</string>
           <property name="minimumSize">
            <size>
             <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
             <height>250</height>
            </size>
           </property>
@@ -827,22 +833,6 @@ padding: 5px 10px;</string>
              <property name="rightMargin">
               <number>5</number>
              </property>
-             <item>
-              <spacer name="verticalSpacer_13">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>30</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
              <item>
               <widget class="QComboBox" name="CoinHomepage">
                <property name="font">
@@ -1100,10 +1090,13 @@ padding: 5px 10px;</string>
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+               </property>
                <property name="sizeHint" stdset="0">
                 <size>
                  <width>20</width>
-                 <height>40</height>
+                 <height>20</height>
                 </size>
                </property>
               </spacer>
@@ -1124,22 +1117,6 @@ padding: 5px 10px;</string>
              <property name="bottomMargin">
               <number>0</number>
              </property>
-             <item>
-              <spacer name="verticalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>30</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
              <item>
               <widget class="QLabel" name="label_5">
                <property name="toolTip">
@@ -1194,22 +1171,6 @@ padding: 5px 10px;</string>
               <number>5</number>
              </property>
              <item>
-              <spacer name="verticalSpacer_4">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>30</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
               <widget class="QLabel" name="label_6">
                <property name="text">
                 <string>Fully Diluted Market Cap</string>
@@ -1253,22 +1214,6 @@ padding: 5px 10px;</string>
               <number>5</number>
              </property>
              <item>
-              <spacer name="verticalSpacer_5">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>30</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
               <widget class="QLabel" name="label_12">
                <property name="text">
                 <string>Total Volume</string>
@@ -1299,7 +1244,7 @@ padding: 5px 10px;</string>
                <property name="sizeHint" stdset="0">
                 <size>
                  <width>20</width>
-                 <height>40</height>
+                 <height>20</height>
                 </size>
                </property>
               </spacer>
@@ -1348,22 +1293,6 @@ padding: 5px 10px;</string>
               <number>5</number>
              </property>
              <item>
-              <spacer name="verticalSpacer_6">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>30</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
               <widget class="QLabel" name="label_9">
                <property name="text">
                 <string>Circulating Supply</string>
@@ -1394,7 +1323,7 @@ padding: 5px 10px;</string>
                <property name="sizeHint" stdset="0">
                 <size>
                  <width>20</width>
-                 <height>40</height>
+                 <height>20</height>
                 </size>
                </property>
               </spacer>
@@ -1546,7 +1475,7 @@ padding: 5px 10px;</string>
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>10</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
@@ -1566,12 +1495,18 @@ padding: 5px 10px;</string>
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="coinName_2">
+             <widget class="QLabel" name="chartCoinName">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>22</pointsize>
+                <bold>true</bold>
+               </font>
               </property>
               <property name="text">
                <string>TextLabel</string>
@@ -1817,7 +1752,7 @@ QToolButton:pressed {
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="changChartType_2">
+             <widget class="QComboBox" name="changeChartType">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
