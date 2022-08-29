@@ -59,8 +59,11 @@ private:
     void drawChartLine(QSplineSeries* series);
     Callout *m_tooltip;
 
+    //Coin Description
+    void CoinDescSection(QJsonObject jsonObj);
+
 private slots:
-    void test(const QPointF &point, bool state);
+    void chartCallOut(const QPointF &point, bool state);
     void managerFinished(QNetworkReply* reply);
 
     void activateComboBox(int index);

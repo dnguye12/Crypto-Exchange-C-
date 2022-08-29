@@ -42,6 +42,7 @@ void CoinPage::constructor(QNetworkReply *reply) {
 
     QJsonObject jsonObj = jsonDoc.object();
 
+    //header section
     section1(jsonObj);
     section2(jsonObj);
     section2Links(jsonObj);
@@ -49,6 +50,9 @@ void CoinPage::constructor(QNetworkReply *reply) {
     //chart
     ui->chartCoinName->setText(jsonObj["name"].toString() + " Price Chart");
     on_changeTimeToday_2_clicked();
+
+    //Coin Desc
+    CoinDescSection(jsonObj);
 }
 
 void CoinPage::section1(QJsonObject jsonObj) {
@@ -370,13 +374,13 @@ void CoinPage::drawChartLine(QSplineSeries* series) {
     chart->addAxis(axisY, Qt::AlignRight);
     series->attachAxis(axisX);
     series->attachAxis(axisY);
-    connect(series, &QXYSeries::hovered, this, &CoinPage::test);
+    connect(series, &QXYSeries::hovered, this, &CoinPage::chartCallOut);
 
     ui->chartView_2->setChart(chart);
     ui->chartView_2->setRenderHint(QPainter::Antialiasing);
 }
 
-void CoinPage::test(const QPointF &point, bool state) {
+void CoinPage::chartCallOut(const QPointF &point, bool state) {
 
     if(m_tooltip == 0) {
         m_tooltip = new Callout(ui->chartView_2->chart());
@@ -392,16 +396,13 @@ void CoinPage::test(const QPointF &point, bool state) {
     QDateTime timeStamp;
     timeStamp.setMSecsSinceEpoch(point.x());
     if(timeSpan == "1d") {
-        QTime timeHelper = timeStamp.time();
-        time = ( QString::number(timeHelper.hour()) + ":" + QString::number(timeHelper.minute()) );
+        time = timeStamp.time().toString("hh:mm:ss");
     }else {
-        //QDate dateStamp = timeStamp.date();
-        //time = ( QString::number(dateStamp.day()) + "/" + QString::number(dateStamp.month()) );
-        time = timeStamp.toString("ddd d MMMM yyyy");
+    time = timeStamp.toString("ddd d MMMM yyyy");
     }
 
     if (state) {
-        m_tooltip->setText(QString("%1\nPrice: $%2 ").arg(time).arg(price));
+        m_tooltip->setText(QString("%1\n\nPrice: $%2 ").arg(time).arg(price));
         m_tooltip->setAnchor(point);
         m_tooltip->setZValue(11);
         m_tooltip->updateGeometry();
@@ -551,4 +552,9 @@ void CoinPage::on_changeTimeYTD_2_clicked()
         request.setUrl(chartUrl);
          manager->get(request);
           loop.exec();
+}
+
+void CoinPage::CoinDescSection(QJsonObject jsonObj) {
+    ui->CoinWhatIs->setText("What is " + jsonObj["name"].toString() + "(" + jsonObj["id"].toString().toUpper() + ")?");
+    ui->CoinDesc->setText(jsonObj["description"].toObject()["en"].toString());
 }

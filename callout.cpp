@@ -65,6 +65,7 @@ void Callout::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     }
     painter->setBrush(QColor(255, 255, 255));
     painter->drawPath(path);
+    painter->setFont(QFont("Segoe UI", -1, 500, false));
     painter->drawText(m_textRect, m_text);
 }
 
@@ -87,7 +88,7 @@ void Callout::setText(const QString &text)
 {
     m_text = text;
     QFontMetrics metrics(m_font);
-    m_textRect = metrics.boundingRect(QRect(0, 0, 150, 150), Qt::AlignLeft, m_text);
+    m_textRect = metrics.boundingRect(QRect(0, 0, 500, 350), Qt::AlignLeft, m_text);
     m_textRect.translate(5, 5);
     prepareGeometryChange();
     m_rect = m_textRect.adjusted(-5, -5, 5, 5);
