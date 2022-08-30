@@ -12,6 +12,8 @@
 #include <QDateTime>
 
 #include <QSplineSeries>
+#include <QTableWidgetItem>
+#include <QMap>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,6 +31,8 @@ private slots:
     void managerFinished(QNetworkReply *reply);
 
     void managerImgFinished(QNetworkReply *reply);
+
+    void openCoinPageRow(int row, int column);
 
 private:
     //attributes
@@ -90,6 +94,7 @@ private:
     void updateLosers(QNetworkReply *reply);
 
     //main table
+    QMap<QString, QString> MainRowId;
     void requestMain();
     void updateMain(QNetworkReply *reply);
     void drawMainRow(QJsonObject coin);
