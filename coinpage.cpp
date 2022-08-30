@@ -596,7 +596,11 @@ void CoinPage::requestNews(QNetworkReply *reply) {
     }else {
         QJsonArray arr = jsonDoc["data"].toArray();
         for(int i = 0; i < arr.size(); i++) {
-            if(arr.at(i).toObject()["type"].toString() == "cryptocurrency" ) {
+            /*
+            if(arr.at(i).toObject()["type"].toString() == "cryptocurrency" and arr.at(i).toObject()["name"].toString().toLower() == ui->CoinName->text().toLower()) {
+                qDebug() << arr.at(i).toObject()["name"].toString();
+            }*/
+            if(arr.at(i).toObject()["type"].toString() == "cryptocurrency" && arr.at(i).toObject()["name"].toString().toLower() == ui->CoinName->text().toLower()) {
                 qDebug() << arr.at(i).toObject()["name"].toString();
             }
         }

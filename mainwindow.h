@@ -94,7 +94,7 @@ private:
     void updateLosers(QNetworkReply *reply);
 
     //main table
-    QMap<QString, QString> MainRowId;
+    QMap<int, QString> MainRowId;
     void requestMain();
     void updateMain(QNetworkReply *reply);
     void drawMainRow(QJsonObject coin);

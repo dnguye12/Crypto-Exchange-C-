@@ -503,6 +503,7 @@ void MainWindow::updateMain(QNetworkReply *reply) {
         QJsonObject coin = jsonArr[i].toObject();
         drawMainRowChart(coin);
         drawMainRow(coin);
+        MainRowId.insert(ui->tableWidget->rowCount() - 1, coin["id"].toString());
     }
     ui->helperChart->setVisible(false);
 }
@@ -510,7 +511,6 @@ void MainWindow::updateMain(QNetworkReply *reply) {
 void MainWindow::drawMainRow(QJsonObject coin) {
     QTableWidgetItem *name = new QTableWidgetItem(tr(coin["name"].toString().toLocal8Bit()));
     ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 0, name);
-    MainRowId[name->text()] =  coin["id"].toString();
 
     QLocale locale(QLocale::English);
 
@@ -600,7 +600,7 @@ void MainWindow::openCoinPageRow(int row, int column) {
         disconnect(ui->tableWidget, &QTableWidget::cellClicked, this, &MainWindow::openCoinPageRow);
         resetChoices();
         reqCoinPage = true;
-        QString link  = "https://api.coingecko.com/api/v3/coins/" + MainRowId[ui->tableWidget->itemAt(row, column)->text()] + "?localization=false&tickers=false&market_data=true&community_data=true&developer_data=true&sparkline=false";
+        QString link  = "https://api.coingecko.com/api/v3/coins/" + MainRowId[row] + "?localization=false&tickers=false&market_data=true&community_data=true&developer_data=true&sparkline=false";
         request.setUrl(QUrl(link));
         manager->get(request);
         loop.exec();
