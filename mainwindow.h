@@ -27,6 +27,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void reconnectMainRowItem();
+
 private slots:
     void managerFinished(QNetworkReply *reply);
 

@@ -111,7 +111,7 @@ void MainWindow::managerFinished(QNetworkReply *reply) {
     }
     if(reqCoinPage) {
         CoinPage *cp = new CoinPage();
-        cp->constructor(reply);
+        cp->constructor(reply, this);
         this->hide();
         cp->show();
     }
@@ -604,6 +604,10 @@ void MainWindow::openCoinPageRow(int row, int column) {
         manager->get(request);
         loop.exec();
     }
+}
+
+void MainWindow::reconnectMainRowItem() {
+    connect(ui->tableWidget, &QTableWidget::cellClicked, this, &MainWindow::openCoinPageRow);
 }
 
 void MainWindow::drawMainRowChart(QJsonObject coin) {

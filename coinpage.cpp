@@ -1,6 +1,8 @@
 #include "coinpage.h"
 #include "ui_coinpage.h"
 
+#include "mainwindow.h"
+
 #include <QJsonParseError>
 #include <QJsonArray>
 
@@ -69,7 +71,7 @@ void CoinPage::managerFinished(QNetworkReply* reply) {
     resetReq();
 }
 
-void CoinPage::constructor(QNetworkReply *reply) {
+void CoinPage::constructor(QNetworkReply *reply, MainWindow* parent) {
     QJsonParseError jsonError;
     QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
     if(jsonError.error != QJsonParseError::NoError) {
@@ -78,6 +80,7 @@ void CoinPage::constructor(QNetworkReply *reply) {
     }
 
     QJsonObject jsonObj = jsonDoc.object();
+    mw =parent;
 
     //header section
     section1(jsonObj);
@@ -750,3 +753,12 @@ void CoinPage::updateNewsImage(QNetworkReply* reply) {
         return;
     }
 }
+
+void CoinPage::on_pushButton_clicked()
+{
+    mw->reconnectMainRowItem();
+    mw->show();
+    this->close();
+    this->setAttribute(Qt::WA_DeleteOnClose);
+}
+

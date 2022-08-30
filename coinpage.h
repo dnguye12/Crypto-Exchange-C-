@@ -14,6 +14,7 @@
 
 #include <QSplineSeries>
 #include "callout.h"
+#include "mainwindow.h"
 
 namespace Ui {
 class CoinPage;
@@ -27,10 +28,12 @@ public:
     explicit CoinPage(QWidget *parent = nullptr);
     ~CoinPage();
 
-    void constructor(QNetworkReply *reply);
+    void constructor(QNetworkReply *reply, MainWindow* parent);
 
 private:
     Ui::CoinPage *ui;
+
+    MainWindow* mw;
 
     QNetworkAccessManager *manager;
     QNetworkRequest request;
@@ -88,6 +91,7 @@ private slots:
     void on_changeTime3M_2_clicked();
     void on_changeTime6M_2_clicked();
     void on_changeTime12M_2_clicked();
+    void on_pushButton_clicked();
 };
 
 #endif // COINPAGE_H
