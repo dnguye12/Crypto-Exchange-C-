@@ -36,6 +36,7 @@ private:
     QNetworkRequest request;
     QEventLoop loop;
     QEventLoop loopNews;
+    QEventLoop loopNewsImg;
 
     QJsonObject helperObj;
 
@@ -43,6 +44,7 @@ private:
     bool reqChart = false;
     bool searchNews = false;
     bool reqNews = false;
+    bool reqNewsImage = false;
 
     //functions
     void resetReq();
@@ -66,9 +68,13 @@ private:
     void CoinDescSection(QJsonObject jsonObj);
 
     //News
+    bool img1 = false;
+    bool img2 = false;
+    bool img3 = false;
     void searchNewsFunction(QJsonObject jsonObj);
     void requestNews(QNetworkReply* reply);
     void updateNews(QNetworkReply* reply);
+    void updateNewsImage(QNetworkReply* reply);
 
 private slots:
     void chartCallOut(const QPointF &point, bool state);

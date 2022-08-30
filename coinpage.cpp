@@ -20,6 +20,7 @@ CoinPage::CoinPage(QWidget *parent) :
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(managerFinished(QNetworkReply*)));
     connect(manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
     connect(manager, SIGNAL(finished(QNetworkReply*)), &loopNews, SLOT(quit()));
+    connect(manager, SIGNAL(finished(QNetworkReply*)), &loopNewsImg, SLOT(quit()));
 }
 
 CoinPage::~CoinPage()
@@ -32,6 +33,7 @@ void CoinPage::resetReq() {
     reqChart = false;
     searchNews = false;
     reqNews = false;
+    reqNewsImage = false;
 }
 
 void CoinPage::managerFinished(QNetworkReply* reply) {
@@ -59,6 +61,10 @@ void CoinPage::managerFinished(QNetworkReply* reply) {
 
     if(reqNews) {
         updateNews(reply);
+    }
+
+    if(reqNewsImage) {
+        updateNewsImage(reply);
     }
     resetReq();
 }
@@ -90,6 +96,7 @@ void CoinPage::constructor(QNetworkReply *reply) {
 }
 
 void CoinPage::section1(QJsonObject jsonObj) {
+    QLocale locale(QLocale::English);
     coinId = jsonObj["id"].toString();
     ui->CoinName->setText(jsonObj["name"].toString());
     ui->CoinSymbol->setText(jsonObj["symbol"].toString().toUpper());
@@ -103,9 +110,9 @@ void CoinPage::section1(QJsonObject jsonObj) {
     ui->CoinPriceSmall->setText(ui->CoinName->text() + " Price (" + ui->CoinSymbol->text() + ")");
     double price = jsonObj["market_data"].toObject()["current_price"].toObject()["usd"].toDouble();
     if(price < 1) {
-        ui->CoinPrice->setText("$" + QString::number(price, 'f', 6));
+        ui->CoinPrice->setText("$" + locale.toString(price, 'f', 6));
     }else {
-        ui->CoinPrice->setText("$" + QString::number(price, 'f', 2));
+        ui->CoinPrice->setText("$" + locale.toString(price, 'f', 2));
     }
 
     if(jsonObj["market_data"].toObject()["price_change_percentage_24h"].toDouble() >= 0) {
@@ -115,8 +122,8 @@ void CoinPage::section1(QJsonObject jsonObj) {
         ui->CoinChange->setStyleSheet("color: white;\nbackground-color: rgb(208, 2, 27);\nborder-radius: 5px;\npadding: 10px 15px;\nmargin-left: 15px;");
         ui->CoinChange->setText("▼" + QString::number(jsonObj["market_data"].toObject()["price_change_percentage_24h"].toDouble(), 'f', 2) + "%");
     }
-    ui->CoinLow->setText("Low(24h):$" + QString::number(jsonObj["market_data"].toObject()["low_24h"].toObject()["usd"].toDouble(), 'f', 2));
-    ui->CoinHigh->setText("High(24h):$" + QString::number(jsonObj["market_data"].toObject()["high_24h"].toObject()["usd"].toDouble(), 'f', 2));
+    ui->CoinLow->setText("Low(24h):$" + locale.toString(jsonObj["market_data"].toObject()["low_24h"].toObject()["usd"].toDouble(), 'f', 2));
+    ui->CoinHigh->setText("High(24h):$" + locale.toString(jsonObj["market_data"].toObject()["high_24h"].toObject()["usd"].toDouble(), 'f', 2));
 
     request.setUrl(QUrl(jsonObj["image"].toObject()["large"].toString()));
     reqIcon = true;
@@ -432,7 +439,7 @@ void CoinPage::chartCallOut(const QPointF &point, bool state) {
     if(timeSpan == "1d") {
         time = timeStamp.time().toString("hh:mm:ss");
     }else {
-    time = timeStamp.toString("ddd d MMMM yyyy");
+        time = timeStamp.toString("ddd d MMMM yyyy");
     }
 
     if (state) {
@@ -573,10 +580,12 @@ void CoinPage::CoinDescSection(QJsonObject jsonObj) {
 }
 
 void CoinPage::searchNewsFunction(QJsonObject jsonObj) {
+    ui->newsWidget1->setVisible(false);
+    ui->newsWidget2->setVisible(false);
+    ui->newsWidget3->setVisible(false);
     ui->CoinNewsName->setText(jsonObj["name"].toString() + " Latest News");
     QString name = jsonObj["name"].toString().replace(" ", "%20");
     QString link = "https://api.marketaux.com/v1/entity/search?search=" + name + "&api_token=Bu2E0S5O8US05Fz7X6qp0G4VOoKOQlcylzlkj0FN";
-    qDebug() << link;
     request.setUrl(QUrl(link));
     resetReq();
     searchNews = true;
@@ -595,26 +604,42 @@ void CoinPage::requestNews(QNetworkReply *reply) {
     }
 
     if(jsonDoc["meta"].toObject()["returned"].toInt() == 0) {
-        qDebug() << "no news found";
         return;
     }else {
         QJsonArray arr = jsonDoc["data"].toArray();
         for(int i = 0; i < arr.size(); i++) {
             if(arr.at(i).toObject()["type"].toString() == "cryptocurrency" && arr.at(i).toObject()["name"].toString().toLower() == ui->CoinName->text().toLower()) {
-
+                ui->label_7->setVisible(false);
                 QString link = "https://api.marketaux.com/v1/news/all?symbols=" + arr.at(i).toObject()["symbol"].toString() + "&language=en&limit=3&api_token=Bu2E0S5O8US05Fz7X6qp0G4VOoKOQlcylzlkj0FN";
                 request.setUrl(QUrl(link));
                 resetReq();
                 reqNews = true;
+                ui->newsWidget1->setVisible(true);
+                ui->newsWidget2->setVisible(true);
+                ui->newsWidget3->setVisible(true);
                 manager->get(request);
                 loopNews.exec();
                 return;
             }
         }
-
-        qDebug() << "no news found";
         return;
     }
+}
+
+QString newsDescShort(QString input) {
+    if(input.length() > 160) {
+        input = input.sliced(0, 157);
+        input += "...";
+    }
+    return input;
+}
+
+QString newsHeadingShort(QString input) {
+    if(input.length() > 80) {
+        input = input.sliced(0, 77);
+        input += "...";
+    }
+    return input;
 }
 
 void CoinPage::updateNews(QNetworkReply* reply) {
@@ -629,7 +654,99 @@ void CoinPage::updateNews(QNetworkReply* reply) {
 
     QJsonObject jsonObj = jsonDoc.object();
     QJsonArray arr = jsonObj["data"].toArray();
-    for(int i = 0; i < arr.size(); i++) {
-        qDebug() << arr[i].toObject()["title"].toString();
+
+    if(arr.size() == 1) {
+        ui->newsWidget2->setVisible(false);
+        ui->newsWidget3->setVisible(false);
+
+        ui->newsHeading1->setText(newsHeadingShort(arr[0].toObject()["title"].toString()));
+        ui->newsDesc1->setText(newsDescShort(arr[0].toObject()["description"].toString()));
+        ui->newsSource1->setText(arr[0].toObject()["source"].toString());
+
+        request.setUrl(QUrl(arr[0].toObject()["image_url"].toString()));
+        resetReq();
+        reqNewsImage = true;
+        manager->get(request);
+        loopNewsImg.exec();
+    }
+
+    else if(arr.size() == 2) {
+        ui->newsWidget3->setVisible(false);
+
+        ui->newsHeading1->setText(newsHeadingShort(arr[0].toObject()["title"].toString()));
+        ui->newsDesc1->setText(newsDescShort(arr[0].toObject()["description"].toString()));
+        ui->newsSource1->setText(arr[0].toObject()["source"].toString());
+
+        request.setUrl(QUrl(arr[0].toObject()["image_url"].toString()));
+        resetReq();
+        reqNewsImage = true;
+        manager->get(request);
+        loopNewsImg.exec();
+
+        ui->newsHeading2->setText(newsHeadingShort(arr[1].toObject()["title"].toString()));
+        ui->newsDesc2->setText(newsDescShort(arr[1].toObject()["description"].toString()));
+        ui->newsSource2->setText(arr[1].toObject()["source"].toString());
+
+        request.setUrl(QUrl(arr[1].toObject()["image_url"].toString()));
+        resetReq();
+        reqNewsImage = true;
+        manager->get(request);
+        loopNewsImg.exec();
+    }else if(arr.size() == 3) {
+        ui->newsHeading1->setText(newsHeadingShort(arr[0].toObject()["title"].toString()));
+        ui->newsDesc1->setText(newsDescShort(arr[0].toObject()["description"].toString()));
+        ui->newsSource1->setText(arr[0].toObject()["source"].toString());
+
+        request.setUrl(QUrl(arr[0].toObject()["image_url"].toString()));
+        resetReq();
+        reqNewsImage = true;
+        manager->get(request);
+        loopNewsImg.exec();
+
+        ui->newsHeading2->setText(newsHeadingShort(arr[1].toObject()["title"].toString()));
+        ui->newsDesc2->setText(newsDescShort(arr[1].toObject()["description"].toString()));
+        ui->newsSource2->setText(arr[1].toObject()["source"].toString());
+
+        request.setUrl(QUrl(arr[1].toObject()["image_url"].toString()));
+        resetReq();
+        reqNewsImage = true;
+        manager->get(request);
+        loopNewsImg.exec();
+
+        ui->newsHeading3->setText(newsHeadingShort(arr[2].toObject()["title"].toString()));
+        ui->newsDesc3->setText(newsDescShort(arr[2].toObject()["description"].toString()));
+        ui->newsSource3->setText(arr[2].toObject()["source"].toString());
+
+        request.setUrl(QUrl(arr[2].toObject()["image_url"].toString()));
+        resetReq();
+        reqNewsImage = true;
+        manager->get(request);
+        loopNewsImg.exec();
+    }
+}
+
+void CoinPage::updateNewsImage(QNetworkReply* reply) {
+    if (reply->error() != QNetworkReply::NoError) {
+        qDebug() << "Error in" << reply->url() << ":" << reply->errorString();
+        return;
+    }
+    QPixmap pixmap;
+    QByteArray img = reply->readAll();
+    pixmap.loadFromData(img);
+    pixmap = pixmap.scaled(410, 192, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    if(not img1) {
+        img1 = true;
+        ui->newsImage1->setPixmap(pixmap);
+        return;
+    }
+    if(not img2) {
+        img2 = true;
+        ui->newsImage2->setPixmap(pixmap);
+        return;
+    }
+    if(not img3) {
+        img3 = true;
+        ui->newsImage3->setPixmap(pixmap);
+        return;
     }
 }

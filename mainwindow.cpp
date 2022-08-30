@@ -486,7 +486,6 @@ void MainWindow::updateMain(QNetworkReply *reply) {
     //QDir dir("F:/School/C++/QT/build-CryptoExchange-Desktop_Qt_6_2_3_MinGW_64_bit-Debug/image", {"*.png"});
     QDir dir(":/image", {"*.png"});
     for(const QString & filename: dir.entryList()){
-        qDebug() << ": " << filename;
         dir.remove(filename);
     }
     ui->tableWidget->setColumnWidth(0, 148);
