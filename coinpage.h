@@ -35,6 +35,7 @@ private:
     QNetworkAccessManager *manager;
     QNetworkRequest request;
     QEventLoop loop;
+    QEventLoop loopNews;
 
     QJsonObject helperObj;
 
@@ -67,6 +68,7 @@ private:
     //News
     void searchNewsFunction(QJsonObject jsonObj);
     void requestNews(QNetworkReply* reply);
+    void updateNews(QNetworkReply* reply);
 
 private slots:
     void chartCallOut(const QPointF &point, bool state);

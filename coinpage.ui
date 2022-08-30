@@ -510,9 +510,9 @@ QPushButton:hover:!pressed {
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-445</y>
+         <y>-460</y>
          <width>1280</width>
-         <height>1345</height>
+         <height>1369</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -526,7 +526,7 @@ QPushButton:hover:!pressed {
          <number>9</number>
         </property>
         <property name="bottomMargin">
-         <number>24</number>
+         <number>0</number>
         </property>
         <item>
          <widget class="QWidget" name="CoinMainInfo" native="true">
@@ -1997,6 +1997,25 @@ QToolButton:pressed {
             <property name="rightMargin">
              <number>10</number>
             </property>
+            <property name="bottomMargin">
+             <number>10</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_7">
+              <property name="font">
+               <font>
+                <pointsize>22</pointsize>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>No News Found</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
          </layout>

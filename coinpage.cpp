@@ -19,7 +19,7 @@ CoinPage::CoinPage(QWidget *parent) :
     manager = new QNetworkAccessManager();
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(managerFinished(QNetworkReply*)));
     connect(manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
-
+    connect(manager, SIGNAL(finished(QNetworkReply*)), &loopNews, SLOT(quit()));
 }
 
 CoinPage::~CoinPage()
@@ -55,6 +55,10 @@ void CoinPage::managerFinished(QNetworkReply* reply) {
 
     if(searchNews) {
         requestNews(reply);
+    }
+
+    if(reqNews) {
+        updateNews(reply);
     }
     resetReq();
 }
@@ -596,13 +600,36 @@ void CoinPage::requestNews(QNetworkReply *reply) {
     }else {
         QJsonArray arr = jsonDoc["data"].toArray();
         for(int i = 0; i < arr.size(); i++) {
-            /*
-            if(arr.at(i).toObject()["type"].toString() == "cryptocurrency" and arr.at(i).toObject()["name"].toString().toLower() == ui->CoinName->text().toLower()) {
-                qDebug() << arr.at(i).toObject()["name"].toString();
-            }*/
             if(arr.at(i).toObject()["type"].toString() == "cryptocurrency" && arr.at(i).toObject()["name"].toString().toLower() == ui->CoinName->text().toLower()) {
-                qDebug() << arr.at(i).toObject()["name"].toString();
+
+                QString link = "https://api.marketaux.com/v1/news/all?symbols=" + arr.at(i).toObject()["symbol"].toString() + "&language=en&limit=3&api_token=Bu2E0S5O8US05Fz7X6qp0G4VOoKOQlcylzlkj0FN";
+                request.setUrl(QUrl(link));
+                resetReq();
+                reqNews = true;
+                manager->get(request);
+                loopNews.exec();
+                return;
             }
         }
+
+        qDebug() << "no news found";
+        return;
+    }
+}
+
+void CoinPage::updateNews(QNetworkReply* reply) {
+    QJsonParseError jsonError;
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
+
+    if(jsonError.error != QJsonParseError::NoError) {
+        qDebug() << "fromJson failed: " << jsonError.errorString();
+        return ;
+    }
+
+    QJsonObject jsonObj = jsonDoc.object();
+    QJsonArray arr = jsonObj["data"].toArray();
+    for(int i = 0; i < arr.size(); i++) {
+        qDebug() << arr[i].toObject()["title"].toString();
     }
 }
