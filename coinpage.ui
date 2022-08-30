@@ -510,9 +510,9 @@ QPushButton:hover:!pressed {
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-496</y>
+         <y>-445</y>
          <width>1280</width>
-         <height>1396</height>
+         <height>1345</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1987,7 +1987,7 @@ QToolButton:pressed {
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_13">
+           <layout class="QHBoxLayout" name="CoinNewsMain">
             <property name="leftMargin">
              <number>10</number>
             </property>
@@ -1997,23 +1997,6 @@ QToolButton:pressed {
             <property name="rightMargin">
              <number>10</number>
             </property>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_12">
-              <property name="topMargin">
-               <number>50</number>
-              </property>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_13">
-              <property name="topMargin">
-               <number>50</number>
-              </property>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_14"/>
-            </item>
            </layout>
           </item>
          </layout>

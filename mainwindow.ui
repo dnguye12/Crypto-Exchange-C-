@@ -702,7 +702,6 @@ color: black;</string>
                 <widget class="QLabel" name="marketCaptLabel">
                  <property name="font">
                   <font>
-                   <family>Segoe UI Semibold</family>
                    <pointsize>16</pointsize>
                    <bold>false</bold>
                   </font>
@@ -2013,7 +2012,7 @@ border-radius: 10px;</string>
               <item>
                <widget class="QTableWidget" name="tableWidget">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -2031,7 +2030,7 @@ border-radius: 10px;</string>
                  </size>
                 </property>
                 <property name="frameShape">
-                 <enum>QFrame::HLine</enum>
+                 <enum>QFrame::VLine</enum>
                 </property>
                 <property name="frameShadow">
                  <enum>QFrame::Plain</enum>
@@ -2210,6 +2209,20 @@ border-radius: 10px;</string>
               <property name="styleSheet">
                <string notr="true">background-color: white;
 border: none;</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <property name="bottomMargin">
+             <number>30</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="pushButton_5">
+              <property name="text">
+               <string>PushButton</string>
               </property>
              </widget>
             </item>

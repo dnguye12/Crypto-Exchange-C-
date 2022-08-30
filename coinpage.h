@@ -40,6 +40,8 @@ private:
 
     bool reqIcon = false;
     bool reqChart = false;
+    bool searchNews = false;
+    bool reqNews = false;
 
     //functions
     void resetReq();
@@ -61,6 +63,10 @@ private:
 
     //Coin Description
     void CoinDescSection(QJsonObject jsonObj);
+
+    //News
+    void searchNewsFunction(QJsonObject jsonObj);
+    void requestNews(QNetworkReply* reply);
 
 private slots:
     void chartCallOut(const QPointF &point, bool state);

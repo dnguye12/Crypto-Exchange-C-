@@ -8,7 +8,6 @@
 #include <QtCore>
 #include <QtGui>
 
-
 #include <QNetworkReply>
 
 #include <QChart>
@@ -21,6 +20,8 @@
 #include <QCategoryAxis>
 
 #include <QTime>
+
+#include <QScrollBar>
 
 #include <algorithm>
 #include <sstream>
@@ -589,6 +590,8 @@ void MainWindow::drawMainRow(QJsonObject coin) {
 
     chart->setTextAlignment(Qt::AlignCenter);
     ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 7, chart);
+
+    ui->tableWidget->verticalScrollBar()->setDisabled(true);
 }
 
 void MainWindow::drawMainRowChart(QJsonObject coin) {

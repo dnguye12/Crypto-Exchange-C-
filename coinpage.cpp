@@ -30,6 +30,33 @@ CoinPage::~CoinPage()
 void CoinPage::resetReq() {
     reqIcon = false;
     reqChart = false;
+    searchNews = false;
+    reqNews = false;
+}
+
+void CoinPage::managerFinished(QNetworkReply* reply) {
+    QPixmap pixmap;
+    if (reply->error() != QNetworkReply::NoError) {
+        qDebug() << "Error in" << reply->url() << ":" << reply->errorString();
+        return;
+    }
+    if(reqIcon) {
+        QByteArray img = reply->readAll();
+        pixmap.loadFromData(img);
+        pixmap = pixmap.scaled(QSize(32,32), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        ui->CoinImage->setPixmap(pixmap);
+
+    }
+    if(reqChart) {
+        m_tooltip = 0;
+        QSplineSeries* serie = returnSerie(reply);
+        drawChartLine(serie);
+    }
+
+    if(searchNews) {
+        requestNews(reply);
+    }
+    resetReq();
 }
 
 void CoinPage::constructor(QNetworkReply *reply) {
@@ -53,6 +80,9 @@ void CoinPage::constructor(QNetworkReply *reply) {
 
     //Coin Desc
     CoinDescSection(jsonObj);
+
+    //Coin News
+    searchNewsFunction(jsonObj);
 }
 
 void CoinPage::section1(QJsonObject jsonObj) {
@@ -412,27 +442,6 @@ void CoinPage::chartCallOut(const QPointF &point, bool state) {
     }
 }
 
-void CoinPage::managerFinished(QNetworkReply* reply) {
-    QPixmap pixmap;
-    if (reply->error() != QNetworkReply::NoError) {
-        qDebug() << "Error in" << reply->url() << ":" << reply->errorString();
-        return;
-    }
-    if(reqIcon) {
-        QByteArray img = reply->readAll();
-        pixmap.loadFromData(img);
-        pixmap = pixmap.scaled(QSize(32,32), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        ui->CoinImage->setPixmap(pixmap);
-
-    }
-    if(reqChart) {
-        m_tooltip = 0;
-        QSplineSeries* serie = returnSerie(reply);
-        drawChartLine(serie);
-    }
-    resetReq();
-}
-
 int CoinPage::timeSpanDateCount(QString timeSpan) {
     QDateTime now = QDateTime::currentDateTimeUtc();
     int monthToAdd = 0;
@@ -557,4 +566,39 @@ void CoinPage::on_changeTimeYTD_2_clicked()
 void CoinPage::CoinDescSection(QJsonObject jsonObj) {
     ui->CoinWhatIs->setText("What is " + jsonObj["name"].toString() + "(" + jsonObj["id"].toString().toUpper() + ")?");
     ui->CoinDesc->setText(jsonObj["description"].toObject()["en"].toString());
+}
+
+void CoinPage::searchNewsFunction(QJsonObject jsonObj) {
+    ui->CoinNewsName->setText(jsonObj["name"].toString() + " Latest News");
+    QString name = jsonObj["name"].toString().replace(" ", "%20");
+    QString link = "https://api.marketaux.com/v1/entity/search?search=" + name + "&api_token=Bu2E0S5O8US05Fz7X6qp0G4VOoKOQlcylzlkj0FN";
+    qDebug() << link;
+    request.setUrl(QUrl(link));
+    resetReq();
+    searchNews = true;
+    manager->get(request);
+    loop.exec();
+}
+
+void CoinPage::requestNews(QNetworkReply *reply) {
+    QJsonParseError jsonError;
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(reply->readAll(), &jsonError);
+
+    if(jsonError.error != QJsonParseError::NoError) {
+        qDebug() << "fromJson failed: " << jsonError.errorString();
+        return ;
+    }
+
+    if(jsonDoc["meta"].toObject()["returned"].toInt() == 0) {
+        qDebug() << "no news found";
+        return;
+    }else {
+        QJsonArray arr = jsonDoc["data"].toArray();
+        for(int i = 0; i < arr.size(); i++) {
+            if(arr.at(i).toObject()["type"].toString() == "cryptocurrency" ) {
+                qDebug() << arr.at(i).toObject()["name"].toString();
+            }
+        }
+    }
 }
