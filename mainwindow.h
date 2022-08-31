@@ -34,6 +34,8 @@ private slots:
 
     void managerImgFinished(QNetworkReply *reply);
 
+    void managerImgMainRowFinished(QNetworkReply *reply);
+
     void openCoinPageRow(int row, int column);
 
 private:
@@ -42,6 +44,7 @@ private:
 
     QNetworkAccessManager *manager;
     QNetworkAccessManager *ImgManager;
+    QNetworkAccessManager *ImgMainRowManager;
     QNetworkRequest request;
     QEventLoop loop;
     QEventLoop imgloop;
@@ -53,7 +56,6 @@ private:
     QString apiKey = "b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c";
 
     //functions
-    void centerScreen();
 
     QSplineSeries * returnSerie(QNetworkReply *reply);
 
@@ -97,10 +99,13 @@ private:
 
     //main table
     QMap<int, QString> MainRowId;
+    QMap<int, QString> MainRowIconUrl;
+    int rowNow;
     void requestMain();
     void updateMain(QNetworkReply *reply);
     void drawMainRow(QJsonObject coin);
     void drawMainRowChart(QJsonObject coin);
+    void drawMainRowIcon();
 
     //coin manager
     void openCoinPage(QMouseEvent* event);

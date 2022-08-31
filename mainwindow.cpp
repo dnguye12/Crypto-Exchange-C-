@@ -33,13 +33,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    //centerScreen();
-
     manager = new QNetworkAccessManager();
     ImgManager = new QNetworkAccessManager();
     QObject::connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(managerFinished(QNetworkReply*)));
     QObject::connect(ImgManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(managerImgFinished(QNetworkReply*)));
-
 
     connect(manager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
     connect(ImgManager, SIGNAL(finished(QNetworkReply*)), &imgloop, SLOT(quit()));
@@ -60,16 +57,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::centerScreen() {
-    QScreen *screen = ui->centralwidget->screen();
-    QRect  screenGeometry = screen->geometry();
-    int sheight = screenGeometry.height();
-    int swidth = screenGeometry.width();
-    int height = ui->centralwidget->height();
-    int width = ui->centralwidget->width();
-    move(  (swidth - width) / 2 ,(sheight - height) / 2 );
 }
 
 void MainWindow::resetChoices() {
